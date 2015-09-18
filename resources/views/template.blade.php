@@ -35,9 +35,8 @@
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{!! Auth::user()['name'] !!}</strong>
                              </span> <span class="text-muted text-xs block">Senior technicien <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="profile.html">Profile</a></li>
-                                <li><a href="contacts.html">Contacts</a></li>
-                                <li><a href="mailbox.html">Mailbox</a></li>
+                                <li><a href="profile">Profile</a></li>
+                                <li><a href="contacts">Contacts</a></li>
                                 <li class="divider"></li>
                                 <li><a href="auth/logout">Logout</a></li>
                             </ul>
@@ -54,7 +53,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Appareil</span><span class="fa arrow"></a>
+                        <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Appareil</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Gerer</a></li>
                             <li><a href="#">Categorie</a></li>
@@ -63,14 +62,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Client</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="#">Ajouter</a></li>
-                            <li><a href="#">Modifier</a></li>
-                            <li><a href="#">Supprimer</a></li>
-                            <li><a href="#">Consulter</a></li>
-
-                        </ul>
+                        <a href="clients"><i class="fa fa-diamond"></i> <span class="nav-label">Clients</span></a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Technicien</span><span class="fa arrow"></span></a>
@@ -216,8 +208,10 @@
             </div>
             <div class="row  border-bottom white-bg dashboard-header">
             </div>
-            <div class="row">
-                @yield('content')
+            <div class="wrapper wrapper-content  animated fadeInRight">
+                <div class="row">
+                    @yield('content')
+                </div>
             </div>
 
 
