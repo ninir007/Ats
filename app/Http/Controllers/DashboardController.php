@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 
 class DashboardController  extends Controller
@@ -16,8 +17,11 @@ class DashboardController  extends Controller
 
     public function showDashboard(Request $request)
     {
+        $use = Auth::user()['name'];
 
-        return view( 'dashboard');
+        flash("ATS REPAIR CENTER" , "Bienvenue ". $use." !");
+
+        return view('dashboard');
     }
 
 

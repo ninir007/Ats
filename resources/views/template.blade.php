@@ -46,6 +46,9 @@
                         </div>
                     </li>
                     <li class="active">
+                        <a href="dashboard"><i class="fa fa-diamond"></i> <span class="nav-label">Dashboard</span></a>
+                    </li>
+                    <li >
                         <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiche</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse in">
                             <li><a href="#">Creation</a></li>
@@ -636,23 +639,13 @@
     <!-- Toastr -->
     <script src="js/plugins/toastr/toastr.min.js"></script>
 
-
     <script>
-        $(document).ready(function() {
-            setTimeout(function () {
-                toastr.options = {
-                    closeButton: true,
-                    progressBar: true,
-                    showMethod: 'slideDown',
-                    timeOut: 4000
-                };
-                toastr.success('ATS REPAIR CENTER', 'Bienvenue {!! Auth::user()['name'] !!}');
+        $(document).ready(function(){
 
-            }, 1300);
         });
-
     </script>
 
+@include('flash')
 
     </body>
 </html>

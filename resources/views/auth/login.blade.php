@@ -12,6 +12,8 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 
+
+
 </head>
 
 <body class="gray-bg">
@@ -45,7 +47,6 @@
 <!-- Mainly scripts -->
 <script src="../js/jquery-2.1.1.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-
 
 
 
