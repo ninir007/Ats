@@ -21,11 +21,14 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::all();
-        return view('clients', ['clients' => $clients]);
+        return view('/clients/clients', ['clients' => $clients]);
 
     }
+
+
     public function handleAction(Request $request)
     {
+
         $action = $request->input('_action');
 
 
@@ -36,15 +39,52 @@ class ClientsController extends Controller
 
             // FLash messaging :
                 flash()->success('Opération réussie!', 'Client créé avec succés.');
-            // back to creation form.
-            return redirect()->back();
 
+        }
+        if( $_POST['_action'] == 'getClientByID')
+        {
+            $id = $_POST['_uid'];
+            $client = Client::where('id', $id)->get();
+            return response(['status' => 'success', 'client' => $client], 200);
+        }
+        if( $_POST['_action'] == 'editClient')
+        {
+            $id = $_POST['id'];
+            $client = Client::find($id);
+            $client->lastname       = $_POST['lastname'];
+            $client->firstname      = $_POST['firstname'];
+            $client->email = $_POST['email'];
+            $client->address = $_POST['address'];
+            $client->tva = $_POST['tva'];
+            $client->mobile = $_POST['mobile'];
+            $client->office = $_POST['office'];
+            $client->fax = $_POST['fax'];
+
+            $client->save();
+            flash()->success('Opération réussie!', 'Client modifé avec succés.');
         }
 
 
 
 
-        return view('clients');
+
+
+        return redirect('/clients');
+
+    }
+
+
+    public function edit($id, Request $res)
+    {
+
+            //Edit :
+
+            // FLash messaging :
+           // flash()->warning('Modification attempt !', $id);
+
+            // back to creation form.
+
+        return view('/clients');
 
     }
 

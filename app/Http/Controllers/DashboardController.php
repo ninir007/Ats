@@ -17,9 +17,9 @@ class DashboardController  extends Controller
 
     public function showDashboard(Request $request)
     {
-        $use = Auth::user()['name'];
 
-        flash("ATS REPAIR CENTER" , "Bienvenue ". $use." !");
+
+
 
         return view('dashboard');
     }

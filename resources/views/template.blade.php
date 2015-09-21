@@ -5,19 +5,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Pro - Gestionnaire du centre ATS">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>ATS Repair Center</title>
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
 
         <!-- Toastr style -->
-        <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+        <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
         <!-- Gritter -->
-        <link href="js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+        <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
-        <link href="css/animate.css" rel="stylesheet">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="/css/animate.css" rel="stylesheet">
+        <link href="/css/style.css" rel="stylesheet">
     </head>
     <body class=" pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
             <div class="pace-progress-inner"></div>
@@ -29,16 +30,16 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg">
+                            <img alt="image" class="img-circle" src="/img/profile_small.jpg">
                              </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{!! Auth::user()['name'] !!}</strong>
                              </span> <span class="text-muted text-xs block">Senior technicien <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="profile">Profile</a></li>
-                                <li><a href="contacts">Contacts</a></li>
+                                <li><a href="/profile">Profile</a></li>
+                                <li><a href="/contacts">Contacts</a></li>
                                 <li class="divider"></li>
-                                <li><a href="auth/logout">Logout</a></li>
+                                <li><a href="/auth/logout">Logout</a></li>
                             </ul>
                         </div>
                         <div class="logo-element">
@@ -46,33 +47,32 @@
                         </div>
                     </li>
                     <li class="active">
-                        <a href="dashboard"><i class="fa fa-diamond"></i> <span class="nav-label">Dashboard</span></a>
+                        <a href="/dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="/clients"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                     </li>
                     <li >
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiche</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse in">
+                        <a href="/index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiche</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
                             <li><a href="#">Creation</a></li>
                             <li><a href="#">Consultation</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Appareil</span><span class="fa arrow"></span></a>
+                        <a href="/layouts.html"><i class="fa fa-tag"></i> <span class="nav-label">Modéle</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="#">Gerer</a></li>
+                            <li><a href="#">Gérer</a></li>
                             <li><a href="#">Categorie</a></li>
                             <li><a href="#">Marque</a></li>
-                            <li><a href="#">Modéle</a></li>
                         </ul>
                     </li>
+
                     <li>
-                        <a href="clients"><i class="fa fa-diamond"></i> <span class="nav-label">Clients</span></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Technicien</span><span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">Technicien</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Ajouter</a></li>
                             <li><a href="#">Modifier</a></li>
-                            <li><a href="#">Supprimer</a></li>
                             <li><a href="#">Consulter</a></li>
 
                         </ul>
@@ -105,7 +105,7 @@
                             <ul class="dropdown-menu dropdown-messages">
                                 <li>
                                     <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
+                                        <a href="/profile.html" class="pull-left">
                                             <img alt="image" class="img-circle" src="img/a7.jpg">
                                         </a>
                                         <div class="media-body">
@@ -118,7 +118,7 @@
                                 <li class="divider"></li>
                                 <li>
                                     <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
+                                        <a href="/profile.html" class="pull-left">
                                             <img alt="image" class="img-circle" src="img/a4.jpg">
                                         </a>
                                         <div class="media-body ">
@@ -131,7 +131,7 @@
                                 <li class="divider"></li>
                                 <li>
                                     <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
+                                        <a href="/profile.html" class="pull-left">
                                             <img alt="image" class="img-circle" src="img/profile.jpg">
                                         </a>
                                         <div class="media-body ">
@@ -144,7 +144,7 @@
                                 <li class="divider"></li>
                                 <li>
                                     <div class="text-center link-block">
-                                        <a href="mailbox.html">
+                                        <a href="/mailbox.html">
                                             <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
                                         </a>
                                     </div>
@@ -152,12 +152,12 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="/#">
                                 <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li>
-                                    <a href="mailbox.html">
+                                    <a href="/mailbox.html">
                                         <div>
                                             <i class="fa fa-envelope fa-fw"></i> You have 16 messages
                                             <span class="pull-right text-muted small">4 minutes ago</span>
@@ -166,7 +166,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="profile.html">
+                                    <a href="/profile.html">
                                         <div>
                                             <i class="fa fa-twitter fa-fw"></i> 3 New Followers
                                             <span class="pull-right text-muted small">12 minutes ago</span>
@@ -175,7 +175,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="grid_options.html">
+                                    <a href="/grid_options.html">
                                         <div>
                                             <i class="fa fa-upload fa-fw"></i> Server Rebooted
                                             <span class="pull-right text-muted small">4 minutes ago</span>
@@ -185,7 +185,7 @@
                                 <li class="divider"></li>
                                 <li>
                                     <div class="text-center link-block">
-                                        <a href="notifications.html">
+                                        <a href="/notifications.html">
                                             <strong>See All Alerts</strong>
                                             <i class="fa fa-angle-right"></i>
                                         </a>
@@ -196,7 +196,7 @@
 
 
                         <li>
-                            <a href="auth/logout">
+                            <a href="/auth/logout">
                                 <i class="fa fa-sign-out"></i> Log out
                             </a>
                         </li>
@@ -601,51 +601,54 @@
     </div>
 
     <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Flot -->
-    <script src="js/plugins/flot/jquery.flot.js"></script>
-    <script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="js/plugins/flot/jquery.flot.spline.js"></script>
-    <script src="js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.pie.js"></script>
 
     <!-- Peity -->
-    <script src="js/plugins/peity/jquery.peity.min.js"></script>
-    <script src="js/demo/peity-demo.js"></script>
+    <script src="/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/js/demo/peity-demo.js"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
+    <script src="/js/inspinia.js"></script>
+    <script src="/js/plugins/pace/pace.min.js"></script>
 
     <!-- jQuery UI -->
-    <script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
     <!-- GITTER -->
-    <script src="js/plugins/gritter/jquery.gritter.min.js"></script>
+    <script src="/js/plugins/gritter/jquery.gritter.min.js"></script>
 
     <!-- Sparkline -->
-    <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="/js/plugins/sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Sparkline demo data  -->
-    <script src="js/demo/sparkline-demo.js"></script>
+    <script src="/js/demo/sparkline-demo.js"></script>
 
     <!-- ChartJS-->
-    <script src="js/plugins/chartJs/Chart.min.js"></script>
+    <script src="/js/plugins/chartJs/Chart.min.js"></script>
 
     <!-- Toastr -->
-    <script src="js/plugins/toastr/toastr.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
 
     <script>
         $(document).ready(function(){
 
         });
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') } });
     </script>
+    @include('flash')
 
-@include('flash')
+
+    @yield('script.client')
 
     </body>
 </html>
