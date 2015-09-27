@@ -417,7 +417,6 @@
                     return true;
                 }
             });
-            console.log(x);
 
         });
     </script>

@@ -17,3 +17,7 @@ Route::get('/profile', 'TechnicienController@getFormEdit');
 Route::get('/clients', 'ClientsController@index');
 Route::post('/clients', 'ClientsController@handleAction');
 
+
+Route::get('/modele', 'ModelesController@index');
+Route::post('/modele', 'ModelesController@handleAction');
+

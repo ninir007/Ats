@@ -46,30 +46,31 @@
                             ATS
                         </div>
                     </li>
-                    <li class="active">
+                    <li class=" {{ isset($leftmenu['dashboard']) ? $leftmenu['dashboard'] : '' }}">
                         <a href="/dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Dashboard</span></a>
                     </li>
-                    <li>
+                    <li class=" {{ isset($leftmenu['client']) ? $leftmenu['client'] : '' }}">
                         <a href="/clients"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                     </li>
+                    <li class=" {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
+                        <a href="/layouts.html"><i class="fa fa-tag"></i> <span class="nav-label">Modéles</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
+                            <li><a href="/modele">Gestion</a></li>
+                            <li><a href="#">Categorie</a></li>
+                            <li><a href="#">Marque</a></li>
+                        </ul>
+                    </li>
                     <li >
-                        <a href="/index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiche</span> <span class="fa arrow"></span></a>
+                        <a href="/index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiches</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Creation</a></li>
                             <li><a href="#">Consultation</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="/layouts.html"><i class="fa fa-tag"></i> <span class="nav-label">Modéle</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="#">Gérer</a></li>
-                            <li><a href="#">Categorie</a></li>
-                            <li><a href="#">Marque</a></li>
-                        </ul>
-                    </li>
+
 
                     <li>
-                        <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">Technicien</span><span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">Techniciens</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Ajouter</a></li>
                             <li><a href="#">Modifier</a></li>
@@ -649,6 +650,7 @@
 
 
     @yield('script.client')
+    @yield('script.modele')
 
     </body>
 </html>

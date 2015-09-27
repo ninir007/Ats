@@ -18,10 +18,10 @@ class DashboardController  extends Controller
     public function showDashboard(Request $request)
     {
 
+        $leftmenu['dashboard'] = 'active';
 
 
-
-        return view('dashboard');
+        return view('dashboard', ['leftmenu' => $leftmenu]);
     }
 
 

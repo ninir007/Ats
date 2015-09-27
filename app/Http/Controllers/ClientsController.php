@@ -21,7 +21,8 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::all();
-        return view('/clients/clients', ['clients' => $clients]);
+        $leftmenu['client'] = 'active';
+        return view('/clients/clients', ['clients' => $clients, 'leftmenu' => $leftmenu]);
 
     }
 
