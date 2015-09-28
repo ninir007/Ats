@@ -11,7 +11,7 @@ class Category extends Model
     protected $fillable =['name'];
     public $timestamps = false;
 
-    public function Models()
+    public function models()
     {
         return $this->hasMany('App\Model');
     }

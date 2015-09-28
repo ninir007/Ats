@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Brand;
+use App\Models;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -21,11 +22,11 @@ class ModelesController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-
+        $modele = Models::with('category', 'brand')->get();
 
         $leftmenu['model'] = 'active';
         $leftmenu['model_menu'] = 'collapse in';
-        return view('/modeles/index', ['leftmenu' => $leftmenu, 'categories' => $categories, 'brands' => $brands]);
+        return view('/modeles/index', ['leftmenu' => $leftmenu, 'categories' => $categories, 'brands' => $brands, 'modeles' => $modele]);
 
     }
 
@@ -44,6 +45,11 @@ class ModelesController extends Controller
         if( $action == 'addBrand' )
         {
             Brand::create( $request->all() );
+            return response(['status' => 'success']);
+        }
+        if( $action == 'addModel' )
+        {
+            Models::create( $request->all() );
             return response(['status' => 'success']);
         }
 

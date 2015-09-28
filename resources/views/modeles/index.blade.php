@@ -47,7 +47,7 @@
         <div class="col-sm-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <span class="label label-warning">7</span>
+                    <span class="label label-warning" id="model-stat">{{ isset($modeles) ? count($modeles) : 0 }}</span>
                     <h5> &nbsp; Modéles</h5>
                     <div class="ibox-tools">
                         <a href="#modalAddModel" data-toggle="modal" class="btn btn-xs btn-primary"><i class="fa fa-plus-circle"></i></a>
@@ -56,21 +56,32 @@
                         </a>
                     </div>
                     <div class="ibox-content no-padding" id="content_models">
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
-                        <p>zdzede</p>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+
+                            <tr>
+
+
+                                <th style="text-align:center;">Modele</th>
+                                <th style="text-align:center;"> Categorie</th>
+                                <th style="text-align:center;"> Marque</th>
+
+                            </tr>
+                            </thead>
+                            <tbody id="modele-content">
+                            @if(isset($modeles))
+                                @foreach($modeles as $modele)
+                                    <tr>
+                                        <td style="text-align:center;">{{ $modele->name }}</td>
+                                        <td style="text-align:center;">{{ $modele->category->name }}</td>
+                                        <td style="text-align:center;">{{ $modele->brand->name }}</td>
+                                    </tr>
+                                @endforeach
+                            @else <tr>Pas d'enregistrements</tr>
+                            @endif
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -254,6 +265,7 @@
                     },
                     'complete' : function(xhr) {
                         var response = JSON.parse( xhr.responseText );
+                        console.log(response);
                         if(response.status != 'success' || typeof response.status == 'undefined')   {
                             $('#returnmsgmodele').html('<div class="alert alert-danger">Error !'+response+'</div>');
                             setTimeout(function(){
@@ -262,17 +274,17 @@
 
                         }
                         else {
-                            $('#returnmsgmodele').html('<div class="alert alert-success">Marque créé avec succés ! </div>');
+                            $('#returnmsgmodele').html('<div class="alert alert-success">Modéle créé avec succés ! </div>');
                             setTimeout(function(){
                                 $('#returnmsgmodele').html('');
                             },3000);
                             //update the VIEW
-                            $stat = parseInt($('#stat-brand').text());
+                            $stat = parseInt($('#model-stat').text());
                             $stat += 1;
 
-                            var newrecord = "<p>"+ $("#brand_name").val().toUpperCase() +"</p>";
-                            $('#content_brands').append(newrecord);
-                            $('#stat-brand').text($stat);
+                            var newrecord = "<tr><td style='text-align:center;'>"+$('#modalinputaddmodele').val().toUpperCase()+"</td><td style='text-align:center;'>"+$('#category_model option:selected').text()+"</td><td style='text-align:center;'>"+$('#brand_model option:selected').text()+"</td></tr>";
+                            $('#modele-content').append(newrecord);
+                            $('#model-stat').text($stat);
 
                             $("#brand_name").val('');
                             $("#brand_name").focus();
