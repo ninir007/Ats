@@ -60,6 +60,9 @@
                             <li><a href="#">Marque</a></li>
                         </ul>
                     </li>
+                    <li class=" {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
+                        <a href="/status"><i class="fa fa-commenting"></i> <span class="nav-label">Statuts</span></a>
+                    </li>
                     <li >
                         <a href="/index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiches</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
@@ -651,6 +654,7 @@
 
     @yield('script.client')
     @yield('script.modele')
+    @yield('script.status')
 
     </body>
 </html>

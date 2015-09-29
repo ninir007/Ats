@@ -21,3 +21,4 @@ Route::post('/clients', 'ClientsController@handleAction');
 Route::get('/modele', 'ModelesController@index');
 Route::post('/modele', 'ModelesController@handleAction');
 
+Route::get('/status', 'GroupStatusController@index');
