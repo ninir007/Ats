@@ -14,7 +14,7 @@ class GroupStatus extends Model
 
     public function codes()
     {
-        return $this->hasMany('App\CodeStatus');
+        return $this->hasMany('App\CodeStatus', 'group_status_id');
     }
 
     public function getLabelAttribute($value)

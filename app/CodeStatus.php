@@ -14,13 +14,25 @@ class CodeStatus extends Model
 
     public function group()
     {
-        return $this->belongsTo('App\GroupStatus');
+        return $this->belongsTo('App\GroupStatus', 'id');
     }
 
     public function getLabelAttribute($value)
     {
         return mb_strtoupper($value);
     }
+     public function getStepAttribute($value)
+    {
+        return mb_strtoupper($value);
+    }
+
+     public function getDescriptionAttribute($value)
+     {
+         return mb_strtoupper($value);
+     }
+
+
+
     public function setLabelAttribute($value)
     {
         $this->attributes['label'] = mb_strtolower($value);

@@ -25,3 +25,4 @@ Route::post('/modele', 'ModelesController@handleAction');
 Route::get('/status/groups', 'GroupStatusController@index');
 Route::post('/status/groups', 'GroupStatusController@handleAction');
 Route::get('/status/codes', 'CodeStatusController@index');
+Route::post('/status/codes', 'CodeStatusController@handleAction');

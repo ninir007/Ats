@@ -104,7 +104,7 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                            <span class="m-r-sm text-muted welcome-message" id="ats-time">h:m:s d/m/y.</span>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -658,8 +658,33 @@
                     timeOut: 4000
                 };
 
+
+            (function startTime() {
+
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                h = checkTime(h);
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('ats-time').innerHTML = h + ":" + m + ":" + s;
+
+                var t = setTimeout(startTime, 500);
+            })();
+
+
+            function checkTime(i) {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+            }
+
         });
+
+
+
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') } });
+
     </script>
     @include('flash')
 

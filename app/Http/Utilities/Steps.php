@@ -5,18 +5,18 @@ namespace App\Http\Utilities;
 Class Steps
 {
     protected static $bigSteps = [
-        "Debut",
-        "Devis",
-        "Usine",
-        "Commande",
-        "Finale",
-        "PreFinale"
+        "DEBUT",
+        "DEVIS",
+        "USINE",
+        "COMMANDE",
+        "FINALE",
+        "PREFINALE"
     ];
     protected static $detailSteps = [
-        "in",
-        "out",
-        "in and out",
-        "middle"
+        "IN",
+        "OUT",
+        "IN AND OUT",
+        "MIDDLE"
     ];
     public static function getBig()
     {

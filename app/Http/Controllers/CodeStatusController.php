@@ -17,11 +17,26 @@ class CodeStatusController extends Controller
 
     public function index()
     {
-        $codes = CodeStatus::all();
         $groups = GroupStatus::all();
+        $codes = CodeStatus::with('group')->get();
         $leftmenu['status'] = 'active';
         $leftmenu['status-codes'] = 'active';
 
         return view('/status/codes', ['codes' => $codes, 'groupes' => $groups, 'leftmenu' => $leftmenu]);
+    }
+    public function handleAction(Request $request)
+    {
+        $action = $request->input('_action');
+
+
+        if( $action == 'addCode' )
+        {
+            CodeStatus::create( $request->all() );
+            flash()->success('Opération réussie!', 'Code créé avec succés.');
+        }
+
+
+
+        return redirect('/status/codes');
     }
 }
