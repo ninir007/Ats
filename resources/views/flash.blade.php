@@ -11,7 +11,7 @@
 
         toastr.{{ session('flash_message.level') }}("{{ session('flash_message.message') }}", "{{ session('flash_message.title') }}" );
 
-    }, 1000);
+    }, 800);
 
 </script>
 @endif

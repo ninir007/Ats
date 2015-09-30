@@ -21,4 +21,8 @@ class GroupStatus extends Model
     {
         return mb_strtoupper($value);
     }
+    public function setLabelAttribute($value)
+    {
+        $this->attributes['label'] = mb_strtolower($value);
+    }
 }

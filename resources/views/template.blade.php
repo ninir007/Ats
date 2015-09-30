@@ -53,7 +53,7 @@
                         <a href="/clients"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                     </li>
                     <li class=" {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
-                        <a href="/layouts.html"><i class="fa fa-tag"></i> <span class="nav-label">Modéles</span><span class="fa arrow"></span></a>
+                        <a href="/modele"><i class="fa fa-tag"></i> <span class="nav-label">Modéles</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
                             <li><a href="/modele">Gestion</a></li>
                             <li><a href="#">Categorie</a></li>
@@ -61,7 +61,11 @@
                         </ul>
                     </li>
                     <li class=" {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
-                        <a href="/status"><i class="fa fa-commenting"></i> <span class="nav-label">Statuts</span></a>
+                        <a href="/status"><i class="fa fa-commenting"></i> <span class="nav-label">Statuts</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
+                            <li class=" {{ isset($leftmenu['status-groups']) ? $leftmenu['status-groups'] : '' }}"><a href="/status/groups">Groupes</a></li>
+                            <li class=" {{ isset($leftmenu['status-codes']) ? $leftmenu['status-codes'] : '' }}"><a href="/status/codes">Codes</a></li>
+                        </ul>
                     </li>
                     <li >
                         <a href="/index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiches</span> <span class="fa arrow"></span></a>
@@ -110,7 +114,7 @@
                                 <li>
                                     <div class="dropdown-messages-box">
                                         <a href="/profile.html" class="pull-left">
-                                            <img alt="image" class="img-circle" src="img/a7.jpg">
+                                            <img alt="image" class="img-circle" src="/img/a7.jpg">
                                         </a>
                                         <div class="media-body">
                                             <small class="pull-right">46h ago</small>
@@ -123,7 +127,7 @@
                                 <li>
                                     <div class="dropdown-messages-box">
                                         <a href="/profile.html" class="pull-left">
-                                            <img alt="image" class="img-circle" src="img/a4.jpg">
+                                            <img alt="image" class="img-circle" src="/img/a4.jpg">
                                         </a>
                                         <div class="media-body ">
                                             <small class="pull-right text-navy">5h ago</small>
@@ -136,7 +140,7 @@
                                 <li>
                                     <div class="dropdown-messages-box">
                                         <a href="/profile.html" class="pull-left">
-                                            <img alt="image" class="img-circle" src="img/profile.jpg">
+                                            <img alt="image" class="img-circle" src="/img/profile.jpg">
                                         </a>
                                         <div class="media-body ">
                                             <small class="pull-right">23h ago</small>
@@ -225,7 +229,8 @@
         </div>
 
         <div id="right-sidebar">
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;"><div class="sidebar-container" style="overflow: hidden; width: auto; height: 100%;">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                <div class="sidebar-container" style="overflow: hidden; width: auto; height: 100%;">
 
                     <ul class="nav nav-tabs navs-3">
 
@@ -255,7 +260,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a1.jpg">
 
                                             <div class="m-t-xs">
                                                 <i class="fa fa-star text-warning"></i>
@@ -273,7 +278,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a2.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a2.jpg">
                                         </div>
                                         <div class="media-body">
                                             The point of using Lorem Ipsum is that it has a more-or-less normal.
@@ -285,7 +290,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a3.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a3.jpg">
 
                                             <div class="m-t-xs">
                                                 <i class="fa fa-star text-warning"></i>
@@ -303,7 +308,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a4.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a4.jpg">
                                         </div>
 
                                         <div class="media-body">
@@ -316,7 +321,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a8.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a8.jpg">
                                         </div>
                                         <div class="media-body">
 
@@ -329,7 +334,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a7.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a7.jpg">
                                         </div>
                                         <div class="media-body">
                                             Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
@@ -341,7 +346,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a3.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a3.jpg">
 
                                             <div class="m-t-xs">
                                                 <i class="fa fa-star text-warning"></i>
@@ -359,7 +364,7 @@
                                 <div class="sidebar-message">
                                     <a href="#">
                                         <div class="pull-left text-center">
-                                            <img alt="image" class="img-circle message-avatar" src="img/a4.jpg">
+                                            <img alt="image" class="img-circle message-avatar" src="/img/a4.jpg">
                                         </div>
                                         <div class="media-body">
                                             Uncover many web sites still in their infancy. Various versions have.
@@ -646,6 +651,13 @@
     <script>
         $(document).ready(function(){
 
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+
         });
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') } });
     </script>
@@ -654,7 +666,8 @@
 
     @yield('script.client')
     @yield('script.modele')
-    @yield('script.status')
+    @yield('script.groups')
+    @yield('script.codes')
 
     </body>
 </html>
