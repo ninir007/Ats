@@ -35,6 +35,20 @@ class CodeStatusController extends Controller
             flash()->success('Opération réussie!', 'Code créé avec succés.');
         }
 
+        if( $action == 'editCode' )
+        {
+            $id = $_POST['editid'];
+            $code_status = CodeStatus::find($id);
+            $code_status->label             = $_POST['label'];
+            $code_status->group_status_id   = $_POST['group_status_id'];
+            $code_status->step              = $_POST['step'];
+            $code_status->step_step         = $_POST['step_step'];
+            $code_status->description       = $_POST['description'];
+
+            $code_status->save();
+            flash()->success('Opération réussie!', 'Code Statut modifé avec succés.');
+        }
+
 
 
         return redirect('/status/codes');

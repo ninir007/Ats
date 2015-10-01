@@ -24,7 +24,6 @@ class CreateCodesStatusTable extends Migration
             $table->foreign('group_status_id')
                 ->references('id')
                 ->on('groups_status')
-                ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
 

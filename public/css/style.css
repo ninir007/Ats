@@ -8091,3 +8091,8 @@ body.md-skin {
     display: none;
   }
 }
+
+#miscellanous {
+  position: relative;
+  bottom: -8px;
+}

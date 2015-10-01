@@ -75,19 +75,6 @@ class ClientsController extends Controller
     }
 
 
-    public function edit($id, Request $res)
-    {
-
-            //Edit :
-
-            // FLash messaging :
-           // flash()->warning('Modification attempt !', $id);
-
-            // back to creation form.
-
-        return view('/clients');
-
-    }
 
 
 }

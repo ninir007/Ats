@@ -55,9 +55,8 @@
                     <li class=" {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
                         <a href="/modele"><i class="fa fa-tag"></i> <span class="nav-label">Modéles</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
-                            <li><a href="/modele">Gestion</a></li>
-                            <li><a href="#">Categorie</a></li>
-                            <li><a href="#">Marque</a></li>
+                            <li class="{{ isset($leftmenu['model_gerer']) ? $leftmenu['model_gerer'] : '' }}"><a href="/modele">Gérer</a></li>
+                            <li class="{{ isset($leftmenu['model_cat']) ? $leftmenu['model_cat'] : '' }}"><a href="/category-model">Catégorie / Marque</a></li>
                         </ul>
                     </li>
                     <li class=" {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
@@ -104,7 +103,11 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message" id="ats-time">h:m:s d/m/y.</span>
+                            <div id="miscellanous">
+                                <i class="fa fa-clock-o"></i>&nbsp;<span class="m-r-sm text-muted welcome-message" id="ats-time"></span>
+                                <br><i class="fa fa-calendar-minus-o"></i><span class="m-r-sm text-muted welcome-message"> {{ $today = date("d/m/Y") }}</span>
+                            </div>
+
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -692,6 +695,7 @@
 
     @yield('script.client')
     @yield('script.modele')
+    @yield('script.category')
     @yield('script.groups')
     @yield('script.codes')
 

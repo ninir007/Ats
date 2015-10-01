@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Category;
 use App\Brand;
-use App\Models;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ModelesController extends Controller
+class CategoryController extends Controller
 {
     public function __construct()
     {
@@ -17,16 +17,14 @@ class ModelesController extends Controller
     }
 
 
-
     public function index()
     {
         $categories = Category::all();
         $brands = Brand::all();
-        $modele = Models::with('category', 'brand')->get();
 
         $leftmenu['model'] = 'active';
-        $leftmenu['model_gerer'] = 'active';
-        return view('/modeles/index', ['leftmenu' => $leftmenu, 'categories' => $categories, 'brands' => $brands, 'modeles' => $modele]);
+        $leftmenu['model_cat'] = 'active';
+        return view('/category-brand/index', ['leftmenu' => $leftmenu, 'categories' => $categories, 'brands' => $brands]);
 
     }
 
@@ -37,15 +35,14 @@ class ModelesController extends Controller
         $action = $request->input('_action');
 
 
-        if( $action == 'addModel' )
-        {
-            Models::create( $request->all() );
+        if ($action == 'addCategory') {
+            Category::create($request->all());
             return response(['status' => 'success']);
         }
-
-
+        if ($action == 'addBrand') {
+            Brand::create($request->all());
+            return response(['status' => 'success']);
+        }
     }
-
-
 
 }
