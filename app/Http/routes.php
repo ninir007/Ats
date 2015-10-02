@@ -22,6 +22,9 @@ Route::get('/category-model', 'CategoryController@index');
 Route::post('/category-model', 'CategoryController@handleAction');
 
 
+Route::get('/articles', 'ArticleController@index');
+Route::post('/articles', 'ArticleController@handleAction');
+
 Route::get('/modele', 'ModelesController@index');
 Route::post('/modele', 'ModelesController@handleAction');
 

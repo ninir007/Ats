@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Groupe :</label>
-                                    <select name="group_status_id" id="editgroup_status_id" class="form-control" required>
+                                    <select name="model_id" id="model_id" class="form-control" required>
                                         <option value="" selected disabled="">--</option>
                                         @if(isset($groupes))
                                             @foreach($groupes as $group)

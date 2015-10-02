@@ -57,6 +57,7 @@
                         <ul class="nav nav-second-level collapse {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
                             <li class="{{ isset($leftmenu['model_gerer']) ? $leftmenu['model_gerer'] : '' }}"><a href="/modele">Gérer</a></li>
                             <li class="{{ isset($leftmenu['model_cat']) ? $leftmenu['model_cat'] : '' }}"><a href="/category-model">Catégorie / Marque</a></li>
+                            <li class="{{ isset($leftmenu['model_article']) ? $leftmenu['model_article'] : '' }}"><a href="/articles">Articles</a></li>
                         </ul>
                     </li>
                     <li class=" {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
@@ -698,6 +699,7 @@
     @yield('script.category')
     @yield('script.groups')
     @yield('script.codes')
+    @yield('script.articles')
 
     </body>
 </html>
