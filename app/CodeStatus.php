@@ -14,7 +14,7 @@ class CodeStatus extends Model
 
     public function group()
     {
-        return $this->belongsTo('App\GroupStatus', 'id');
+        return $this->belongsTo('App\GroupStatus', 'group_status_id');
     }
 
     public function getLabelAttribute($value)

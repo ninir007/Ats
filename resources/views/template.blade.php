@@ -16,7 +16,7 @@
 
         <!-- Gritter -->
         <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
-
+        <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
         <link href="/css/animate.css" rel="stylesheet">
         <link href="/css/style.css" rel="stylesheet">
     </head>
@@ -37,7 +37,7 @@
                              </span> <span class="text-muted text-xs block">Senior technicien <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="/profile">Profile</a></li>
-                                <li><a href="/contacts">Contacts</a></li>
+                                <li><a href="/technicien/notes">Notes</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/auth/logout">Logout</a></li>
                             </ul>
@@ -49,8 +49,14 @@
                     <li class=" {{ isset($leftmenu['dashboard']) ? $leftmenu['dashboard'] : '' }}">
                         <a href="/dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Dashboard</span></a>
                     </li>
+                    <li class=" {{ isset($leftmenu['files']) ? $leftmenu['files'] : '' }}" >
+                        <a href="/files"><i class="fa fa-th-large"></i> <span class="nav-label">Fiches</span></a>
+                    </li>
                     <li class=" {{ isset($leftmenu['client']) ? $leftmenu['client'] : '' }}">
                         <a href="/clients"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
+                    </li>
+                    <li class=" {{ isset($leftmenu['devices']) ? $leftmenu['devices'] : '' }}">
+                        <a href="/devices"><i class="fa fa-television"></i> <span class="nav-label">Appareils</span></a>
                     </li>
                     <li class=" {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
                         <a href="/modele"><i class="fa fa-tag"></i> <span class="nav-label">Modéles</span><span class="fa arrow"></span></a>
@@ -67,13 +73,7 @@
                             <li class=" {{ isset($leftmenu['status-codes']) ? $leftmenu['status-codes'] : '' }}"><a href="/status/codes">Codes</a></li>
                         </ul>
                     </li>
-                    <li >
-                        <a href="/index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Fiches</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="#">Creation</a></li>
-                            <li><a href="#">Consultation</a></li>
-                        </ul>
-                    </li>
+
 
 
                     <li>
@@ -616,8 +616,8 @@
     <!-- Mainly scripts -->
     <script src="/js/jquery-2.1.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+
 
     <!-- Flot -->
     <script src="/js/plugins/flot/jquery.flot.js"></script>
@@ -633,6 +633,8 @@
     <!-- Custom and plugin javascript -->
     <script src="/js/inspinia.js"></script>
     <script src="/js/plugins/pace/pace.min.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
     <!-- jQuery UI -->
     <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -651,6 +653,11 @@
 
     <!-- Toastr -->
     <script src="/js/plugins/toastr/toastr.min.js"></script>
+
+    <!-- Data picker -->
+    <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+
 
     <script>
         $(document).ready(function(){
@@ -700,6 +707,8 @@
     @yield('script.groups')
     @yield('script.codes')
     @yield('script.articles')
+    @yield('script.notes')
+    @yield('script.files')
 
     </body>
 </html>

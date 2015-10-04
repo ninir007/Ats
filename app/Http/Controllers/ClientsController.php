@@ -42,13 +42,13 @@ class ClientsController extends Controller
                 flash()->success('Opération réussie!', 'Client créé avec succés.');
 
         }
-        if( $_POST['_action'] == 'getClientByID')
+        else if( $_POST['_action'] == 'getClientByID')
         {
             $id = $_POST['_uid'];
             $client = Client::where('id', $id)->get();
             return response(['status' => 'success', 'client' => $client], 200);
         }
-        if( $_POST['_action'] == 'editClient')
+        else if( $_POST['_action'] == 'editClient')
         {
             $id = $_POST['id'];
             $client = Client::find($id);
@@ -63,6 +63,10 @@ class ClientsController extends Controller
 
             $client->save();
             flash()->success('Opération réussie!', 'Client modifé avec succés.');
+        }
+        else
+        {
+
         }
 
 

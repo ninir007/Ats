@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models;
+use App\Modeles;
 use App\Article;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -17,7 +17,7 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $modele = Models::all();
+        $modele = Modeles::all();
         $articles = Article::with('model')->get();
 
         $leftmenu['model'] = 'active';

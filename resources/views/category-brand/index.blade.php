@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-sm-3 col-lg-offset-2">
+    <div class="col-sm-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <span class="label label-warning" id="stat-cat">{{ isset($categories) ? count($categories) : 0 }}</span>
@@ -14,12 +14,17 @@
                         <i class="fa fa-chevron-up"></i>
                     </a>
                 </div>
-                <div class="ibox-content no-padding" id="content_categories">
-                    @if(isset($categories))
-                        @foreach($categories as $cate)
-                            <p>{{ $cate->name }}</p>
-                        @endforeach
-                    @endif
+                <div class="ibox-content no-padding customheight" >
+                    <table class="table table-bordered table-striped table-hover">
+                        <tbody id="content_categories">
+                        @if(isset($categories))
+                            @foreach($categories as $cate)
+                                <tr><td>{{ $cate->name }}</td></tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+
+                    </table>
                 </div>
             </div>
         </div>
@@ -35,12 +40,17 @@
                         <i class="fa fa-chevron-up"></i>
                     </a>
                 </div>
-                <div class="ibox-content no-padding" id="content_brands">
+                <div class="ibox-content no-padding customheight" >
+                    <table class="table table-bordered table-striped table-hover">
+                        <tbody id="content_brands">
                     @if(isset($brands))
                         @foreach($brands as $brand)
-                            <p>{{ $brand->name }}</p>
+                            <tr><td>{{ $brand->name }}</td></tr>
                         @endforeach
                     @endif
+                        </tbody>
+
+                    </table>
                 </div>
             </div>
         </div>
@@ -167,7 +177,7 @@
                             $stat = parseInt($('#stat-brand').text());
                             $stat += 1;
 
-                            var newrecord = "<p>"+ $("#brand_name").val().toUpperCase() +"</p>";
+                            var newrecord = "<tr><td>"+ $("#brand_name").val().toUpperCase() +"</td></tr>";
                             $('#content_brands').append(newrecord);
                             $('#stat-brand').text($stat);
 
@@ -221,7 +231,7 @@
                             $stat = parseInt($('#stat-cat').text());
                             $stat += 1;
 
-                            var newrecord = "<p>"+ $("#category_name").val().toUpperCase() +"</p>";
+                            var newrecord = "<tr><td>"+ $("#category_name").val().toUpperCase() +"</td></tr>";
                             $('#content_categories').append(newrecord);
                             $('#stat-cat').text($stat);
 

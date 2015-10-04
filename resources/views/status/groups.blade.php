@@ -3,7 +3,7 @@
 @section('content')
     <div class="row" >
 
-        <div class="col-sm-5 col-lg-offset-3">
+        <div class="col-sm-5">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-warning" id="stat-grp">{{ isset($groups) ? count($groups) : 0 }}</span>
@@ -14,7 +14,7 @@
                             <i class="fa fa-chevron-up"></i>
                         </a>
                     </div>
-                    <div class="ibox-content no-padding">
+                    <div class="ibox-content no-padding ">
                         <div id="returnmsggrp"></div>
                         <table class="table table-bordered table-striped table-hover">
                             <thead>

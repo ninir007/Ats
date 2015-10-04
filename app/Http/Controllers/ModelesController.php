@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Brand;
-use App\Models;
+use App\Modeles;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -22,7 +22,7 @@ class ModelesController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        $modele = Models::with('category', 'brand')->get();
+        $modele = Modeles::with('category', 'brand')->get();
 
         $leftmenu['model'] = 'active';
         $leftmenu['model_gerer'] = 'active';
@@ -39,7 +39,7 @@ class ModelesController extends Controller
 
         if( $action == 'addModel' )
         {
-            Models::create( $request->all() );
+            Modeles::create( $request->all() );
             return response(['status' => 'success']);
         }
 

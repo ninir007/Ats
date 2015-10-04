@@ -13,7 +13,7 @@
                         <i class="fa fa-chevron-up"></i>
                     </a>
                 </div>
-                <div class="ibox-content no-padding" id="content_models">
+                <div class="ibox-content no-padding customheight" id="content_models">
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
 

@@ -7,7 +7,6 @@ Class Steps
     protected static $bigSteps = [
         "DEBUT",
         "DEVIS",
-        "USINE",
         "COMMANDE",
         "FINALE",
         "PREFINALE"

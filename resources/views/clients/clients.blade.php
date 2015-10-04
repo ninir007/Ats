@@ -23,7 +23,7 @@
                             <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Particulier</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i> Société</a></li>
                         </ul>
-                        <div class="tab-content">
+                        <div class="tab-content ">
                             <div id="tab-1" class="tab-pane active">
                                 <div class="full-height-scroll">
                                     <div class="table-responsive">
@@ -113,6 +113,7 @@
                                                 </p>
                                                 <a type="button" id="details-mail" class="btn btn-primary btn-sm btn-block" href=""><i class="fa fa-envelope"></i> Mail
                                                 </a>
+                                                <a id="new-file" class="btn btn-success btn-sm btn-block" href=""><i class="fa fa-th-large"></i>  Créer Fiche </a>
 
                                                 <a id="details-id" class="btn btn-warning btn-sm btn-block editClient" data-toggle="modal" data-target="#modalEditClient"><i class="fa fa-pencil"></i> Editer </a>
                                                 <small id="details-updt" ></small>
@@ -374,8 +375,17 @@
 
                     if(response.status == 'success')
                     {
-                        //set the new details field
                         detailclient = response.client[0];
+
+
+
+                        // set the href button for new file creation
+                        $('#new-file').attr('href', "/new-file/"+detailclient.id);
+
+
+
+                        //set the new details field
+
                         $('#details-name').text( detailclient.FirstName+ " " +detailclient.LastName);
                         $('#details-pic').attr('src', 'img/img_generic_person.jpg');
                         $('#details-mail').attr('href', "mailto:"+detailclient.Email+"?subject=ATS Repair Center&amp;body=Bonjour");
@@ -412,7 +422,7 @@
                     }
                     else
                     {
-                        alert('no way man !');
+                        alert('erreur DB !');
                     }
                     return true;
                 }

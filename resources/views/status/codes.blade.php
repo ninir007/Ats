@@ -16,7 +16,7 @@
                             <i class="fa fa-chevron-up"></i>
                         </a>
                     </div>
-                    <div class="ibox-content no-padding">
+                    <div class="ibox-content no-padding customheight">
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
 
@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Groupe :</label>
-                                    <select name="model_id" id="model_id" class="form-control" required>
+                                    <select name="group_status_id" id="editgroup_status_id" class="form-control" required>
                                         <option value="" selected disabled="">--</option>
                                         @if(isset($groupes))
                                             @foreach($groupes as $group)

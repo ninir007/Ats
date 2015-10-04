@@ -15,8 +15,9 @@ class Article extends Model
 
     public function model()
     {
-        return $this->belongsTo('App\Models', 'id');
+        return $this->belongsTo('App\Modeles', 'model_id');
     }
+
 
     public function setReferenceAttribute($value)
     {
