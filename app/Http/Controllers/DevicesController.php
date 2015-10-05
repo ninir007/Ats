@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Modeles;
+use App\Device;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -26,9 +27,14 @@ class DevicesController extends Controller
     {
         $action = $request->input('_action');
 
-        if( $action == '' )
+        if( $action == 'addDevice' )
         {
-
+            Device::create( $request->all() );
+            return response(['status' => 'success']);
+        }
+        else
+        {
+            return response(['status' => 'error']);
         }
     }
 }

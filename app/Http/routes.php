@@ -31,6 +31,7 @@ Route::post('/modele', 'ModelesController@handleAction');
 
 //Devices
 Route::get('/devices', 'DevicesController@index');
+Route::post('/new-file/devices', 'DevicesController@handleAction');
 
 
 //Technicien = USER
