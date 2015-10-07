@@ -14,6 +14,10 @@
         <!-- Toastr style -->
         <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
+        <!-- FooTable -->
+        <link href="/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <!-- Chosen -->
+        <link href="/css/plugins/chosen/chosen.css" rel="stylesheet">
         <!-- Gritter -->
         <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
         <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
@@ -76,15 +80,7 @@
 
 
 
-                    <li>
-                        <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">Techniciens</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="#">Ajouter</a></li>
-                            <li><a href="#">Modifier</a></li>
-                            <li><a href="#">Consulter</a></li>
 
-                        </ul>
-                    </li>
 
                 </ul>
 
@@ -634,6 +630,8 @@
     <script src="/js/inspinia.js"></script>
     <script src="/js/plugins/pace/pace.min.js"></script>
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Chosen -->
+    <script src="/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
     <!-- jQuery UI -->
@@ -657,7 +655,8 @@
     <!-- Data picker -->
     <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
-
+    <!-- FooTable -->
+    <script src="/js/plugins/footable/footable.all.min.js"></script>
 
     <script>
         $(document).ready(function(){

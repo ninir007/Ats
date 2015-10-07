@@ -1,11 +1,9 @@
 @extends('template')
 
-
 @section('content')
     <div class="row">
-
-        <div class="col-lg-6">
-            <div class="ibox float-e-margins">
+        <div class="col-lg-5">
+            <div class="ibox">
                 <div class="ibox-title">
                     <h5>Client</h5>
                     <div class="ibox-tools">
@@ -99,112 +97,117 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-7">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-repair"> Réparation</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-command"> Commande</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-repair" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="tabs-container">
+                                    <form id="formDevice" method="post" autocomplete="off" role="form">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <select name="device_id" data-placeholder="Numéro de serie" id="device_select" style="width:350px;" required >
+                                                        @if(isset($devices))
+                                                            <option value=""></option>
+                                                            @foreach($devices as $device)
+                                                                <option value="{{ $device->id }}" data-modeleid="{{ $device->model_id }}" data-desc="{{ $device->description }}" data-purchased="{{ $device->purchased_at }}" > {{ $device->serial_number }}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
 
-        <div class="col-lg-6">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Appareil</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link" >
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
+                                                </div>
+                                            </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group"></div>
+                                        </div>
+
+                                            <div class="col-lg-8">
+                                                <div class="hr-line-dashed"></div>
+                                                <div class="form-group">
+                                                    <label>Description </label>
+                                                    <textarea rows="4" cols="20" class="form-control lockable" name="description" id="description_device"></textarea>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Accessoires ?</label>
+                                                        <div data-toggle="buttons">
+                                                            <label class="btn btn-outline btn-info btn-circle dim "><input type="radio" name="accessory" value="1"><i class="fa fa-check"></i></label>
+                                                            <label class="btn btn-outline btn-danger btn-circle dim "><input type="radio" name="accessory" value="0" checked="checked"><i class="fa fa-times"></i></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group" id="data_3">
+                                                        <label>Date Achat</label>
+                                                        <div class="input-group date">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            <input type="text" class="form-control lockable" name="purchased_at" value="" id="purchaseddevice">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Categorie</label>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon"><i class="fa fa-bookmark-o"></i></span>
+                                                        <input type="text" id="categorie" class="form-control" value="" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Marque</label>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon"><i class="fa fa-television"></i></span>
+                                                        <input type="text" id="marque" class="form-control" value="" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select name="model_id" id="model_select" class="form-control lockable" required>
+                                                        <option value="" selected disabled="">Modéles</option>
+                                                        @if(isset($modeles))
+                                                            @foreach($modeles as $mod)
+                                                                <option value="{{ $mod->id }}" data-cat="{{$mod->category->name}}" data-brand="{{$mod->brand->name}}"> {{ $mod->name }}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <div class="input-group date">
+                                                        <button type="submit" id="validation-device-btn" class="btn btn-w-m btn-primary tourne"><i class="fa fa-refresh"></i> Valider</button>
+                                                        <button type="submit" id="submitCreationBtn" class="btn btn-w-m btn-primary hidden tourne"><i class="fa fa-refresh" style=""></i> Créer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-command" class="tab-pane">
+                        <div class="panel-body">
+                            <strong>formulaire de commande : </strong>
+
+                            <p>inputs /</p><p>inputs /</p><p>inputs /</p><p>inputs /</p><p>inputs /</p><p>inputs /</p>
+
+                        </div>
                     </div>
                 </div>
-                <div class="ibox-content">
-                    <form id="formDevice" method="post" autocomplete="off" role="form">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="form-group">
-                                    <select name="device_id" data-placeholder="Numéro de serie" id="device_select" style="width:350px;" required >
-                                        @if(isset($devices))
-                                            <option value=""></option>
-                                            @foreach($devices as $device)
-                                                <option value="{{ $device->id }}" data-modeleid="{{ $device->model_id }}" data-desc="{{ $device->description }}" data-purchased="{{ $device->purchased_at }}" > {{ $device->serial_number }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="hr-line-dashed"></div>
-                            <div class="col-lg-8">
-
-                                <div class="form-group">
-                                    <label>Description </label>
-                                    <textarea rows="4" cols="20" class="form-control lockable" name="description" id="description_device"></textarea>
-                                </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Accessoires ?</label>
-                                            <div data-toggle="buttons">
-                                                <label class="btn btn-outline btn-info btn-circle dim "><input type="radio" name="accessory" value="1"><i class="fa fa-check"></i></label>
-                                                <label class="btn btn-outline btn-danger btn-circle dim "><input type="radio" name="accessory" value="0" checked="checked"><i class="fa fa-times"></i></label>
-                                            </div>
-                                    </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group" id="data_3">
-                                            <label>Date Achat</label>
-                                            <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input type="text" class="form-control lockable" name="purchased_at" value="" id="purchaseddevice">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Categorie</label>
-                                    <div class="input-group date">
-                                        <span class="input-group-addon"><i class="fa fa-bookmark-o"></i></span>
-                                        <input type="text" id="categorie" class="form-control" value="" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Marque</label>
-                                    <div class="input-group date">
-                                        <span class="input-group-addon"><i class="fa fa-television"></i></span>
-                                        <input type="text" id="marque" class="form-control" value="" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <select name="model_id" id="model_select" class="form-control lockable" required>
-                                        <option value="" selected disabled="">Modéles</option>
-                                        @if(isset($modeles))
-                                            @foreach($modeles as $mod)
-                                                <option value="{{ $mod->id }}" data-cat="{{$mod->category->name}}" data-brand="{{$mod->brand->name}}"> {{ $mod->name }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="form-group">
-
-                                    <div class="input-group date">
-                                        <button type="submit" id="validation-device-btn" class="btn btn-w-m btn-primary tourne"><i class="fa fa-refresh"></i> Valider</button>
-                                        <button type="submit" id="submitCreationBtn" class="btn btn-w-m btn-primary hidden tourne"><i class="fa fa-refresh" style=""></i> Créer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-
-
-
-                </div>
             </div>
         </div>
-
-
     </div>
-
-
-
-    <div class="row">
+    <div class="row m-t-lg">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -218,24 +221,37 @@
                 <div class="ibox-content">
                     <form id="formcreatefile" role="form" autocomplete="off">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-5">
                                 <div class="form-group">
                                     <label>Rapport Interne </label>
                                     <textarea rows="4" cols="20" class="form-control" name="intern_report"></textarea>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-5">
                                 <div class="form-group">
                                     <label>Rapport Client </label>
                                     <textarea rows="4" cols="20" class="form-control" name="client_report"></textarea>
                                 </div>
                             </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label>Technicien attribué </label>
+
+                                    <select name="user_id" id="select_user">
+                                        <option value="" selected disabled="">Tech</option>
+                                        @if(isset($users))
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}" > {{ $user->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="row">
-                            <input type="hidden" val="" name="">
-                            <input type="hidden" val="" name="">
-                            <input type="hidden" val="" name="">
+                            <input type="hidden" value="" id="type" name="type">
+                            <input type="hidden" value="{{$client->id}}" name="client_id">
                             <button type="submit" id="create_file" class="btn btn-w-m btn-primary pull-right"> Créer</button>
                         </div>
                     </form>
@@ -246,8 +262,10 @@
             </div>
         </div>
     </div>
-@stop
 
+
+
+@stop
 
 
 
@@ -294,7 +312,7 @@
             alert('koi add ?');
             var newserial = $('#device_select option:selected').text();
             $.ajax({
-                'url' : './devices',
+                'url' : './device',
                 'data' : '_action=addDevice&serial_number='+newserial+'&'+$('#formDevice').serialize(),
                 'dataType' : 'json',
                 'type' : 'POST',
@@ -312,6 +330,16 @@
                             $.gritter.add({
                                 title: 'Succes !',
                                 text: 'Appareil ajouté !'
+                            });
+                            disableInputs();
+                            $('#type').val('REPAIR');
+                            $('#validation-device-btn').addClass('hidden');
+                        }
+                        else
+                        {
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: "Erreur DB : ajout échoué !"
                             });
                         }
                         //window.location.reload();
@@ -459,16 +487,16 @@
             var select, chosen;
 
             // cache the select element as we'll be using it a few times
-                        select = $("#device_select");
+            select = $("#device_select");
 
             // init the chosen plugin
-                        select.chosen({
-                            no_results_text: "ya pas ",
-                            width: "95%"
-                        });
+            select.chosen({
+                no_results_text: "Tapez ENTER pour créer :  ",
+                width: "95%"
+            });
 
             // get the chosen object
-                        chosen = select.data('chosen');
+            chosen = select.data('chosen');
 
             // Bind the keyup event to the search box input
             chosen.dropdown.find('input').on('keyup', function(e)

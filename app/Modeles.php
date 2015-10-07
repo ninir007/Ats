@@ -25,4 +25,8 @@ class Modeles extends Model
     {
         return $this->belongsTo('App\Category');
     }
+    public function articles()
+    {
+        return $this->belongsToMany('App\Article', 'modele_article','model_id' , 'article_id' );
+    }
 }

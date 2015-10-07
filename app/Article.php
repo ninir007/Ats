@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $table ='articles';
-    protected $fillable =['reference','description', 'model_id'];
+    protected $fillable =['reference','description'];
 
     public $timestamps = false;
 
 
 
-    public function model()
+    public function theModels()
     {
-        return $this->belongsTo('App\Modeles', 'model_id');
+        return $this->belongsToMany('App\Modeles', 'modele_article', 'article_id', 'model_id');
     }
 
 

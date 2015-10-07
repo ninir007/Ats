@@ -162,7 +162,7 @@
                     'complete' : function(xhr) {
                         var response = JSON.parse( xhr.responseText );
                         if(response.status != 'success' || typeof response.status == 'undefined')   {
-                            $('#contentreturnmsgbrand').html('<div class="alert alert-danger">Error !'+response+'</div>');
+                            $('#contentreturnmsgbrand').html('<div class="alert alert-danger">Error !'+response.name+'</div>');
                             setTimeout(function(){
                                 $('#contentreturnmsgbrand').html('');
                             },3000);
@@ -216,7 +216,7 @@
                     'complete' : function(xhr) {
                         var response = JSON.parse( xhr.responseText );
                         if(response.status != 'success')   {
-                            $('#contentreturnmsgcategory').html('<div class="alert alert-danger">Error !'+response+'</div>');
+                            $('#contentreturnmsgcategory').html('<div class="alert alert-danger">Error !'+response.name+'</div>');
                             setTimeout(function(){
                                 $('#contentreturnmsgcategory').html('');
                             },3000);

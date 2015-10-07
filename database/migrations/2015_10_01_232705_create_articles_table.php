@@ -16,13 +16,6 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('reference');
             $table->string('description');
-            $table->integer('model_id')->unsigned();
-
-
-            $table->foreign('model_id')
-                ->references('id')
-                ->on('models')
-                ->onUpdate('cascade');
 
         });
     }

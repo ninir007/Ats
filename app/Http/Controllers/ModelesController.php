@@ -24,9 +24,17 @@ class ModelesController extends Controller
         $brands = Brand::all();
         $modele = Modeles::with('category', 'brand')->get();
 
+        $articles_modeles = Modeles::with('articles')->get();
+
+
         $leftmenu['model'] = 'active';
         $leftmenu['model_gerer'] = 'active';
-        return view('/modeles/index', ['leftmenu' => $leftmenu, 'categories' => $categories, 'brands' => $brands, 'modeles' => $modele]);
+        return view('/modeles/index', ['leftmenu' => $leftmenu,
+                                        'categories' => $categories,
+                                        'brands' => $brands,
+                                        'modeles' => $modele,
+                                        'artmod' => $articles_modeles
+                                      ]);
 
     }
 
@@ -39,8 +47,16 @@ class ModelesController extends Controller
 
         if( $action == 'addModel' )
         {
+            $this->validate($request, [
+                'name' => 'unique:models',
+            ]);
+
             Modeles::create( $request->all() );
             return response(['status' => 'success']);
+        }
+        else
+        {
+            return response(['status' => 'error']);
         }
 
 

@@ -15,7 +15,7 @@
                         </a>
                     </div>
                     <div class="ibox-content no-padding customheight" id="content_models">
-                        <table class="table table-bordered table-striped table-hover">
+                        <table class="footable table table-bordered table-striped table-hover">
                             <thead>
 
                             <tr>
@@ -42,6 +42,50 @@
                         </table>
 
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                        <thead>
+                            <tr>
+
+                                <th data-toggle="true">Modele</th>
+                                <th data-hide="all">Articles</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if(isset($artmod))
+
+                         @foreach($artmod as $mod)
+                             <tr>
+                                <td>
+                                    {{ $mod->name }}
+                                </td>
+                                <td>
+                                    @foreach($mod->articles as $art)
+                                        <span class="label label-primary">{{$art->reference}} - {{$art->description}}</span>
+                                    @endforeach
+
+                                </td>
+                             </tr>
+                         @endforeach
+
+                        @endif
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <ul class="pagination pull-right"></ul>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+
                 </div>
             </div>
         </div>
@@ -111,7 +155,11 @@
 
 @section('script.modele')
     <script type="text/javascript">
+
+        $('.footable').footable(); //Here otherwise display latency....
+
         $(document).ready(function(){
+
 
             handleFormAddModele();
 
@@ -162,7 +210,7 @@
                         var response = JSON.parse( xhr.responseText );
                         console.log(response);
                         if(response.status != 'success' || typeof response.status == 'undefined')   {
-                            $('#returnmsgmodele').html('<div class="alert alert-danger">Error !'+response+'</div>');
+                            $('#returnmsgmodele').html('<div class="alert alert-danger">Error !'+response.name+'</div>');
                             setTimeout(function(){
                                 $('#returnmsgmodele').html('');
                             },3000);

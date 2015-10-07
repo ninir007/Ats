@@ -9,12 +9,24 @@ class Device extends Model
     protected $table ='devices';
     protected $fillable =['serial_number','description', 'purchased_at','model_id'];
     public $timestamps = false;
-   // protected $dateFormat = 'd-m-Y';
-
 
     public function setPurchasedAtAttribute($value)
     {
-        $dated = date('Y-m-d', strtotime($value));
+        $dated = date('Y-m-d', strtotime(str_replace('/', '-', $value)));
         $this->attributes['purchased_at'] = $dated;
     }
+
+
+    public function getPurchasedAtAttribute($value)
+    {
+        $dated = date('d/m/Y', strtotime($value));
+        return $dated;
+    }
+
+    public static function convertDate($value)
+    {
+        $dated = date('Y-m-d', strtotime(str_replace('/', '-', $value)));
+        return $dated;
+    }
+
 }

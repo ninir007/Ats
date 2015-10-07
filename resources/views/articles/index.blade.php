@@ -6,7 +6,7 @@
     <div class="col-sm-6">
         <div class="ibox float-e-margins" >
             <div class="ibox-title">
-                <span class="label label-warning" id="model-stat">{{ isset($articles) ? count($articles) : 0 }}</span>
+                <span class="label label-warning" id="model-stat">{{ isset($article_modele) ? count($article_modele) : 0 }}</span>
                 <h5> &nbsp; Articles <small>- Liste</small> </h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
@@ -19,7 +19,6 @@
 
                         <tr>
 
-
                             <th style="text-align:center;">Modele</th>
                             <th style="text-align:center;"> Description</th>
                             <th style="text-align:center;"> Reference</th>
@@ -27,10 +26,10 @@
                         </tr>
                         </thead>
                         <tbody id="modele-content">
-                        @if(isset($articles))
-                            @foreach($articles as $art)
+                        @if(isset($article_modele))
+                            @foreach($article_modele as $art)
                                 <tr>
-                                    <td style="text-align:center;">{{ $art->model->name }}</td>
+                                    <td style="text-align:center;"></td>
                                     <td style="text-align:center;">{{ $art->description }}</td>
                                     <td style="text-align:center;">{{ $art->reference }}</td>
                                 </tr>
@@ -39,6 +38,7 @@
                         @endif
                         </tbody>
                     </table>
+
 
                 </div>
             </div>
@@ -50,50 +50,86 @@
 
 
     <div class="col-sm-6">
-        <div class="ibox float-e-margins" >
-            <div class="ibox-title">
-                <span class="label label-warning" id="model-stat"></span>
-                <h5> &nbsp; Articles <small>- Ajout</small> </h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
+        <div class="row"><div class="ibox float-e-margins" >
+                <div class="ibox-title">
+                    <span class="label label-warning" id="model-stat"></span>
+                    <h5> &nbsp; Articles <small>- Ajout</small> </h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                    <div class="ibox-content" id="content_add_article">
+
+                        <form id="formAddArticle" method="post" role="form"  >
+
+                            <div class="form-group">
+                                <label>Reference : </label> <small>3 min.</small>
+                                <input class="form-control" type="text" id="reference" name="reference" pattern=".{3,}" autofocus required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Description :</label>
+                                <input class="form-control" type="text" id="description" name="description" />
+                            </div>
+
+                            <div class="form-group pull-right">
+                                <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-plus-circle"></i> Ajouter</button>
+                            </div>
+                            <div id="wait_addarticle"></div>
+
+                        </form>
+
+                    </div>
                 </div>
-                <div class="ibox-content" id="content_add_article">
+            </div></div>
+        <div class="row"><div class="ibox float-e-margins" >
+                <div class="ibox-title">
+                    <span class="label label-warning" ></span>
+                    <h5> &nbsp; Articles/Modéles <small>- Ajout</small> </h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                    <div class="ibox-content" id="content_add_modarticle">
 
-                    <form id="formAddArticle" method="post" role="form"  >
+                        <form id="formAddModArt" method="post" role="form"  >
 
-                        <div class="form-group">
-                            <label>Reference : </label> <small>3 min.</small>
-                            <input class="form-control" type="text" id="reference" name="reference" pattern=".{3,}" autofocus required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Description :</label>
-                            <input class="form-control" type="text" id="description" name="description" />
-                        </div>
+                            <div class="form-group">
+                                <label>Article :</label>
+                                <select name="article_id" id="article_id" class="form-control" required>
+                                    <option value="" selected disabled="">--</option>
+                                    @if(isset($article_modele))
+                                        @foreach($article_modele as $mod)
+                                            <option value="{{ $mod->id }}"> {{ $mod->reference }} -- {{$mod->description}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
 
-                        <div class="form-group">
-                            <label>Modéle :</label>
-                            <select name="model_id" id="model_id" class="form-control" required>
-                                <option value="" selected disabled="">--</option>
-                                @if(isset($modeles))
-                                    @foreach($modeles as $mod)
-                                        <option value="{{ $mod->id }}"> {{ $mod->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                        <div class="form-group pull-right">
-                            <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-plus-circle"></i> Ajouter</button>
-                        </div>
-                        <div id="wait_addarticle"></div>
+                            <div class="form-group">
+                                <label>Modéle :</label>
+                                <select name="model_id" id="model_id" class="form-control" required>
+                                    <option value="" selected disabled="">--</option>
+                                    @if(isset($modeles))
+                                        @foreach($modeles as $mod)
+                                            <option value="{{ $mod->id }}"> {{ $mod->name }} ( {{ $mod->category->name }} - {{ $mod->brand->name }} )</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="form-group pull-right">
+                                <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-plus-circle"></i> Ajouter</button>
+                            </div>
+                            <div id="wait_addarticles"></div>
 
 
-                    </form>
+                        </form>
 
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div></div></div>
+
     </div>
 </div>
 @stop
@@ -109,8 +145,65 @@
                 handleSubmitFormAddArticle();
                 return false;
             });
+            $('#formAddModArt').submit(function(){
+                handleSubmitFormAddModArt();
+                return false;
+            });
 
         });
+        function handleSubmitFormAddModArt()
+        {
+            $.ajax({
+                'url' : './articles',
+                'data' : '_action=addModArt&'+$('#formAddModArt').serialize(),
+                'dataType' : 'json',
+                'type' : 'POST',
+                'beforeSend' : function()
+                {
+                    $('#wait_addarticles').html('<p><small class="alert alert-info"><i class="fa fa-spinner fa-pulse"></i> Patienter...</small></p>');
+                },
+                'complete' : function(xhr) {
+                    setTimeout(function(){
+                        $('#wait_addarticles').html('');
+                    },2000);
+
+                    if(xhr.status == '200')
+                    {
+                        var response = JSON.parse( xhr.responseText );
+                        if(response.status != 'undefined' && response.status == 'success')
+                        {
+                            $.gritter.add({
+                                title: 'Succes !',
+                                text: 'Votre ajout a été effectué !'
+                            });
+                        }
+                        window.location.reload();
+                        return false;
+
+                    }
+                    else if(xhr.status == '500')
+                    {
+                        $.gritter.add({
+                            title: 'Attention, une erreur est survenue !',
+                            text: "Enregistrement déjà existant ! !"
+                        });
+                    }
+                    else {
+                        $.gritter.add({
+                            title: 'Attention, une erreur est survenue !',
+                            text: "L'ajout article n'est pas sauvé !"
+                        });
+                    }
+                    return false;
+                }
+            });
+            return false;
+        }
+
+
+
+
+
 
         function handleSubmitFormAddArticle()
         {

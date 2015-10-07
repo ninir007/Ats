@@ -380,7 +380,8 @@
 
 
                         // set the href button for new file creation
-                        $('#new-file').attr('href', "/new-file/"+detailclient.id);
+                       // $('#new-file').attr('href', "/new-file/"+detailclient.id);
+                        $('#new-file').attr('href', "/create/file/"+detailclient.id);
 
 
 

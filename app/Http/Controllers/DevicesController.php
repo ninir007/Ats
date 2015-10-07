@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Modeles;
 use App\Device;
 use Illuminate\Http\Request;
@@ -29,8 +30,18 @@ class DevicesController extends Controller
 
         if( $action == 'addDevice' )
         {
-            Device::create( $request->all() );
-            return response(['status' => 'success']);
+            $this->validate($request, [
+                'serial_number' => 'unique:devices',
+            ]);
+            $date = Device::convertDate($request->input('purchased_at'));
+            $id = DB::table('devices')->insertGetId(
+                ['serial_number' => $request->input('serial_number'),
+                 'description'   => $request->input('description'),
+                 'purchased_at'  => $date,
+                 'model_id'      => $request->input('model_id')
+                ]);
+            //Device::create( $request->all() );
+            return response(['status' => 'success', 'new_added_id' => $id]);
         }
         else
         {

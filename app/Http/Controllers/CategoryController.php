@@ -36,12 +36,27 @@ class CategoryController extends Controller
 
 
         if ($action == 'addCategory') {
+
+            $this->validate($request, [
+                'name' => 'unique:categories',
+            ]);
+
             Category::create($request->all());
             return response(['status' => 'success']);
         }
-        if ($action == 'addBrand') {
+        else if ($action == 'addBrand') {
+
+            $this->validate($request, [
+                'name' => 'unique:brands',
+            ]);
+
             Brand::create($request->all());
             return response(['status' => 'success']);
+        }
+        else
+        {
+            return response(['status' => 'error']);
+
         }
     }
 

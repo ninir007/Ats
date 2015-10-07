@@ -49,4 +49,8 @@ Route::post('/status/codes', 'CodeStatusController@handleAction');
 
 //Files...
 Route::get('/files', 'FilesController@index');
-Route::get('/new-file/{id}', 'FilesController@create')->where('id', '[0-9]*');
+Route::get('/new-file/{id}', 'FilesController@create')->where('id', '[0-9]*'); //???????????
+
+//File new view ???????
+Route::get('/create/file/{id}', 'FilesController@createFile')->where('id', '[0-9]*');
+Route::post('/create/file/device', 'FilesController@handleAction');
