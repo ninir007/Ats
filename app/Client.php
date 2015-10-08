@@ -16,7 +16,10 @@ class Client extends Model
         'office',
         'fax',
         'tva'];
-
+    public function files()
+    {
+        return $this->hasMany('App\Files', 'client_id');
+    }
 
     public function setFirstnameAttribute($value)
     {

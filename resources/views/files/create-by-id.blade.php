@@ -181,7 +181,8 @@
                                                 <div class="form-group">
 
                                                     <div class="input-group date">
-                                                        <button type="submit" id="validation-device-btn" class="btn btn-w-m btn-primary tourne"><i class="fa fa-refresh"></i> Valider</button>
+                                                      <!--  <button type="submit" id="validation-device-btn" class="btn btn-w-m btn-primary tourne"><i class="fa fa-refresh"></i> Valider</button>
+                                                      -->
                                                         <button type="submit" id="submitCreationBtn" class="btn btn-w-m btn-primary hidden tourne"><i class="fa fa-refresh" style=""></i> Créer</button>
                                                     </div>
                                                 </div>
@@ -237,7 +238,7 @@
                                 <div class="form-group">
                                     <label>Technicien attribué </label>
 
-                                    <select name="user_id" id="select_user">
+                                    <select name="user_id" id="select_user" required>
                                         <option value="" selected disabled="">Tech</option>
                                         @if(isset($users))
                                             @foreach($users as $user)
@@ -250,7 +251,7 @@
 
                         </div>
                         <div class="row">
-                            <input type="hidden" value="" id="type" name="type">
+                            <input type="hidden" value="Repair" id="type" name="represent_type">
                             <input type="hidden" value="{{$client->id}}" name="client_id">
                             <button type="submit" id="create_file" class="btn btn-w-m btn-primary pull-right"> Créer</button>
                         </div>
@@ -280,28 +281,77 @@
             handleSelectDevice();
 
 
-            $('#validation-device-btn').click(function(e){
-                e.preventDefault();
-                handleSubmitFormDeviceValidation()
-            });
+
             $('#submitCreationBtn').click(function(e) {
                 e.preventDefault();
 
                 handleSubmitFormAddDevice()
             });
+            $('#formcreatefile').submit(function(){
+                handleSubmitFormAddFile();
+                return false;
+            });
 
 
         });
 
+        function handleSubmitFormAddFile()
+        {
+            var inputs = $('#formDevice').serialize();
+            $.ajax({
+                'url' : './device',
+                'data' : '_action=addFile&'+$('#formcreatefile').serialize()+'&'+inputs,
+                'dataType' : 'json',
+                'type' : 'POST',
+                'beforeSend' : function()
+                {
+                    //simpleLoad(true);
+                },
+                'complete' : function(xhr) {
+                    if(xhr.status == '200')
+                    {
+                        var response = JSON.parse( xhr.responseText );
+                        if(response.status == 'success')
+                        {
+                            $.gritter.add({
+                                title: 'Succes !',
+                                text: 'Validation effectuée !'
+                            });
+                            setTimeout(function(){
+                                window.location.href = "/files";
+                            },1700);
+
+                        }
+                        else
+                        {
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: "Erreur DB : validation échouée !"
+                            });
+                        }
+
+                        return false;
+
+                    }
+                    else {
+                        $.gritter.add({
+                            title: 'Attention, une erreur est survenue !',
+                            text: "Validation échouée !"
+                        });
+                    }
+                    return false;
+                }
+            });
+            return false;
+        }
+
         function disableInputs()
         {
             $('.lockable').prop('disabled', true);
-            $('#validation-device-btn').removeClass('hidden');
             $('#submitCreationBtn').addClass('hidden');
         }
         function enableInputs()
         {
-            $('#validation-device-btn').addClass('hidden');
             $('#submitCreationBtn').removeClass('hidden');
             $('.lockable').prop('disabled', false);
             $('.lockable').val('');
@@ -309,7 +359,7 @@
 
         function handleSubmitFormAddDevice()
         {
-            alert('koi add ?');
+           // alert('koi add ?');
             var newserial = $('#device_select option:selected').text();
             $.ajax({
                 'url' : './device',
@@ -332,8 +382,11 @@
                                 text: 'Appareil ajouté !'
                             });
                             disableInputs();
-                            $('#type').val('REPAIR');
-                            $('#validation-device-btn').addClass('hidden');
+                            //Complete addfile Form
+                            var id = response.new_added_id;
+                            alert(id);
+                           $("#device_select option:selected").attr('value', response.new_added_id);
+                            $('#type').val('Repair');
                         }
                         else
                         {
@@ -342,7 +395,6 @@
                                 text: "Erreur DB : ajout échoué !"
                             });
                         }
-                        //window.location.reload();
                         return false;
 
                     }
@@ -357,54 +409,7 @@
             });
             return false;
         }
-        function handleSubmitFormDeviceValidation()
-        {
-            alert('koi valid  ?');
-            var inputs = $('#formDevice').serialize();
-            console.log(inputs);
-            $.ajax({
-                'url' : './devices',
-                'data' : '_action=validateDevice&'+$('#formDevice').serialize(),
-                'dataType' : 'json',
-                'type' : 'POST',
-                'beforeSend' : function()
-                {
-                    simpleLoad(true);
-                },
-                'complete' : function(xhr) {
-                    simpleLoad(false);
-                    if(xhr.status == '200')
-                    {
-                        var response = JSON.parse( xhr.responseText );
-                        if(response.status == 'success')
-                        {
-                            $.gritter.add({
-                                title: 'Succes !',
-                                text: 'Validation effectuée !'
-                            });
-                        }
-                        else
-                        {
-                            $.gritter.add({
-                                title: 'Attention, une erreur est survenue !',
-                                text: "Erreur DB : validation échouée !"
-                            });
-                        }
-                        //window.location.reload();
-                        return false;
 
-                    }
-                    else {
-                        $.gritter.add({
-                            title: 'Attention, une erreur est survenue !',
-                            text: "Validation échouée !"
-                        });
-                    }
-                    return false;
-                }
-            });
-            return false;
-        }
 
         function simpleLoad( state) {
             var btn = $('.tourne');
@@ -442,6 +447,7 @@
 
                     str= $( this ).data('cat');
                     $( "#categorie" ).val( str );
+
                 });
 
             });

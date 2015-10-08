@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRepairFilesTable extends Migration
+class CreateRepairsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,9 @@ class CreateRepairFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('repair_files', function (Blueprint $table) {
+        Schema::create('repairs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('device_id')->unsigned();
-            $table->integer('file_id')->unsigned();
             $table->boolean('accessory');
             $table->timestamps();
 
@@ -24,10 +23,7 @@ class CreateRepairFilesTable extends Migration
                 ->references('id')
                 ->on('devices')
                 ->onUpdate('cascade');
-            $table->foreign('file_id')
-                ->references('id')
-                ->on('files')
-                ->onUpdate('cascade');
+
         });
     }
 
@@ -38,6 +34,6 @@ class CreateRepairFilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('repair_files');
+        Schema::drop('repairs');
     }
 }
