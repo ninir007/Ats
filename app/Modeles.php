@@ -29,4 +29,12 @@ class Modeles extends Model
     {
         return $this->belongsToMany('App\Article', 'modele_article','model_id' , 'article_id' );
     }
+    public function repairs()
+    {
+        return $this->hasManyThrough('App\Repair', 'App\Device', 'model_id', 'device_id');
+    }
+    public function devices()
+    {
+        return $this->hasMany('App\Device', 'model_id');
+    }
 }

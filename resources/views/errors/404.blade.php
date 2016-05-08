@@ -21,7 +21,7 @@
     <h3 class="font-bold">Page non trouvée</h3>
 
     <div class="error-desc">
-        Désolé, mais la page que vous cherchez n'a pas été trouvé.<br>
+        L'URL et/ou l'enregistrement que vous cherchez n'a pas été trouvé.<br>
         Vous pouvez retourner sur la page d'acceuil: <br><a href="dashboard" class="btn btn-primary m-t">Dashboard</a>
     </div>
 </div>

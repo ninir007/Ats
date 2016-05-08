@@ -29,4 +29,13 @@ class Device extends Model
         return $dated;
     }
 
+    public function modele()
+    {
+        return $this->belongsTo('App\Modeles', 'model_id');
+    }
+    public function repairs()
+    {
+        return $this->hasMany('App\Repair', 'device_id');
+    }
+
 }

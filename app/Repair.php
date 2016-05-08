@@ -7,18 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Repair extends Model
 {
     protected $table ='repairs';
-    protected $morphClass ='MorphRepair';
 
     protected $fillable = [
+        'file_id',
         'device_id',
         'accessory'
     ];
-
-
-    public function files()
+    public function device()
     {
-        return $this->morphMany('App\File', 'represent');
+        return $this->belongsTo('App\Device', 'device_id');
     }
+
+    public function file()
+    {
+        return $this->belongsTo('App\File', 'file_id', 'id');
+    }
+
+
+
 
 
 

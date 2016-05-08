@@ -7,14 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class File extends Model
 {
     protected $table ='files';
-    protected $morphClass ='MorphFile';
 
 
     protected $fillable = [
         'user_id',
         'client_id',
-        'represent_type',
-        'represent_id',
         'intern_report',
         'client_report',
         'labor_amount',
@@ -31,27 +28,28 @@ class File extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function represent()
+
+
+
+    public static function dumpFile()
     {
-        return $this->morphTo();
+        $result['reparation'] = '';
+        $result['commande'] = '';
+        $response = File::with('client', 'technicien')->get();
+
+
+        foreach($response as $file)
+        {
+
+            $result['reparation'][]= [
+                'id' => $file->id,
+                'intern_report' => $file->intern_report,
+                'client' => $file->intern_report,
+            ];
+
+        }
+         return $result;
     }
-}
-
-class Repair extends Model
-{
-    protected $table ='repairs';
-
-    protected $fillable = [
-        'device_id',
-        'accessory'
-    ];
-
-
-    public function files()
-    {
-        return $this->morphMany('App\File', 'represent');
-    }
-
 
 
 

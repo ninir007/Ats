@@ -251,7 +251,7 @@
 
                         </div>
                         <div class="row">
-                            <input type="hidden" value="Repair" id="type" name="represent_type">
+                            <input type="hidden" value="REPAIR" id="type" name="represent_type">
                             <input type="hidden" value="{{$client->id}}" name="client_id">
                             <button type="submit" id="create_file" class="btn btn-w-m btn-primary pull-right"> Créer</button>
                         </div>
@@ -386,7 +386,7 @@
                             var id = response.new_added_id;
                             alert(id);
                            $("#device_select option:selected").attr('value', response.new_added_id);
-                            $('#type').val('Repair');
+                            $('#type').val('REPAIR');
                         }
                         else
                         {

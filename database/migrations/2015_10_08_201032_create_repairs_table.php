@@ -13,7 +13,7 @@ class CreateRepairsTable extends Migration
     public function up()
     {
         Schema::create('repairs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('file_id')->unsigned();
             $table->integer('device_id')->unsigned();
             $table->boolean('accessory');
             $table->timestamps();
@@ -24,6 +24,12 @@ class CreateRepairsTable extends Migration
                 ->on('devices')
                 ->onUpdate('cascade');
 
+            $table->primary('file_id');
+
+            $table->foreign('file_id')
+                ->references('id')
+                ->on('files')
+                ->onUpdate('cascade');
         });
     }
 

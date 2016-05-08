@@ -13,36 +13,10 @@
                             <a href="/new-file" class="btn btn-primary btn-xs">Nouvelle fiche</a>
                         </div>
                     </div>
-                    <div class="row">
 
-                        @foreach ($files as $file)
-                            <p>
-                            {{$file}}
-                            </p>
-                        @endforeach
-
-                    </div>
-                    <div class="row">
-
-                        @foreach ($list as $file)
-                            <p>
-                            {{$file->represent}}
-                            </p>
-                        @endforeach
-
-                    </div>
 
                     <div class="ibox-content">
-                        <div class="row m-b-sm m-t-sm">
-                            <div class="col-md-1">
-                                <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Rafraicir</button>
-                            </div>
-                            <div class="col-md-11">
-                                <div class="input-group">
-                                    <input type="text" placeholder="Search" class="input-sm form-control">
-                                    <span class="input-group-btn"> <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
-                            </div>
-                        </div>
+
 
                         <div class="project-list">
 
@@ -56,12 +30,39 @@
                                     <th style="text-align:center;"> Titre</th>
                                     <th style="text-align:center;"> Achèvement</th>
                                     <th style="text-align:center;"> Client</th>
-                                    <th style="text-align:center;"> Action</th>
+                                    <th style="text-align:right;"> Action</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach ($files as $file)
+                                    <tr>
+                                        <td class="project-status">
+                                            <span class="label label-primary"> {{$file->id}} </span>
+                                        </td>
+                                    @if( isset($file->id) )
 
+                                            <td class="project-title">
+                                                <a href="/file/repair/{{$file->id}}">Réparation de : @foreach($repairs as $repair) @if($repair->file_id == $file->id) {{$repair->device->modele->name}} - ({{$repair->device->modele->category->name}} - {{$repair->device->modele->brand->name}}) @endif @endforeach</a>
+                                                <br>
+                                                <small>Créé {{ $file->created_at }}</small>
+                                            </td>
+                                            <td class="project-completion">
+                                                <small>Completion with: 48%</small>
+                                                <div class="progress progress-mini">
+                                                    <div style="width: 48%;" class="progress-bar"></div>
+                                                </div>
+                                            </td>
+                                            <td class="project-people"  style="text-align:center;">
+                                                <p>{{$file->client->LastName}} {{$file->client->FirstName}}</p>
+                                            </td>
+                                            <td class="project-actions" >
+                                                <a href="/file/repair/{{$file->id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
+                                            </td>
+                                        </tr>
+                                    @endif
+
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

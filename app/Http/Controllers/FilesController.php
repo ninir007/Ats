@@ -21,12 +21,28 @@ class FilesController extends Controller
     }
 
 
+    public function editRepair($id)
+    {
+        $files = File::with('client', 'technicien')->get()->find($id);
+        if( empty($files))
+        {
+            return redirect('/404');
+        }
+        //$files = File::with('client', 'technicien')->get();
+        $repairs = Repair::where('file_id', $files['id'])->with('device')->first();
+        $repairs["modele"] =  Modeles::where('id', $repairs['device']['model_id'])->with('category', 'brand')->get();
+        $leftmenu['files'] = 'active';
+        return view('/files/edit-repair', [ 'leftmenu' => $leftmenu, 'files' => $files, 'repairs' => $repairs ]);
+    }
+
+
     public function index()
     {
         $files = File::with('client', 'technicien')->get();
-        $list = File::all();
+        $repairs = Repair::with('device')->get();
+
         $leftmenu['files'] = 'active';
-        return view('/files/index', [ 'leftmenu' => $leftmenu, 'files' => $files, 'list' => $list ]);
+        return view('/files/index', [ 'leftmenu' => $leftmenu, 'files' => $files, 'repairs' => $repairs ]);
     }
 
     public function create($id)
@@ -35,7 +51,6 @@ class FilesController extends Controller
         $client = Client::where('id', $id)->get();
         $modele = Modeles::with('category', 'brand')->get();
         $devices = Device::all();
-
 
         $leftmenu['files'] = 'active';
         return view('/files/create', [
@@ -86,11 +101,10 @@ class FilesController extends Controller
         else if( $action == 'addFile')
         {
 
+            $id = File::create( $request->all() )->id;
 
-
-            $id = Repair::create(['device_id' => $request->input('device_id') , 'accessory' => $request->input('accessory')])->id;
+            Repair::create(['file_id' => $id, 'device_id' => $request->input('device_id') , 'accessory' => $request->input('accessory')]);
             $request['represent_id'] = $id;
-            File::create( $request->all() );
 
             $leftmenu['files'] = 'active';
 

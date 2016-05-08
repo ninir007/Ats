@@ -16,8 +16,8 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('client_id')->unsigned();
-            $table->integer('represent_id')->unsigned();;
-            $table->enum('represent_type', ['Repair', 'Command']);
+//            $table->integer('represent_id')->unsigned();;
+//            $table->enum('represent_type', ['REPAIR', 'COMMAND']);
 
             $table->mediumText('intern_report');
             $table->mediumText('client_report');

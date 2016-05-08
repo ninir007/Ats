@@ -196,8 +196,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Html'      => Illuminate\Html\HtmlFacade::class,
 
-        'MorphRepair'      => 'App\Repair',
-        'MorphFile'      => 'App\File',
+
 
 
     ],
