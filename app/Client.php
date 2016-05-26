@@ -18,7 +18,7 @@ class Client extends Model
         'tva'];
     public function files()
     {
-        return $this->hasMany('App\Files', 'client_id');
+        return $this->hasMany('App\File', 'client_id');
     }
 
     public function setFirstnameAttribute($value)

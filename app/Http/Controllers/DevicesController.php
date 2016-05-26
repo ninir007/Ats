@@ -18,10 +18,11 @@ class DevicesController extends Controller
 
     public function index()
     {
-        $modele = Modeles::all();
+        $devices = Device::with('modele.category','modele.brand')->get();
+
 
         $leftmenu['devices'] = 'active';
-        return view('/devices/index', ['leftmenu' => $leftmenu, 'modeles' => $modele]);
+        return view('/devices/index', ['leftmenu' => $leftmenu, 'devices' => $devices]);
 
     }
     public function handleAction(Request $request)

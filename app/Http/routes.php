@@ -17,6 +17,10 @@ Route::get('/dashboard', 'DashboardController@showDashboard');
 Route::get('/clients', 'ClientsController@index');
 Route::post('/clients', 'ClientsController@handleAction');
 
+//Providers...
+Route::get('/suppliers', 'SuppliersController@index');
+Route::post('/suppliers', 'SuppliersController@handleAction');
+
 //Category + Brand
 Route::get('/category-model', 'CategoryController@index');
 Route::post('/category-model', 'CategoryController@handleAction');
@@ -50,10 +54,15 @@ Route::post('/status/codes', 'CodeStatusController@handleAction');
 //Files...
 Route::get('/files', 'FilesController@index'); // OK
 Route::get('/file/repair/{id}', 'FilesController@editRepair')->where('id', '[0-9]*');; // OK
+Route::get('/file/order/{id}', 'FilesController@editOrder')->where('id', '[0-9]*');; // OK
 Route::get('/new-file/{id}', 'FilesController@create')->where('id', '[0-9]*'); //!!!!!!!!!!!!!
 
 //File new view ???????
 Route::get('/create/file/{id}', 'FilesController@createFile')->where('id', '[0-9]*');
-Route::post('/create/file/device', 'FilesController@handleAction');
+Route::post('/create/file', 'FilesController@handleAction');
+
+
+//Autocomplete
+Route::post('/autocomplete', 'AutocompleteController@index');
 
 

@@ -12,11 +12,13 @@ class File extends Model
     protected $fillable = [
         'user_id',
         'client_id',
+        'type',
         'intern_report',
         'client_report',
         'labor_amount',
         'part_amount',
-        'sum_amount' ];
+        'sum_amount'
+    ];
 
     public function client()
     {
@@ -26,6 +28,15 @@ class File extends Model
     public function technicien()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function repairs()
+    {
+        return $this->hasMany('App\Repairs', 'file_id');
+    }
+    public function orders()
+    {
+        return $this->hasMany('App\Orders', 'file_id');
     }
 
 

@@ -1,7 +1,6 @@
 @extends('template')
 
 @section('content')
-
     <div class="row">
         <div class="col-sm-8">
             <div class="ibox">
@@ -154,7 +153,7 @@
 
                                                 <hr>
                                                 <strong>Historique d'activités</strong>
-                                                <div id="vertical-timeline" class="vertical-container dark-timeline">
+                                                <div id="vertical-timeline" class="vertical-container dark-timeline files-history">
                                                     <div class="vertical-timeline-block">
                                                         <div class="vertical-timeline-icon gray-bg">
                                                             <i class="fa fa-coffee"></i>
@@ -219,8 +218,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
 
 
                     </div>
@@ -372,21 +369,16 @@
                 'complete' : function(xhr) {
                     var response = JSON.parse( xhr.responseText );
 
-
                     if(response.status == 'success')
                     {
-                        detailclient = response.client[0];
-
-
+                        console.log(response);
+                        detailclient = response.client;
 
                         // set the href button for new file creation
                        // $('#new-file').attr('href', "/new-file/"+detailclient.id);
                         $('#new-file').attr('href', "/create/file/"+detailclient.id);
 
-
-
                         //set the new details field
-
                         $('#details-name').text( detailclient.FirstName+ " " +detailclient.LastName);
                         $('#details-pic').attr('src', 'img/img_generic_person.jpg');
                         $('#details-mail').attr('href', "mailto:"+detailclient.Email+"?subject=ATS Repair Center&amp;body=Bonjour");
@@ -405,12 +397,28 @@
                                 $('#details-tva').text( detailclient.Tva);
                                 $('.details-tva').show();
                             }
-                            $('#tab-pane').show();
 
+                        //set the file history part
+                        var files = detailclient.files;
+                        var template = "";
+                        $.each(files, function(key, data){
 
+                            var temp1 =  "<div class='vertical-timeline-block'><div class='vertical-timeline-icon navy-bg'>";
+                            var icone = (data.type == 'REPAIR') ? "<i class='fa fa-wrench'></i>" : "<i class='fa fa-file-text'></i>";
+                            var temp2= "</div><div class='vertical-timeline-content project-title'><p>";
+                            var cont = "<a href='/file/repair/"+data.id+"'>Fiche #" + data.id + "</a><br>" + data.intern_report;
+                            var temp3= "</p><span class='vertical-date small text-muted'>";
+                            var dtime = data.created_at;
+                            var temp4 = "</span></div></div>";
+                            template += temp1+ icone+ temp2+ cont+ temp3+ dtime+ temp4;
+                        });
+
+                        $('.files-history').html(template);
+
+            //reveal the side panel
+            $('#tab-pane').show();
 
                         // set the form edit fields
-
                         $('#editfirstname').val(detailclient.FirstName);
                         $('#id-edit').val(detailclient.id);
                         $('#editlastname').val( detailclient.LastName);

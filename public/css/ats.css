@@ -1,0 +1,17 @@
+.ui-autocomplete {
+    z-index: 100000;
+    background: white;
+    color: #1ab394;
+}
+
+#autoclient-result-list {
+    position: relative;
+}
+
+#autoclient-result-list a {
+    color: #1ab394;
+}
+
+#autoclient-result-list> ul {
+    position: absolute;
+}

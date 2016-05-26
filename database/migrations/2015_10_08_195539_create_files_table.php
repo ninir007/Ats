@@ -16,14 +16,13 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('client_id')->unsigned();
-//            $table->integer('represent_id')->unsigned();;
-//            $table->enum('represent_type', ['REPAIR', 'COMMAND']);
+            $table->enum('type', ['REPAIR', 'ORDER']);
 
             $table->mediumText('intern_report');
             $table->mediumText('client_report');
-            $table->integer('labor_amount');
-            $table->integer('part_amount');
-            $table->integer('sum_amount');
+            $table->float('labor_amount');
+            $table->float('part_amount');
+            $table->float('sum_amount');
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -45,5 +44,6 @@ class CreateFilesTable extends Migration
     public function down()
     {
         Schema::drop('files');
+
     }
 }

@@ -23,6 +23,15 @@
         <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
         <link href="/css/animate.css" rel="stylesheet">
         <link href="/css/style.css" rel="stylesheet">
+
+        <!-- Data Tables -->
+        <link href="/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+        <link href="/css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet">
+        <link href="/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
+
+        <!-- ATS Custom -->
+        <link href="/css/ats.css" rel="stylesheet">
+
     </head>
     <body class=" pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
             <div class="pace-progress-inner"></div>
@@ -58,6 +67,9 @@
                     </li>
                     <li class=" {{ isset($leftmenu['client']) ? $leftmenu['client'] : '' }}">
                         <a href="/clients"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
+                    </li>
+                    <li class=" {{ isset($leftmenu['supplier']) ? $leftmenu['supplier'] : '' }}">
+                        <a href="/suppliers"><i class="fa fa-user"></i> <span class="nav-label">Fournisseurs</span></a>
                     </li>
                     <li class=" {{ isset($leftmenu['devices']) ? $leftmenu['devices'] : '' }}">
                         <a href="/devices"><i class="fa fa-television"></i> <span class="nav-label">Appareils</span></a>
@@ -708,6 +720,7 @@
     @yield('script.articles')
     @yield('script.notes')
     @yield('script.files')
+    @yield('javascript')
 
     </body>
 </html>

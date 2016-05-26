@@ -21,15 +21,15 @@ class CodeStatus extends Model
     {
         return mb_strtoupper($value);
     }
-     public function getStepAttribute($value)
+    public function getStepAttribute($value)
     {
         return mb_strtoupper($value);
     }
 
-     public function getDescriptionAttribute($value)
-     {
-         return mb_strtoupper($value);
-     }
+    public function getDescriptionAttribute($value)
+    {
+        return mb_strtoupper($value);
+    }
 
 
 

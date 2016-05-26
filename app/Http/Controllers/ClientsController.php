@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Client;
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -21,6 +22,7 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::all();
+
         $leftmenu['client'] = 'active';
         return view('/clients/clients', ['clients' => $clients, 'leftmenu' => $leftmenu]);
 
@@ -39,13 +41,13 @@ class ClientsController extends Controller
             Client::create( $request->all() );
 
             // FLash messaging :
-                flash()->success('Opération réussie!', 'Client créé avec succés.');
+                flash()->success('Opération réussie!', 'Client créé avec succès.');
 
         }
         else if( $_POST['_action'] == 'getClientByID')
         {
             $id = $_POST['_uid'];
-            $client = Client::where('id', $id)->get();
+            $client = Client::where('id', $id)->with('files')->first();
             return response(['status' => 'success', 'client' => $client], 200);
         }
         else if( $_POST['_action'] == 'editClient')
@@ -62,7 +64,7 @@ class ClientsController extends Controller
             $client->fax = $_POST['fax'];
 
             $client->save();
-            flash()->success('Opération réussie!', 'Client modifé avec succés.');
+            flash()->success('Opération réussie!', 'Client modifé avec succès.');
         }
         else
         {

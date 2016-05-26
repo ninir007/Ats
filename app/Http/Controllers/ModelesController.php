@@ -51,8 +51,10 @@ class ModelesController extends Controller
                 'name' => 'unique:models',
             ]);
 
-            Modeles::create( $request->all() );
-            return response(['status' => 'success']);
+            $modele = Modeles::create( $request->all() );
+            $response = isset($modele->id) ? ['status' => 'success', 'modele_id' => $modele->id] : ['status' => 'success'] ;
+
+            return response($response);
         }
         else
         {

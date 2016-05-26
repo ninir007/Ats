@@ -16,7 +16,6 @@
 
                     <form id="formClient" role="form" autocomplete="off">
                         <div class="row">
-
                             <div class="col-lg-8">
                                 <div class="form-group">
                                     <div class="input-group">
@@ -88,11 +87,9 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <input type="hidden" class="form-control input-sm" name="client_id" value="{{$client->id}}" disabled>
-
                                 </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -100,8 +97,8 @@
         <div class="col-lg-7">
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-repair"> Réparation</a></li>
-                    <li class=""><a data-toggle="tab" href="#tab-command"> Commande</a></li>
+                    <li class="active"><a data-toggle="tab" href="#tab-repair"> Réparation Appareil</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-command"> Commande Client</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-repair" class="tab-pane active">
@@ -123,7 +120,19 @@
                                                 </div>
                                             </div>
                                         <div class="col-lg-4">
-                                            <div class="form-group"></div>
+                                            <div class="form-group">
+                                                <label>Modéle</label>
+                                                <button type="button" data-toggle="modal" data-target="#modalNewModel" class="btn btn-outline btn-xs btn-primary" style="margin-left: 5px;margin-bottom: 5px;">+</button>
+
+                                                <select name="model_id" id="model_select" class="form-control lockable" required>
+                                                    <option value="" selected disabled="">Modéles</option>
+                                                    @if(isset($modeles))
+                                                        @foreach($modeles as $mod)
+                                                            <option value="{{ $mod->id }}" data-cat="{{$mod->category->name}}" data-brand="{{$mod->brand->name}}"> {{ $mod->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
                                         </div>
 
                                             <div class="col-lg-8">
@@ -154,6 +163,7 @@
                                             </div>
 
                                             <div class="col-lg-4">
+
                                                 <div class="form-group">
                                                     <label>Categorie</label>
                                                     <div class="input-group date">
@@ -168,16 +178,7 @@
                                                         <input type="text" id="marque" class="form-control" value="" disabled>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <select name="model_id" id="model_select" class="form-control lockable" required>
-                                                        <option value="" selected disabled="">Modéles</option>
-                                                        @if(isset($modeles))
-                                                            @foreach($modeles as $mod)
-                                                                <option value="{{ $mod->id }}" data-cat="{{$mod->category->name}}" data-brand="{{$mod->brand->name}}"> {{ $mod->name }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
+
                                                 <div class="form-group">
 
                                                     <div class="input-group date">
@@ -197,9 +198,84 @@
                     </div>
                     <div id="tab-command" class="tab-pane">
                         <div class="panel-body">
-                            <strong>formulaire de commande : </strong>
+                            <span id="orderError" class="label label-danger" style="display: none;">Erreur encodage</span>
+                            <div id="order-setter" class="row">
 
-                            <p>inputs /</p><p>inputs /</p><p>inputs /</p><p>inputs /</p><p>inputs /</p><p>inputs /</p>
+                                <form id="formOrder" method="post" autocomplete="off" role="form">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label" for="supplier">Fournisseur</label>
+                                            <select class="form-control" name="supplier" data-placeholder="Fournisseur" id="supplier-sel" required >
+                                                @if(isset($suppliers))
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($suppliers as $supp)
+                                                        <option value="{{ $supp->id }}"> {{ $supp->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label" for="article">Article</label>
+                                            <select class="form-control" name="article" data-placeholder="Article" id="article-sel" required >
+                                                @if(isset($articles))
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($articles as $article)
+                                                        <option value="{{ $article->id }}"> {{ $article->reference }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label" for="price">Prix</label>
+                                            <input type="number" min="0" id="price" name="price" value="" placeholder="Prix" class="form-control order-clear">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label" for="quantity">Quantité</label>
+                                            <input type="number" min="1" id="quantity" name="quantity" value="" placeholder="Quantité" class="form-control order-clear">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label" for="quantity">Ajouter</label>
+                                            <a id="order-list-add" href="" class="form-control btn btn-white btn-bitbucket">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="tabs-container">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Fournisseur</th>
+                                            <th>Article</th>
+                                            <th>Prix</th>
+                                            <th>Qte</th>
+                                            <th><i class="fa fa-trash-o"></i></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="order-list-body">
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button id="btn-order-validation" class="btn btn-w-m btn-primary tourne" style="display: none"><i class="fa fa-refresh" ></i> Valider</button>
+                            </div>
 
                         </div>
                     </div>
@@ -251,7 +327,7 @@
 
                         </div>
                         <div class="row">
-                            <input type="hidden" value="REPAIR" id="type" name="represent_type">
+                            <input type="hidden" value="REPAIR" id="type-file" name="type">
                             <input type="hidden" value="{{$client->id}}" name="client_id">
                             <button type="submit" id="create_file" class="btn btn-w-m btn-primary pull-right"> Créer</button>
                         </div>
@@ -265,6 +341,58 @@
     </div>
 
 
+    <div id="modalNewModel" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" role="form" autocomplete="off" id="formAddModel">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Ajouter un nouveau modéle</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="returnmsgmodele"></div>
+                        <div class="form-group">
+                            <label>Nom :</label>
+                            <input id="modalinputaddmodele" type="text" class="form-control" name="name" required autofocus >
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6">
+                                <label>Marque :</label>
+                                <div class="form-group">
+                                    <select name="brand_id" id="brand_model" class="form-control input-sm">
+                                        <option value="0" selected disabled="">--</option>
+                                        @if(isset($brands))
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6">
+                                <label>Categorie :</label>
+                                <div class="form-group">
+                                    <select name="category_id" id="category_model" class="form-control input-sm">
+                                        <option value="0" selected="" disabled="">--</option>
+                                        @if(isset($categories))
+                                            @foreach($categories as $cate)
+                                                <option value="{{ $cate->id }}">{{ $cate->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="submit" id="btnSubmitFormAddModel" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @stop
 
@@ -279,6 +407,9 @@
             handlePurchasedCalendar();
             handleSelectModele();
             handleSelectDevice();
+            handleOrderCart();
+            handleNewModel();
+            deleteOrder();
 
 
 
@@ -287,20 +418,234 @@
 
                 handleSubmitFormAddDevice()
             });
+
             $('#formcreatefile').submit(function(){
                 handleSubmitFormAddFile();
                 return false;
             });
 
+            $('#btn-order-validation' ).click(function(e) {
+                var orderobject = {orders: []};
+                e.preventDefault();
 
+               var orderNodes =  $(".order-node" );
+                if(orderNodes.length > 0) {
+                    $.each(orderNodes, function(key, data) {
+                        var details =  $(data ).children();
+                        var fourn = $(details[0] ).data("supplier");
+                        var arti = $(details[1] ).data("article");
+                        var prix = $(details[2] ).data("price");
+                        var qte = $(details[3] ).data("qte");
+
+                        orderobject.orders.push({ supplier_id: fourn, article_id: arti, price: prix, quantity: qte });
+                    })
+                }
+
+                console.log(orderobject);
+
+                handleSubmitOrder(orderobject)
+
+            });
         });
 
-        function handleSubmitFormAddFile()
+        function handleNewModel()
+        {
+            $('#formAddModel' ).submit(function(e){
+                e.preventDefault();
+
+                var inpt = $.trim($("#modalinputaddmodele").val());
+                var brand = $( "#brand_model" ).val();
+                var brand_text = $( "#brand_model option:selected" ).text();
+                var category = $( "#category_model" ).val();
+                var category_text = $( "#category_model option:selected" ).text();
+
+                $.ajax({
+                    url: '/modele',
+                    dataType: 'json',
+                    data: '_action=addModel&'+$('#formAddModel').serialize(),
+                    type: 'POST',
+                    'beforeSend' : function() {
+
+                        if( inpt.length < 1)
+                        {
+                            $('#returnmsgmodele').html('<div class="alert alert-danger">Erreur ! Specifier un nom !</div>');
+                            setTimeout(function(){
+                                $('#returnmsgmodele').html('');
+                            },2000);
+                            return false;
+                        }
+                        if(brand == null)
+                        {
+                            $('#returnmsgmodele').html('<div class="alert alert-danger">Erreur ! Selectionner une marque !</div>');
+                            setTimeout(function(){
+                                $('#returnmsgmodele').html('');
+                            },2000);
+                            return false;
+                        }
+                        if(category == null)
+                        {
+                            $('#returnmsgmodele').html('<div class="alert alert-danger">Erreur ! Selectionner une categorie !</div>');
+                            setTimeout(function(){
+                                $('#returnmsgmodele').html('');
+                            },2000);
+                            return false;
+                        }
+
+                        $('#returnmsgmodele').html('<div class="alert alert-info">Traitement en cours...</div>');
+                    },
+                    'complete' : function(xhr) {
+                        var response = JSON.parse( xhr.responseText );
+                        console.log(response);
+                        if(response.status != 'success' || typeof response.status == 'undefined')   {
+                            $('#returnmsgmodele').html('<div class="alert alert-danger">Error !'+response.name+'</div>');
+                            setTimeout(function(){
+                                $('#returnmsgmodele').html('');
+                            },3000);
+
+                        }
+                        else {
+                            $('#returnmsgmodele').html('<div class="alert alert-success">Modéle créé avec succés ! </div>');
+                            setTimeout(function(){
+                                $('#returnmsgmodele').html('');
+                            },3000);
+                            //update the VIEW
+                            var new_id = response.modele_id;
+                            $('#model_select' ).val(new_id);
+
+                            $('#modalNewModel').modal('hide');
+
+                            var newrecord = "<option selected value='"+new_id+"' data-brand='"+brand_text+"' data-cat='"+category_text+"'>"+inpt.toUpperCase()+"</option>";
+                            $('#model_select').append(newrecord);
+                            handleSelectModele();
+                            $('#model_select option[value=new_id]').prop('selected', true);
+                            $("#categorie" ).val(category_text);
+                            $("#marque" ).val(brand_text);
+                    console.log('select set');
+//                            $("#brand_name").val('');
+//                            $("#brand_name").focus();
+                        }
+                        return false;
+                    }
+                });
+            });
+        }
+
+        function deleteOrder()
+        {
+            $(document).on("click", ".btn-del-order-node", function(e){
+                $this = $(this);
+                var todelete = $this.parent().parent();
+                todelete.remove();
+
+                var cpt = $("#order-list-body").children().length;
+
+                if(! cpt) {
+                    $("#btn-order-validation").hide();
+                }
+
+            });
+        }
+
+        function handleSubmitOrder(orderobject)
+        {
+            $.ajax({
+                'url' : '/create/file',
+                'data' : '_action=calculateOrder&_params='+JSON.stringify(orderobject),
+                'dataType' : 'json',
+                'type' : 'POST',
+                'beforeSend' : function()
+                {
+
+                },
+                'complete' : function(xhr) {
+                    if(xhr.status == '200')
+                    {
+                        var response = JSON.parse( xhr.responseText );
+                        if(response.status == 'success')
+                        {
+                            $.gritter.add({
+                                title: 'Succès !',
+                                text: 'Validation commande effectuée !'
+                            });
+                            $('#type-file').val('ORDER');
+                            setTimeout(function(){
+                                $("#btn-order-validation").replaceWith("<span class='product-price' style='position: relative; top: 0;'>Total TVAC € <span id='total-order'>"+response.total +"</span></span>");
+
+                            },1000);
+                        }
+                        else
+                        {
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: "Validation échouée !"
+                            });
+                        }
+                        return false;
+                    }
+                    else {
+                        $.gritter.add({
+                            title: 'Attention, une erreur est survenue !',
+                            text: "Erreur DB : validation échouée !"
+                        });
+                    }
+                    return false;
+                }
+            });
+        }
+
+        function handleOrderCart()
+        {
+            $("#order-list-add" ).on("click", function(e) {
+                e.preventDefault();
+                var inputs = $('#formOrder').serializeArray();
+                var error = validateOrder(inputs);
+
+                if(error) {
+                    $("#orderError" ).show();
+                   setTimeout(function(){
+                       $("#orderError" ).hide();
+                   }, 2000);
+                }
+                else {
+                    var four = $("#supplier-sel option:selected" ).text();
+                    var arti = $("#article-sel option:selected" ).text();
+                    var row = "<tr class='order-node'><td class='supplierOrder' data-supplier='"+ inputs[0]['value'] +"'>"+four+"</td><td data-article='"+ inputs[1]['value'] +"'>"+arti+"</td><td data-price='"+ inputs[2]['value'] +"' >"+inputs[2]['value']+"</td><td data-qte='"+ inputs[3]['value'] +"' >"+inputs[3]['value']+"</td><td><button class='btn-del-order-node btn btn-xs btn-danger'><i class='fa fa-times-circle'></i></button></td></tr>";
+                    $("#order-list-body").append(row);
+                    $("#btn-order-validation" ).show();
+
+//                    refreshSupplier(four,inputs[0]['value'] );
+                    clearOrderCart();
+                }
+            });
+        }
+
+        function refreshSupplier(name, id) {
+            $('.supplierOrder' ).text(name);
+            $('.supplierOrder' ).attr('data-supplier', id);
+        }
+
+        function clearOrderCart() {
+            $("#article-sel" ).val("");
+            $(".order-clear" ).val("");
+        }
+
+        function validateOrder($list)
+        {
+            var error = false;
+            if($list.length < 4) { error = true; }
+
+            $.each($list, function(key, data) {
+               if(data['value'] == '' || data['value'] == undefined || data['value'] < 0) error = true;
+            });
+
+            return error;
+        }
+        function createRepair()
         {
             var inputs = $('#formDevice').serialize();
             $.ajax({
-                'url' : './device',
-                'data' : '_action=addFile&'+$('#formcreatefile').serialize()+'&'+inputs,
+                'url' : '/create/file',
+                'data' : '_action=createRepair&'+$('#formcreatefile').serialize()+'&'+inputs,
                 'dataType' : 'json',
                 'type' : 'POST',
                 'beforeSend' : function()
@@ -342,8 +687,64 @@
                     return false;
                 }
             });
-            return false;
         }
+        function createOrder()
+        {
+            console.log($('#formcreatefile').serialize());
+            $.ajax({
+                'url' : '/create/file',
+                'data' : '_action=createOrder&'+$('#formcreatefile').serialize(),
+                'dataType' : 'json',
+                'type' : 'POST',
+                'beforeSend' : function()
+                {
+                    //simpleLoad(true);
+                },
+                'complete' : function(xhr) {
+                    if(xhr.status == '200')
+                    {
+                        var response = JSON.parse( xhr.responseText );
+                        if(response.status == 'success')
+                        {
+                            $.gritter.add({
+                                title: 'Succes !',
+                                text: 'Validation effectuée !'
+                            });
+                            setTimeout(function(){
+                                window.location.href = response.redirect;
+                            },1700);
+
+                        }
+                        else
+                        {
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: "Erreur DB : validation échouée !"
+                            });
+                        }
+
+                        return false;
+
+                    }
+                    else {
+                        $.gritter.add({
+                            title: 'Attention, une erreur est survenue !',
+                            text: "Validation échouée !"
+                        });
+                    }
+                    return false;
+                }
+            });
+        }
+
+        function handleSubmitFormAddFile()
+        {
+            var action = $("#type-file" ).val();
+            if(action == "REPAIR") createRepair();
+            else createOrder();
+            return;
+
+            }
 
         function disableInputs()
         {
@@ -362,7 +763,7 @@
            // alert('koi add ?');
             var newserial = $('#device_select option:selected').text();
             $.ajax({
-                'url' : './device',
+                'url' : '/create/file',
                 'data' : '_action=addDevice&serial_number='+newserial+'&'+$('#formDevice').serialize(),
                 'dataType' : 'json',
                 'type' : 'POST',
@@ -384,9 +785,8 @@
                             disableInputs();
                             //Complete addfile Form
                             var id = response.new_added_id;
-                            alert(id);
                            $("#device_select option:selected").attr('value', response.new_added_id);
-                            $('#type').val('REPAIR');
+                            $('#type-file').val('REPAIR');
                         }
                         else
                         {
@@ -488,6 +888,9 @@
 
             });
         }
+
+
+
         function setSmartSelectionDevice()
         {
             var select, chosen;
@@ -524,14 +927,9 @@
                             populateLockedField();
                             enableInputs()
                         }
-
-
                     });
                 }
-
-
             });
-
         }
 
 

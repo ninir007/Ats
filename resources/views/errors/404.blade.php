@@ -5,11 +5,11 @@
 
     <title>INSPINIA | 404 Error</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link href="../css/animate.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -22,13 +22,13 @@
 
     <div class="error-desc">
         L'URL et/ou l'enregistrement que vous cherchez n'a pas été trouvé.<br>
-        Vous pouvez retourner sur la page d'acceuil: <br><a href="dashboard" class="btn btn-primary m-t">Dashboard</a>
+        Vous pouvez retourner sur la page d'acceuil: <br><a href="/dashboard" class="btn btn-primary m-t">Dashboard</a>
     </div>
 </div>
 
 <!-- Mainly scripts -->
-<script src="../js/jquery-2.1.1.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="/js/jquery-2.1.1.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 
 
