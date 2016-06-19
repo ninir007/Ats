@@ -10,12 +10,12 @@ class CreateOrdersTable extends Migration
      *
      * @return void
      */
+
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->integer('file_id')->unsigned();
-            $table->float('total');
-            $table->timestamps();
+            $table->float('total_details_amount');
 
             $table->primary('file_id');
             $table->foreign('file_id')

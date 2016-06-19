@@ -16,14 +16,15 @@ class CreateSuppliersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('contact');
-            $table->string('street');
-            $table->string('postal_code');
-            $table->string('city');
-            $table->string('country');
             $table->string('email');
-            $table->string('mobile');
-            $table->string('office');
-            $table->string('fax');
+
+            $table->string('street');
+            $table->char('postal_code', 6);
+            $table->string('city');
+            $table->string('mobile', 12);
+            $table->string('office', 12);
+            $table->string('fax', 12);
+            $table->string('vat', 12);
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ class CreateSuppliersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('suppliers');
+        Schema::dropIfExists('suppliers');
     }
 }

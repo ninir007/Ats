@@ -16,7 +16,9 @@ class CreateRepairsTable extends Migration
             $table->integer('file_id')->unsigned();
             $table->integer('device_id')->unsigned();
             $table->boolean('accessory');
-            $table->timestamps();
+            $table->string('description', 60);
+            $table->float('total_details_amount');
+
 
 
             $table->foreign('device_id')

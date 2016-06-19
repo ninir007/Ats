@@ -15,7 +15,6 @@ class CreateDevicesTable extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number', 40);
-            $table->string('description', 60);
             $table->date('purchased_at');
             $table->integer('model_id')->unsigned();
 

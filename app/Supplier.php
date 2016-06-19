@@ -20,7 +20,10 @@ class Supplier extends Model
         'mobile'];
 
 
-
+    public function articles()
+    {
+        return $this->hasMany('App\Article', 'supplier_id');
+    }
 
 
     /*GETTER*/
@@ -92,15 +95,6 @@ class Supplier extends Model
         $this->attributes['mobile'] = strtolower($value);
     }
 
-    public function setCreatedAtAttribute($value)
-    {
-        $dated = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $value)));
-        $this->attributes['created_at'] = $dated;
-    }
-    public function setUpdatedAtAttribute($value)
-    {
-        $dated = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $value)));
-        $this->attributes['updated_at'] = $dated;
-    }
+
 
 }

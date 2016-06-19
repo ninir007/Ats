@@ -17,6 +17,11 @@ class File extends Model
         'client_report',
         'labor_amount',
         'part_amount',
+        'advance_amount',
+        'shifting_amount',
+        'labor_vat',
+        'part_vat',
+        'shifting_vat',
         'sum_amount'
     ];
 
@@ -32,13 +37,33 @@ class File extends Model
 
     public function repairs()
     {
-        return $this->hasMany('App\Repairs', 'file_id');
+        return $this->hasOne('App\Repairs', 'file_id');
     }
-    public function orders()
+    public function order()
     {
-        return $this->hasMany('App\Orders', 'file_id');
+        return $this->hasOne('App\Order', 'file_id');
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        $dated = date('d/m/Y, H:i:s', strtotime($value));
+        return $dated;
+    }
+    public function getUpdatedAtAttribute($value)
+    {
+        $dated = date('d/m/Y, H:i:s', strtotime($value));
+        return $dated;
+    }
+    public function setCreatedAtAttribute($value)
+    {
+        $dated = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $value)));
+        $this->attributes['created_at'] = $dated;
+    }
+    public function setUpdatedAtAttribute($value)
+    {
+        $dated = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $value)));
+        $this->attributes['updated_at'] = $dated;
+    }
 
 
 

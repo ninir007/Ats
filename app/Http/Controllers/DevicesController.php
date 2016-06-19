@@ -37,7 +37,6 @@ class DevicesController extends Controller
             $date = Device::convertDate($request->input('purchased_at'));
             $id = DB::table('devices')->insertGetId(
                 ['serial_number' => $request->input('serial_number'),
-                 'description'   => $request->input('description'),
                  'purchased_at'  => $date,
                  'model_id'      => $request->input('model_id')
                 ]);

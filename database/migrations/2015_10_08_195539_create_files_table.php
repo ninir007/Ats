@@ -18,13 +18,21 @@ class CreateFilesTable extends Migration
             $table->integer('client_id')->unsigned();
             $table->enum('type', ['REPAIR', 'ORDER']);
 
-            $table->mediumText('intern_report');
-            $table->mediumText('client_report');
+            $table->text('intern_report');
+            $table->text('client_report');
+
             $table->float('labor_amount');
             $table->float('part_amount');
             $table->float('sum_amount');
-            $table->timestamps();
+            $table->float('shifting_amount');
+            $table->float('advance_amount');
 
+
+            $table->decimal('shifting_vat', 5, 2)->default(21);
+            $table->decimal('part_vat', 5, 2)->default(21);
+            $table->decimal('labor_vat', 5, 2)->default(21);
+
+            $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

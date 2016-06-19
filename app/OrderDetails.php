@@ -20,10 +20,7 @@ class OrderDetails extends Model
     {
         return $this->belongsTo('App\Order', 'file_id', 'file_id');
     }
-    public function supplier()
-    {
-        return $this->belongsTo('App\Supplier');
-    }
+
     public function article()
     {
         return $this->belongsTo('App\Article');

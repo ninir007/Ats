@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $table ='orders';
+    public $timestamps = false;
 
     protected $fillable = [
         'file_id',
-        'total'
+        'total_details_amount'
     ];
 
     public function file()
@@ -33,8 +34,25 @@ class Order extends Model
 
         return $total;
     }
+    public static function calculateInvoice($req)
+    {
+        $total = 0;
+        $total = $req['part_amount'] * ( 1 + ($req['part_vat']/100) ) ;
 
+        return round($total, 2);
+    }
 
+    /*GETTER*/
+    public function getCreatedAtAttribute($value)
+    {
+        $dated = date('d/m/Y, H:i:s', strtotime($value));
+        return $dated;
+    }
+    public function getUpdatedAtAttribute($value)
+    {
+        $dated = date('d/m/Y, H:i:s', strtotime($value));
+        return $dated;
+    }
 
 
 

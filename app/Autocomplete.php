@@ -16,14 +16,11 @@ class Autocomplete
             $fields=[];
 
             foreach($res as $item) {
-                $name = $item->LastName.' '. $item->FirstName;
+                $name = $item->lastname.' '. $item->firstname;
                 $fields[] = [ 'label' => $name , 'value' => $item->id ];
             }
             return $fields;
         }
         else  return [];
     }
-
-
-
 }

@@ -8106,3 +8106,38 @@ body.md-skin {
   height: 580px;
   overflow: auto;
 }
+.center-my-tab td, .mycenter {
+  text-align: center;
+}
+
+.center-mytitle {
+  margin-left: -12px;
+}
+
+.error-order-selection {
+   display: none;
+  top: 10px;
+  position: relative;
+  left: 23px;
+}
+
+.toclone {
+  display: none;
+}
+
+.modele-array-spinner {
+  position: absolute;
+  margin-left: 43%;
+  font-size: 70px;
+  margin-top: 7%;
+}
+
+.adresse {
+  width: 120px;
+  margin-top: 3px;
+}
+
+.italic {
+  margin-top: 2px;
+  font-style: italic;
+}

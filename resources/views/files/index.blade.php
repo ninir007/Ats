@@ -52,7 +52,7 @@
                                                 </div>
                                             </td>
                                             <td class="project-people"  style="text-align:center;">
-                                                <p>{{$file->client->LastName}} {{$file->client->FirstName}}</p>
+                                                <p>{{$file->client->lastname}} {{$file->client->firstname}}</p>
                                             </td>
                                             <td class="project-actions" >
                                                 <a href="/file/repair/{{$file->id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
@@ -65,7 +65,7 @@
                                                 <span class="label label-primary"> {{$file->id.'O'.$file->client->id}} </span>
                                             </td>
                                             <td class="project-title">
-                                                <a href="/file/order/{{$file->id}}">Commande de : @foreach($orders as $order) @if($order->file_id == $file->id) {{$order->total}} €  @endif @endforeach</a>
+                                                <a href="/file/order/{{$file->id}}">Commande de : @foreach($orders as $order) @if($order->file_id == $file->id) {{$order->total_details_amount}} €  @endif @endforeach</a>
                                                 <br>
                                                 <small>Créé {{ $file->created_at }}</small>
                                             </td>
@@ -76,7 +76,7 @@
                                                 </div>
                                             </td>
                                             <td class="project-people"  style="text-align:center;">
-                                                <p>{{$file->client->LastName}} {{$file->client->FirstName}}</p>
+                                                <p>{{$file->client->lastname}} {{$file->client->firstname}}</p>
                                             </td>
                                             <td class="project-actions" >
                                                 <a href="/file/order/{{$file->id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>

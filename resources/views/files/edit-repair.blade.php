@@ -67,7 +67,7 @@
                                     <dl class="dl-horizontal">
                                         <dt>Modéle:</dt> <dd>	{{$repairs["modele"][0]['name']}}</dd>
                                         <dt>N° Serie:</dt> <dd> {{$repairs["device"]['serial_number']}} </dd>
-                                        <dt>Etat:</dt> <dd> {{$repairs["device"]['description']}} </dd>
+                                        <dt>Etat:</dt> <dd> {{$repairs['description']}} </dd>
                                     </dl>
                                 </div>
                             </div>

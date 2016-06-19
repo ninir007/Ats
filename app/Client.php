@@ -10,12 +10,14 @@ class Client extends Model
 
     protected $fillable = ['firstname',
         'lastname',
-        'address',
+        'street',
+        'postal_code',
+        'city',
         'email',
         'mobile',
         'office',
         'fax',
-        'tva'];
+        'vat'];
     public function files()
     {
         return $this->hasMany('App\File', 'client_id');
@@ -29,9 +31,13 @@ class Client extends Model
     {
         $this->attributes['lastname'] = strtolower($value);
     }
-    public function setAddressAttribute($value)
+    public function setStreetAttribute($value)
     {
-        $this->attributes['address'] = strtolower($value);
+        $this->attributes['street'] = strtolower($value);
+    }
+    public function setCityAttribute($value)
+    {
+        $this->attributes['city'] = strtolower($value);
     }
     public function setEmailAttribute($value)
     {
@@ -49,10 +55,33 @@ class Client extends Model
     {
         $this->attributes['fax'] = strtolower($value);
     }
-    public function setTvaAttribute($value)
+    public function setVatAttribute($value)
     {
-        $this->attributes['tva'] = strtolower($value);
+        $this->attributes['vat'] = strtoupper($value);
+    }
+    public function setCreatedAtAttribute($value)
+    {
+        $dated = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $value)));
+        $this->attributes['created_at'] = $dated;
+    }
+    public function setUpdatedAtAttribute($value)
+    {
+        $dated = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $value)));
+        $this->attributes['updated_at'] = $dated;
     }
 
+
+
+
+    public function getCreatedAtAttribute($value)
+    {
+        $dated = date('d/m/Y, H:i:s', strtotime($value));
+        return $dated;
+    }
+    public function getUpdatedAtAttribute($value)
+    {
+        $dated = date('d/m/Y, H:i:s', strtotime($value));
+        return $dated;
+    }
 
 }

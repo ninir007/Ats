@@ -19,9 +19,12 @@
 
                         <tr>
 
-                            <th style="text-align:center;">Modele</th>
-                            <th style="text-align:center;"> Description</th>
-                            <th style="text-align:center;"> Reference</th>
+                            <th class="mycenter">Modele</th>
+                            <th class="mycenter"> Description</th>
+                            <th class="mycenter"> Reference</th>
+                            <th class="mycenter">Prix</th>
+                            <th class="mycenter">Fournisseur</th>
+
 
                         </tr>
                         </thead>
@@ -29,9 +32,11 @@
                         @if(isset($article_modele))
                             @foreach($article_modele as $art)
                                 <tr>
-                                    <td style="text-align:center;"></td>
-                                    <td style="text-align:center;">{{ $art->description }}</td>
-                                    <td style="text-align:center;">{{ $art->reference }}</td>
+                                    <td class="mycenter"><button data-title="{{$art->description.' :: '.$art->reference}}" data-idarticle="{{$art->id}}" class="btnshowmodels btn btn-xs btn-info" data-toggle="modal" data-target="#modalShowModels"><i class="fa fa-arrows-alt"></i></button></td>
+                                    <td class="mycenter">{{ $art->description }}</td>
+                                    <td class="mycenter">{{ $art->reference }}</td>
+                                    <td class="mycenter">{{ $art->standard_price }}</td>
+                                    <td class="mycenter"><a href="/suppliers/{{ $art->supplier->id }}" target="_blank" class="text-navy"> {{ $art->supplier->name }}</a></td>
                                 </tr>
                             @endforeach
                         @else <tr>Pas d'enregistrements</tr>
@@ -71,6 +76,21 @@
                                 <label>Description :</label>
                                 <input class="form-control" type="text" id="description" name="description" />
                             </div>
+                            <div class="form-group">
+                                <label class="control-label" for="supplier">Fournisseur : </label>
+                                <select class="form-control" name="supplier_id" data-placeholder="Fournisseur" id="supplier-sel" required >
+                                    @if(isset($suppliers))
+                                        <option value="" disabled selected></option>
+                                        @foreach($suppliers as $supp)
+                                            <option value="{{ $supp->id }}"> {{ $supp->name }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Prix : </label>
+                                <input class="form-control" type="number" name="standard_price" step="any" required/>
+                            </div>
 
                             <div class="form-group pull-right">
                                 <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-plus-circle"></i> Ajouter</button>
@@ -82,7 +102,8 @@
                     </div>
                 </div>
             </div></div>
-        <div class="row"><div class="ibox float-e-margins" >
+        <div class="row">
+            <div class="ibox float-e-margins" >
                 <div class="ibox-title">
                     <span class="label label-warning" ></span>
                     <h5> &nbsp; Articles/Modéles <small>- Ajout</small> </h5>
@@ -128,8 +149,49 @@
 
                     </div>
                 </div>
-            </div></div></div>
+            </div>
+        </div>
+    </div>
 
+    </div>
+</div>
+
+
+
+<div id="modalShowModels" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <!--Modal Content-->
+        <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                    <h4 id="modele-array-title" ></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="ibox-content no-padding customheight" id="content_models">
+                            <table class="footable table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="mycenter">Modele</th>
+                                    <th class="mycenter">Categorie</th>
+                                    <th class="mycenter">Marque</th>
+                                </tr>
+                                </thead>
+                                <tbody id="modele-array-content">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+
+        </div>
     </div>
 </div>
 @stop
@@ -140,7 +202,7 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-
+            $('.footable').footable();
             $('#formAddArticle').submit(function(){
                 handleSubmitFormAddArticle();
                 return false;
@@ -150,7 +212,59 @@
                 return false;
             });
 
+            showModels();
+
         });
+
+
+
+
+
+        function showModels() {
+            $('.btnshowmodels' ).click(function(e) {
+                var id = $(this).data("idarticle");
+                var label = $(this).data("title");
+                $('#modele-array-title' ).html(label);
+
+
+                $('#modele-array-content').html('<h1 class="modele-array-spinner"><i class="fa fa-spinner fa-pulse"></i></h1>');
+
+//                $('#modalShowModels').modal('show');
+
+                $.ajax({
+                    'url' : './articles',
+                    'data' : '_action=getModeles&_id='+id,
+                    'dataType' : 'html',
+                    'type' : 'POST',
+
+                    'complete' : function(xhr) {
+
+
+                        if(xhr.status == '200') {
+                            console.log(xhr);
+                            $("#modele-array-content" ).html(xhr.responseText);
+                            return false;
+                        }
+                        else {
+                            $('#modalShowModels').modal('hide');
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: "Impossible de charger les modéles !"
+                            });
+                        }
+                        return false;
+                    }
+                });
+
+            });
+
+
+        }
+
+
+
+
+
         function handleSubmitFormAddModArt()
         {
             $.ajax({
@@ -232,8 +346,7 @@
                     if(xhr.status == '200')
                     {
                         var response = JSON.parse( xhr.responseText );
-                        if(response.status != 'undefined' && response.status == 'success')
-                        {
+                        if(response.status != 'undefined' && response.status == 'success')  {
                             $.gritter.add({
                                 title: 'Succes !',
                                 text: 'Votre ajout a été effectué !'
@@ -243,7 +356,7 @@
                         return false;
 
                     }
-                    else {
+                    else  {
                         $.gritter.add({
                             title: 'Attention, une erreur est survenue !',
                             text: "L'ajout article n'est pas sauvé !"

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticlesTable extends Migration
+class CreateInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,21 +12,19 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reference')->unique();
-            $table->string('description');
-            $table->integer('supplier_id')->unsigned();
-            $table->float('standard_price');
+            $table->integer('file_id')->unsigned();
+            $table->string('number')->unique();
+            $table->date('created_at');
 
-            $table->foreign('supplier_id')
+            $table->foreign('file_id')
                 ->references('id')
-                ->on('suppliers')
+                ->on('files')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
-
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -35,6 +33,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::drop('invoices');
     }
 }

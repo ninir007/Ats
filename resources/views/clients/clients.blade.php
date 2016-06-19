@@ -20,7 +20,6 @@
                         <ul class="nav nav-tabs">
                             <span class="pull-right small text-muted">{{ count($clients) }} Elements</span>
                             <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Particulier</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i> Société</a></li>
                         </ul>
                         <div class="tab-content ">
                             <div id="tab-1" class="tab-pane active">
@@ -31,17 +30,17 @@
                                             @if(isset($clients))
 
                                                 @foreach($clients as $client)
-                                                    @if(($client->Tva) == '')
+
                                                     <tr>
                                                         <td class="client-avatar"><img alt="image" src="img/img_generic_person.jpg"> </td>
-                                                        <td><a data-toggle="tab" rel="{{$client->id}}" class="client-link">{{$client->LastName}} {{$client->FirstName}}</a></td>
+                                                        <td><a data-toggle="tab" rel="{{$client->id}}" class="client-link">{{$client->lastname}} {{$client->firstname}}</a></td>
                                                         <td class="contact-type"><i class="fa fa-phone"> </i></td>
-                                                        <td> {{$client->Mobile}}</td>
+                                                        <td> {{$client->mobile}}</td>
                                                         <td class="contact-type"><i class="fa fa-envelope"> </i></td>
-                                                        <td> {{$client->Email}}</td>
+                                                        <td> {{$client->email}}</td>
                                                         <td class="client-status"><span class="label label-info">Actif</span></td>
                                                     </tr>
-                                                    @endif
+
                                                 @endforeach
 
                                             @else    <tr><th colspan="5" style="text-align: center">Pas d'enregistrement!</th></tr>
@@ -53,34 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="tab-2" class="tab-pane">
-                                <div class="full-height-scroll">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
-                                            <tbody>
-                                            @if(isset($clients))
-                                                    @foreach($clients as $client)
-                                                        @if(($client->Tva) != '')
-                                                        <tr>
-                                                            <td class="client-avatar"><img alt="image" src="img/briefcase-logo.JPG"> </td>
-                                                            <td><a data-toggle="tab" rel="{{$client->id}}" href="#company-{{$client->id}}" class="client-link">{{$client->LastName}} {{$client->FirstName}}</a></td>
-                                                            <td class="contact-type"><i class="fa fa-phone"> </i></td>
-                                                            <td> {{$client->Office}}</td>
-                                                            <td class="contact-type"><i class="fa fa-envelope"> </i></td>
-                                                            <td> {{$client->Email}}</td>
-                                                            <td class="client-status"><span class="label label-info">Actif</span></td>
-                                                        </tr>
-                                                        @endif
 
-                                                    @endforeach
-                                            @else    <tr><th colspan="5" style="text-align: center">Pas d'enregistrement!</th></tr>
-                                            @endif
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -154,66 +126,7 @@
                                                 <hr>
                                                 <strong>Historique d'activités</strong>
                                                 <div id="vertical-timeline" class="vertical-container dark-timeline files-history">
-                                                    <div class="vertical-timeline-block">
-                                                        <div class="vertical-timeline-icon gray-bg">
-                                                            <i class="fa fa-coffee"></i>
-                                                        </div>
-                                                        <div class="vertical-timeline-content">
-                                                            <p>Conference on the sales results for the previous year.
-                                                            </p>
-                                                            <span class="vertical-date small text-muted"> 2:10 pm - 12.06.2014 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="vertical-timeline-block">
-                                                        <div class="vertical-timeline-icon gray-bg">
-                                                            <i class="fa fa-briefcase"></i>
-                                                        </div>
-                                                        <div class="vertical-timeline-content">
-                                                            <p>Many desktop publishing packages and web page editors now use Lorem.
-                                                            </p>
-                                                            <span class="vertical-date small text-muted"> 4:20 pm - 10.05.2014 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="vertical-timeline-block">
-                                                        <div class="vertical-timeline-icon gray-bg">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </div>
-                                                        <div class="vertical-timeline-content">
-                                                            <p>There are many variations of passages of Lorem Ipsum available.
-                                                            </p>
-                                                            <span class="vertical-date small text-muted"> 06:10 pm - 11.03.2014 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="vertical-timeline-block">
-                                                        <div class="vertical-timeline-icon navy-bg">
-                                                            <i class="fa fa-warning"></i>
-                                                        </div>
-                                                        <div class="vertical-timeline-content">
-                                                            <p>The generated Lorem Ipsum is therefore.
-                                                            </p>
-                                                            <span class="vertical-date small text-muted"> 02:50 pm - 03.10.2014 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="vertical-timeline-block">
-                                                        <div class="vertical-timeline-icon gray-bg">
-                                                            <i class="fa fa-coffee"></i>
-                                                        </div>
-                                                        <div class="vertical-timeline-content">
-                                                            <p>Conference on the sales results for the previous year.
-                                                            </p>
-                                                            <span class="vertical-date small text-muted"> 2:10 pm - 12.06.2014 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="vertical-timeline-block">
-                                                        <div class="vertical-timeline-icon gray-bg">
-                                                            <i class="fa fa-briefcase"></i>
-                                                        </div>
-                                                        <div class="vertical-timeline-content">
-                                                            <p>Many desktop publishing packages and web page editors now use Lorem.
-                                                            </p>
-                                                            <span class="vertical-date small text-muted"> 4:20 pm - 10.05.2014 </span>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -252,20 +165,28 @@
                                     <input class="form-control" type="email" name="email" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label>Adresse :</label>
-                                    <textarea rows="5" cols="30" class="form-control" name="address" placeholder="Adresse valable du client" required></textarea>
+                                    <label>Rue :</label>
+                                    <textarea rows="5" cols="30" class="form-control" name="street"  required></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label>Code Postal :</label>
+                                    <input class="form-control"  name="postal_code" required/>
+                                </div>
+
+
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>TVA :</label>
-                                    <input class="form-control" name="tva"  placeholder="( facultatif) "/>
+                                    <label>Ville :</label>
+                                    <input class="form-control"  name="city" required/>
                                 </div>
                                 <div class="form-group">
                                     <label> Mobile:</label>
-                                    <input class="form-control" name="mobile"  placeholder="( facultatif)"/>
+                                    <input class="form-control" name="mobile"  required />
                                 </div>
+
+
                                 <div class="form-group">
                                     <label>Bureau :</label>
                                     <input class="form-control" name="office"  placeholder="( facultatif)"/>
@@ -273,6 +194,10 @@
                                 <div class="form-group">
                                     <label>Fax :</label>
                                     <input class="form-control" name="fax"  placeholder="( facultatif)"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>TVA :</label>
+                                    <input class="form-control" name="vat"  placeholder="( facultatif) "/>
                                 </div>
                             </div>
                         </div>
@@ -313,17 +238,24 @@
                                     <label>Email :</label>
                                     <input class="form-control" type="email" id="editemail" name="email" />
                                 </div>
+
                                 <div class="form-group">
-                                    <label>Adresse :</label>
-                                    <textarea rows="5" cols="30" class="form-control" id="editaddress" name="address" ></textarea>
+                                    <label>Rue :</label>
+                                    <textarea rows="5" cols="30" class="form-control" id="editstreet" name="street"  required></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label>Code Postal :</label>
+                                    <input class="form-control" id="editpostal" name="postal_code" required/>
+                                </div>
+
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>TVA :</label>
-                                    <input class="form-control" id="edittva" name="tva"  />
+                                    <label>Ville :</label>
+                                    <input class="form-control" id="editcity" name="city" required/>
                                 </div>
+
                                 <div class="form-group">
                                     <label> Mobile:</label>
                                     <input class="form-control" id="editmobile" name="mobile"  />
@@ -335,6 +267,10 @@
                                 <div class="form-group">
                                     <label>Fax :</label>
                                     <input class="form-control" id="editfax" name="fax"  />
+                                </div>
+                                <div class="form-group">
+                                    <label>TVA :</label>
+                                    <input class="form-control" id="edittva" name="tva"  />
                                 </div>
                             </div>
                         </div>
@@ -379,22 +315,20 @@
                         $('#new-file').attr('href', "/create/file/"+detailclient.id);
 
                         //set the new details field
-                        $('#details-name').text( detailclient.FirstName+ " " +detailclient.LastName);
+                        $('#details-name').text( detailclient.firstname+ " " +detailclient.lastname);
                         $('#details-pic').attr('src', 'img/img_generic_person.jpg');
-                        $('#details-mail').attr('href', "mailto:"+detailclient.Email+"?subject=ATS Repair Center&amp;body=Bonjour");
-                        $('#detail-mail').text( detailclient.Email);
+                        $('#details-mail').attr('href', "mailto:"+detailclient.email+"?subject=ATS Repair Center&amp;body=Bonjour");
+                        $('#detail-mail').text( detailclient.email);
                         $('#details-updt').text( "Derniére modification: "+detailclient.updated_at);
                         $('#details-creation').text( detailclient.created_at);
-                        $('#details-address').text( detailclient.Address);
-                        $('#details-mobile').text( detailclient.Mobile);
-                        $('#details-office').text( detailclient.Office);
-                        $('#details-fax').text( detailclient.Fax);
+                        $('#details-address').text( detailclient.street + ', ' +detailclient.postal_code+ ' ' +detailclient.city);
+                        $('#details-mobile').text( detailclient.mobile);
+                        $('#details-office').text( detailclient.office);
+                        $('#details-fax').text( detailclient.fax);
                         $('.details-tva').hide();
-                            if(detailclient.Tva != '')
+                            if(detailclient.vat != '')
                             {
-                                $('#details-pic').attr('src',  'img/briefcase-logo.JPG');
-
-                                $('#details-tva').text( detailclient.Tva);
+                                $('#details-tva').text( detailclient.vat);
                                 $('.details-tva').show();
                             }
 
@@ -419,15 +353,18 @@
             $('#tab-pane').show();
 
                         // set the form edit fields
-                        $('#editfirstname').val(detailclient.FirstName);
+                        $('#editfirstname').val(detailclient.firstname);
                         $('#id-edit').val(detailclient.id);
-                        $('#editlastname').val( detailclient.LastName);
-                        $('#editaddress').text( detailclient.Address);
-                        $('#edittva').val( detailclient.Tva);
-                        $('#editemail').val( detailclient.Email);
-                        $('#editmobile').val( detailclient.Mobile);
-                        $('#editoffice').val( detailclient.Office);
-                        $('#editfax').val( detailclient.Fax);
+                        $('#editlastname').val( detailclient.lastname);
+                        $('#edittva').val( detailclient.vat);
+                        $('#editemail').val( detailclient.email);
+                        $('#editmobile').val( detailclient.mobile);
+                        $('#editoffice').val( detailclient.office);
+                        $('#editfax').val( detailclient.fax);
+                        $('#editcity').val( detailclient.city);
+                        $('#editpostal').val( detailclient.postal_code);
+                        $('#editstreet').text( detailclient.street);
+
                     }
                     else
                     {

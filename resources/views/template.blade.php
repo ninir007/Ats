@@ -75,7 +75,7 @@
                         <a href="/devices"><i class="fa fa-television"></i> <span class="nav-label">Appareils</span></a>
                     </li>
                     <li class=" {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
-                        <a href="/modele"><i class="fa fa-tag"></i> <span class="nav-label">Modéles</span><span class="fa arrow"></span></a>
+                        <a href="/modele"><i class="fa fa-tag"></i> <span class="nav-label">Modèles</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse {{ isset($leftmenu['model']) ? $leftmenu['model'] : '' }}">
                             <li class="{{ isset($leftmenu['model_gerer']) ? $leftmenu['model_gerer'] : '' }}"><a href="/modele">Gérer</a></li>
                             <li class="{{ isset($leftmenu['model_cat']) ? $leftmenu['model_cat'] : '' }}"><a href="/category-model">Catégorie / Marque</a></li>
@@ -104,9 +104,11 @@
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        <form role="search" class="navbar-form-custom" action="/file" method="post">
                             <div class="form-group">
-                                <input type="text" placeholder="Rechercher fiche..." class="form-control" name="top-search" id="top-search">
+                                <input type="text" placeholder="Rechercher fiche..." class="form-control" name="top_search" id="top_search" required>
+                                <input type="hidden" value="massiveSearch" name="_action">
+                                {{csrf_field()}}
                             </div>
                         </form>
                     </div>
@@ -230,6 +232,7 @@
                 </nav>
             </div>
             <div class="row  border-bottom white-bg dashboard-header">
+                @yield('special-action')
             </div>
             <div class="wrapper wrapper-content  animated fadeInRight">
                 <div class="row">
@@ -669,6 +672,9 @@
 
     <!-- FooTable -->
     <script src="/js/plugins/footable/footable.all.min.js"></script>
+
+    <!-- Printthis -->
+    <script src="/js/printThis.js"></script>
 
     <script>
         $(document).ready(function(){

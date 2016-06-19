@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $table ='articles';
-    protected $fillable =['reference','description'];
+    protected $fillable =['reference','description','supplier_id','standard_price'];
 
     public $timestamps = false;
 
@@ -16,6 +16,10 @@ class Article extends Model
     public function theModels()
     {
         return $this->belongsToMany('App\Modeles', 'modele_article', 'article_id', 'model_id');
+    }
+    public function supplier()
+    {
+        return $this->belongsTo('App\Supplier', 'supplier_id');
     }
 
 

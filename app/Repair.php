@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Repair extends Model
 {
     protected $table ='repairs';
+    public $timestamps = false;
 
     protected $fillable = [
         'file_id',
         'device_id',
+        'description',
         'accessory'
     ];
     public function device()
@@ -22,11 +24,4 @@ class Repair extends Model
     {
         return $this->belongsTo('App\File', 'file_id', 'id');
     }
-
-
-
-
-
-
-
 }

@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" class="form-control input-sm" value=" {{$client->LastName.' '. $client->FirstName}}" autocomplete="off" disabled>
+                                        <input type="text" class="form-control input-sm" value=" {{$client->lastname.' '. $client->firstname}}" autocomplete="off" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon">%</span>
-                                        <input type="text" class="form-control input-sm " value="{{$client->Tva}}" placeholder="TVA" disabled>
+                                        <input type="text" class="form-control input-sm " value="{{$client->vat}}" placeholder="TVA" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope-square"></i></span>
-                                        <input type="text" class="form-control input-sm" value="{{$client->Email}}" disabled>
+                                        <input type="text" class="form-control input-sm" value="{{$client->email}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                        <input type="text" class="form-control input-sm " placeholder="Mobile" value="{{$client->Mobile}}" disabled>
+                                        <input type="text" class="form-control input-sm " placeholder="Mobile" value="{{$client->mobile}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-                                        <input type="text" class="form-control input-sm " placeholder="Bureau"  value="{{$client->Office}}" disabled>
+                                        <input type="text" class="form-control input-sm " placeholder="Bureau"  value="{{$client->office}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-fax"></i></span>
-                                        <input type="text" class="form-control input-sm " placeholder="Fax"  value="{{$client->Fax}}" disabled>
+                                        <input type="text" class="form-control input-sm " placeholder="Fax"  value="{{$client->fax}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                             <div class="col-lg-8">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <textarea rows="5" cols="50" placeholder="Adresse" disabled>{{ $client->Address }}</textarea>
+                                        <textarea rows="5" cols="50" placeholder="Adresse" disabled>{{ $client->street }}, {{ $client->postal_code.' '.$client->city }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,6 @@
                                                             @endforeach
                                                         @endif
                                                     </select>
-
                                                 </div>
                                             </div>
                                         <div class="col-lg-4">
@@ -137,11 +136,8 @@
 
                                             <div class="col-lg-8">
                                                 <div class="hr-line-dashed"></div>
-                                                <div class="form-group">
-                                                    <label>Description </label>
-                                                    <textarea rows="4" cols="20" class="form-control lockable" name="description" id="description_device"></textarea>
-                                                </div>
-                                                <div class="col-lg-6">
+
+                                                <div class="col-lg-4">
                                                     <div class="form-group">
                                                         <label>Accessoires ?</label>
                                                         <div data-toggle="buttons">
@@ -150,13 +146,19 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <div class="form-group" id="data_3">
                                                         <label>Date Achat</label>
                                                         <div class="input-group date">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                             <input type="text" class="form-control lockable" name="purchased_at" value="" id="purchaseddevice">
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>Description </label>
+                                                        <textarea rows="4" cols="20" class="form-control" name="description" id="description_device"></textarea>
                                                     </div>
                                                 </div>
 
@@ -233,13 +235,13 @@
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="control-label" for="price">Prix</label>
-                                            <input type="number" min="0" id="price" name="price" value="" placeholder="Prix" class="form-control order-clear">
+                                            <input type="number" min="0" step="any" id="price" name="price" value="" placeholder="Prix" class="form-control order-clear">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="control-label" for="quantity">Quantité</label>
-                                            <input type="number" min="1" id="quantity" name="quantity" value="" placeholder="Quantité" class="form-control order-clear">
+                                            <input type="number" min="1"  id="quantity" name="quantity" value="" placeholder="Quantité" class="form-control order-clear">
                                         </div>
                                     </div>
 
@@ -410,6 +412,7 @@
             handleOrderCart();
             handleNewModel();
             deleteOrder();
+            handleArticleSupplier();
 
 
 
@@ -425,7 +428,7 @@
             });
 
             $('#btn-order-validation' ).click(function(e) {
-                var orderobject = {orders: []};
+                var orderobject = { orders: [] };
                 e.preventDefault();
 
                var orderNodes =  $(".order-node" );
@@ -569,7 +572,7 @@
                             });
                             $('#type-file').val('ORDER');
                             setTimeout(function(){
-                                $("#btn-order-validation").replaceWith("<span class='product-price' style='position: relative; top: 0;'>Total TVAC € <span id='total-order'>"+response.total +"</span></span>");
+                                $("#btn-order-validation").replaceWith("<span class='product-price' style='position: relative; top: 0;'>Total HTVA € <span id='total-order'>"+response.total +"</span></span>");
 
                             },1000);
                         }
@@ -643,6 +646,8 @@
         function createRepair()
         {
             var inputs = $('#formDevice').serialize();
+            console.log(inputs);
+            alert("");
             $.ajax({
                 'url' : '/create/file',
                 'data' : '_action=createRepair&'+$('#formcreatefile').serialize()+'&'+inputs,
@@ -886,6 +891,55 @@
 
                 });
 
+            });
+        }
+        function handleArticleSupplier()
+        {
+            $('#article-sel').on('change', function() {
+                var selected = $( "#article-sel option:selected" ),
+                price_selected = $(selected[0]).data('price');
+                $('#price' ).val(price_selected);
+            });
+
+            $('#supplier-sel').on('change', function() {
+                $( "#article-sel" ).html('');
+                $( "#article-sel" ).val('');
+                var arti_id = $( "#article-sel" ).val();
+                var supplier_id = $( "#supplier-sel" ).val();
+                if(supplier_id > 0) {
+                    $.ajax({
+                        'url' : '/articles',
+                        'data' : '_action=getArticlesBySupplier&supplier_id='+supplier_id,
+                        'dataType' : 'json',
+                        'type' : 'POST',
+                        'beforeSend' : function()
+                        {
+                        },
+                        'complete' : function(xhr) {
+                            if(xhr.status == '200')
+                            {
+                                var response = JSON.parse( xhr.responseText );
+                                if(response.status == 'success')
+                                {   var wrapper ='';
+                                    $( "#article-sel" ).val('');
+                                   $.each(response.list, function(key, data) {
+                                       wrapper += "<option value="+data.id+" data-price="+data.standard_price+"> "+data.reference+"</option>";
+                                   });
+                                    $( "#article-sel" ).html(wrapper);
+                                    handleArticleSupplier();
+                                }
+                                else
+                                {
+                                    alert("nouvelle attribution ?")
+                                }
+
+                                return false;
+
+                            }
+                            return false;
+                        }
+                    });
+                }
             });
         }
 

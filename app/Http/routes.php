@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Mail;
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -17,9 +17,10 @@ Route::get('/dashboard', 'DashboardController@showDashboard');
 Route::get('/clients', 'ClientsController@index');
 Route::post('/clients', 'ClientsController@handleAction');
 
-//Providers...
+//Suppliers...
 Route::get('/suppliers', 'SuppliersController@index');
 Route::post('/suppliers', 'SuppliersController@handleAction');
+Route::get('/suppliers/{id}', 'SuppliersController@supplierDetails')->where('id', '[0-9]*');
 
 //Category + Brand
 Route::get('/category-model', 'CategoryController@index');
@@ -53,16 +54,31 @@ Route::post('/status/codes', 'CodeStatusController@handleAction');
 
 //Files...
 Route::get('/files', 'FilesController@index'); // OK
-Route::get('/file/repair/{id}', 'FilesController@editRepair')->where('id', '[0-9]*');; // OK
-Route::get('/file/order/{id}', 'FilesController@editOrder')->where('id', '[0-9]*');; // OK
-Route::get('/new-file/{id}', 'FilesController@create')->where('id', '[0-9]*'); //!!!!!!!!!!!!!
 
-//File new view ???????
+//..//repair
+    Route::get('/file/repair/{id}', 'FilesController@editRepair')->where('id', '[0-9]*'); // OK
+
+//..//order
+    Route::get('/file/order/{id}', 'FilesController@editOrder')->where('id', '[0-9]*'); // OK
+    Route::post('/file/order/{id}', 'FilesController@updateOrder')->where('id', '[0-9]*'); // OK
+    Route::delete('/file/order/{id}', 'FilesController@deleteOrder')->where('id', '[0-9]*'); // OK
+    Route::get('/invoice/order/{id}', 'FilesController@invoiceOrder')->where('id', '[0-9]*'); // OK
+//..//file
+    Route::post('/file/{id}', 'FilesController@handleFile')->where('id', '[0-9]*'); // OK
+    Route::post('/file', 'FilesController@searchFile'); // OK
+
+//File
 Route::get('/create/file/{id}', 'FilesController@createFile')->where('id', '[0-9]*');
 Route::post('/create/file', 'FilesController@handleAction');
 
-
 //Autocomplete
 Route::post('/autocomplete', 'AutocompleteController@index');
+
+
+get('/email', function() {
+    Mail::send('emails', ['name' => 'amchoum'], function($message){
+       $message->to('bouzanih.mounir@gmail.com', 'some Guy')->subject('Welcome chez ats !');
+    });
+});
 
 

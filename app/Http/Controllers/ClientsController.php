@@ -57,8 +57,10 @@ class ClientsController extends Controller
             $client->lastname       = $_POST['lastname'];
             $client->firstname      = $_POST['firstname'];
             $client->email = $_POST['email'];
-            $client->address = $_POST['address'];
-            $client->tva = $_POST['tva'];
+            $client->street = $_POST['street'];
+            $client->postal_code = $_POST['postal_code'];
+            $client->city = $_POST['city'];
+            $client->vat = $_POST['tva'];
             $client->mobile = $_POST['mobile'];
             $client->office = $_POST['office'];
             $client->fax = $_POST['fax'];

@@ -52,6 +52,7 @@
                             <th>Fax</th>
                             <th>créé le</th>
                             <th>modifié le</th>
+                            <th>Articles</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,6 +71,7 @@
                                     <td>{{$supp['fax']}}</td>
                                     <td>{{$supp['created_at']}}</td>
                                     <td>{{$supp['updated_at']}}</td>
+                                    <td><a href="/suppliers/{{$supp['id']}}" class="btn btn-xs btn-primary"><i class="fa fa-list" aria-hidden="true"></i></a></td>
                                 </tr>
                             @endforeach
                         @endif
@@ -88,6 +90,7 @@
                             <th>Fax</th>
                             <th>créé le</th>
                             <th>modifié le</th>
+                            <th>Articles</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -163,6 +166,70 @@
                         {{ csrf_field() }}
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                         <button type="submit" id="btnSubmitFormAddClient" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalSupplierArticle" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <!--Modal Content-->
+            <div class="modal-content">
+                <form method="post" role="form" autocomplete="off" id="form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                        <h4 class="modal-title" >Modification</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nom :</label>
+                                    <input class="form-control" id="editlastname" name="lastname"  autofocus/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Prénom :</label>
+                                    <input class="form-control" id="editfirstname" name="firstname" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Email :</label>
+                                    <input class="form-control" type="email" id="editemail" name="email" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Adresse :</label>
+                                    <textarea rows="5" cols="30" class="form-control" id="editaddress" name="address" ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>TVA :</label>
+                                    <input class="form-control" id="edittva" name="tva"  />
+                                </div>
+                                <div class="form-group">
+                                    <label> Mobile:</label>
+                                    <input class="form-control" id="editmobile" name="mobile"  />
+                                </div>
+                                <div class="form-group">
+                                    <label>Bureau :</label>
+                                    <input class="form-control" id="editoffice" name="office"  />
+                                </div>
+                                <div class="form-group">
+                                    <label>Fax :</label>
+                                    <input class="form-control" id="editfax" name="fax"  />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="_action" value="editClient" />
+                        <input type="hidden" id="id-edit" name="id" />
+                        {{ csrf_field() }}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="submit" id="btnSubmitFormEditClient" class="btn btn-warning">Modifier</button>
                     </div>
                 </form>
             </div>
