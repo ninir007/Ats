@@ -16,8 +16,7 @@ class CreateCodesStatusTable extends Migration
             $table->increments('id');
             $table->string('label', 10);
             $table->integer('group_status_id')->unsigned();
-            $table->enum('step', ['DEBUT', 'DEVIS', 'COMMANDE', 'PREFINALE','FINALE']);
-            $table->enum('step_step', ['IN', 'OUT', 'IN AND OUT', 'MIDDLE']);
+            $table->enum('step', ['IN', 'OUT', 'IN AND OUT', 'MIDDLE']);
             $table->string('description', 50);
 
 
@@ -26,7 +25,6 @@ class CreateCodesStatusTable extends Migration
                 ->on('groups_status')
                 ->onUpdate('cascade');
         });
-
     }
 
     /**

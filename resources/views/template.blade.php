@@ -46,7 +46,7 @@
                             <img alt="image" class="img-circle" src="/img/profile_small.jpg">
                              </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{!! Auth::user()['name'] !!}</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{!! Auth::user()->name !!}</strong>
                              </span> <span class="text-muted text-xs block">Senior technicien <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="/profile">Profile</a></li>
@@ -82,13 +82,21 @@
                             <li class="{{ isset($leftmenu['model_article']) ? $leftmenu['model_article'] : '' }}"><a href="/articles">Articles</a></li>
                         </ul>
                     </li>
-                    <li class=" {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
-                        <a href="/status"><i class="fa fa-commenting"></i> <span class="nav-label">Statuts</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
-                            <li class=" {{ isset($leftmenu['status-groups']) ? $leftmenu['status-groups'] : '' }}"><a href="/status/groups">Groupes</a></li>
-                            <li class=" {{ isset($leftmenu['status-codes']) ? $leftmenu['status-codes'] : '' }}"><a href="/status/codes">Codes</a></li>
-                        </ul>
-                    </li>
+
+                    @if(Auth::user()['is_admin'])
+                        <li class=" {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
+                            <a href="/status"><i class="fa fa-commenting"></i> <span class="nav-label">Statuts</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse {{ isset($leftmenu['status']) ? $leftmenu['status'] : '' }}">
+                                <li class=" {{ isset($leftmenu['status-groups']) ? $leftmenu['status-groups'] : '' }}"><a href="/status/groups">Groupes</a></li>
+                                <li class=" {{ isset($leftmenu['status-codes']) ? $leftmenu['status-codes'] : '' }}"><a href="/status/codes">Codes</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class=" {{ isset($leftmenu['client']) ? $leftmenu['client'] : '' }}">
+                            <a href="/new-user"><i class="fa fa-plus"></i> <span class="nav-label">Technicien</span></a>
+                        </li>
+                    @endif
 
 
 

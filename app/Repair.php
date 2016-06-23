@@ -24,4 +24,9 @@ class Repair extends Model
     {
         return $this->belongsTo('App\File', 'file_id', 'id');
     }
+
+    public function details()
+    {
+        return $this->hasMany('App\RepairDetails', 'file_id', 'file_id');
+    }
 }

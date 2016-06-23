@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderDetails extends Model
+class RepairDetails extends Model
 {
-    protected $table ='orders_details';
+    protected $table ='repairs_details';
 
     protected $fillable = [
         'file_id',
@@ -15,9 +15,9 @@ class OrderDetails extends Model
         'quantity'
     ];
 
-    public function order()
+    public function repair()
     {
-        return $this->belongsTo('App\Order', 'file_id', 'file_id');
+        return $this->belongsTo('App\Repair', 'file_id', 'file_id');
     }
 
     public function article()

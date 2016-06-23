@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Note;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,16 @@ class TechnicienController extends Controller
 
         if( $action == 'addNote' )
         {
-            Note::create( $request->all() );
+            $param = '';
+            if($request['private'] == 'yes') {
+                $param = 'PRIVATE';
+            }
+            else {
+                $param = 'PUBLIC';
+            }
+            $note = Note::create( $request->all() );
+            $note->scope = $param;
+            $note->save();
             return response(['status' => 'success']);
         }
         else if( $action == "deleteNote")
@@ -42,6 +52,32 @@ class TechnicienController extends Controller
         }
 
 
+    }
+
+    public function newTech(Request $req)
+    {
+        return view('/techniciens/create');
+    }
+
+    public function registerTech(Request $req, User $user)
+    {
+
+        $this->validate($req, [
+            'name' => 'required|max:255|min:4',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
+            'password_confirmation' => 'required_with:password|same:password',
+        ]);
+        $params['name'] = $req['name'];
+        $params['email'] = $req['email'];
+        $params['password'] = bcrypt($req['password']);
+
+        $note = User::create( $params );
+
+        $response = $user->sendMail($req);
+
+        flash()->success('Opération réussie!', 'Technicien '.$params['name'].' créé avec succés.');
+        return redirect('/new-user');
     }
 
 

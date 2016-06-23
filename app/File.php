@@ -35,9 +35,9 @@ class File extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function repairs()
+    public function repair()
     {
-        return $this->hasOne('App\Repairs', 'file_id');
+        return $this->hasOne('App\Repair', 'file_id');
     }
     public function order()
     {

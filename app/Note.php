@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
     protected $table ='notes';
-    protected $fillable =['title','content', 'user_id'];
+    protected $fillable =['title','content','scope', 'user_id'];
 
 
 
@@ -24,5 +24,11 @@ class Note extends Model
     public function getContentAttribute($value)
     {
         return mb_strtolower($value);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        $dated = date('d/m/Y, H:i:s', strtotime($value));
+        return $dated;
     }
 }

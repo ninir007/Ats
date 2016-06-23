@@ -15,22 +15,34 @@
 
     </div>
 
-
     <div class="row">
         <div class="col-lg-12">
             <div class="wrapper wrapper-content animated fadeInUp">
                 <ul class="notes">
                     @if(isset($notes))
                         @foreach($notes as $note)
-                            <li>
-                                <div style="word-wrap: break-word;">
-                                    <small>{{ $note->created_at }}</small>
-                                    <h4>{{ $note->title }}</h4>
-                                    <p>{{ $note->content }}</p>
-                                    <label class="text-right">{{ $note->technicien->name }}</label>
-                                    <a href="" rel="{{ $note->id }}" class="btndeletenote"><i class="fa fa-trash-o "></i></a>
-                                </div>
-                            </li>
+                            @if($note['scope'] == 'PRIVATE' && $note['user_id'] ==  Auth::user()['id']  )
+                                <li>
+                                    <div style="word-wrap: break-word;">
+                                        <small>Privée: {{ $note->created_at }}</small>
+                                        <h4>{{ $note->title }}</h4>
+                                        <p>{{ $note->content }}</p>
+                                        <label class="text-right">{{ $note->technicien->name }}</label>
+                                        <a href="" rel="{{ $note->id }}" class="btndeletenote"><i class="fa fa-trash-o "></i></a>
+                                    </div>
+                                </li>
+                            @elseif($note['scope'] == 'PUBLIC')
+                                <li>
+                                    <div style="word-wrap: break-word;">
+                                        <small>Publique: {{ $note->created_at }}</small>
+                                        <h4>{{ $note->title }}</h4>
+                                        <p>{{ $note->content }}</p>
+                                        <label class="text-right">{{ $note->technicien->name }}</label>
+                                        <a href="" rel="{{ $note->id }}" class="btndeletenote"><i class="fa fa-trash-o "></i></a>
+                                    </div>
+                                </li>
+                            @else
+                            @endif
                         @endforeach
                     @else
                     @endif
@@ -61,7 +73,20 @@
                                     <input class="form-control" name="title" id="title" required autofocus/>
                                 </div>
                             </div>
-
+                            <div class="col-md-4">
+                                <div>
+                                    <label>
+                                        <input type="radio" checked="" value="yes" id="optionsRadios1" name="private" required> private
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input type="radio" value="no" id="optionsRadios2" name="private" required> public
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Contenu :</label>
@@ -150,6 +175,7 @@
                 'type' : 'POST',
                 'beforeSend' : function()
                 {
+
                     var inpt = $.trim($("#title").val());
                     if( inpt.length < 1)
                     {

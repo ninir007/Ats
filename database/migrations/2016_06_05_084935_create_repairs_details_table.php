@@ -23,7 +23,7 @@ class CreateRepairsDetailsTable extends Migration
 
             $table->foreign('file_id')
                 ->references('file_id')
-                ->on('orders')
+                ->on('repairs')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 

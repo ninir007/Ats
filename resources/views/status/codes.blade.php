@@ -27,7 +27,6 @@
                                 <th style="text-align:center;">Statut</th>
                                 <th style="text-align:center;"> Groupe</th>
                                 <th style="text-align:center;"> Etape</th>
-                                <th style="text-align:center;"> Etape_Etape</th>
                                 <th style="text-align:center;">Description</th>
 
                             </tr>
@@ -36,11 +35,10 @@
                             @if(isset($codes))
                                 @foreach($codes as $code)
                                     <tr>
-                                        <td><button class="btn btn-xs btn-primary editcodestatus" data-group-id="{{ $code->group->id }}" data-id="{{ $code->id }}" data-label="{{ $code->label }}" data-step="{{ $code->step }}" data-detailstep="{{ mb_strtoupper($code->step_step) }}" data-description="{{ $code->description }}" ><i class="fa fa-pencil"></i></button></td>
+                                        <td><button class="btn btn-xs btn-primary editcodestatus" data-group-id="{{ $code->group->id }}" data-id="{{ $code->id }}" data-label="{{ $code->label }}" data-step="{{ $code->step }}"  data-description="{{ $code->description }}" ><i class="fa fa-pencil"></i></button></td>
                                         <td style="text-align:center;">{{ $code->label }}</td>
                                         <td style="text-align:center;">{{ $code->group->label }}</td>
                                         <td style="text-align:center;">{{ $code->step }}</td>
-                                        <td style="text-align:center;">{{ mb_strtoupper($code->step_step)  }}</td>
                                         <td style="text-align:center;">{{ $code->description }}</td>
                                     </tr>
                                 @endforeach

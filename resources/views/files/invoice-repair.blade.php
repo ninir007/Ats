@@ -18,7 +18,6 @@
                 <div class="ibox-content p-xl">
                     <div class="row">
                         <div class="col-sm-6">
-
                             <address>
                                <h3><strong>{{env("company_name")}}</strong><br></h3>
                                 <div class="italic">{{env("company_label")}}</div>
@@ -31,18 +30,17 @@
                         </div>
 
                         <div class="col-sm-6 text-right">
-                            <h4>Facture No.</h4>
-                            <h4 class="text-navy">{{$invoice['number']}}</h4>
+                            <h4>Facture No. <div class="text-navy">{{$invoice['number']}}</div></h4>
                             <p>
                                 <span><strong>Date:</strong> {{$invoice['created_at']}} </span><br>
                             </p>
                             <address>
-                                <h4><strong>{{strtoupper($order['client']['firstname']).' '.strtoupper($order['client']['lastname'])}}</strong></h4>
-                                {{$order['client']['street']}}, <br>
-                                {{$order['client']['postal_code']}}, {{$order['client']['city']}}<br>
-                                <abbr title="telephone">TEL:</abbr> @if(isset($order['client']['mobile'])) {{$order['client']['mobile']}}@elseif(isset($order['client']['office'])) {{$order['client']['office']}} @endif
+                                <h4><strong>{{strtoupper($repair['client']['firstname']).' '.strtoupper($repair['client']['lastname'])}}</strong></h4>
+                                {{$repair['client']['street']}}, <br>
+                                {{$repair['client']['postal_code']}}, {{$repair['client']['city']}}<br>
+                                <abbr title="telephone">TEL:</abbr> @if(isset($repair['client']['mobile'])) {{$repair['client']['mobile']}}@elseif(isset($repair['client']['office'])) {{$repair['client']['office']}} @endif
                                 <br>
-                                <abbr title="tva">TVA:</abbr> @if(isset($order['client']['vat'])) {{$order['client']['vat']}} @endif
+                                <abbr title="tva">TVA:</abbr> @if(isset($repair['client']['vat'])) {{$repair['client']['vat']}} @endif
                             </address>
 
                         </div>
@@ -51,23 +49,23 @@
                     <div class="table-responsive m-t">
                         <table class="table invoice-table">
                             <thead>
-                            <tr>
-                                <th>Articles</th>
-                                <th>Quantité</th>
-                                <th>Prix/u</th>
-                                <th>Tva ({{$order['part_vat'].'%'}})</th>
-                                <th>Total</th>
-                            </tr>
+                                <tr>
+                                    <th>Articles</th>
+                                    <th>Quantité</th>
+                                    <th>Prix/u</th>
+                                    <th>Tva ({{$repair['part_vat'].'%'}})</th>
+                                    <th>Total</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($order['order']['details'] as $detail)
+                            @foreach($repair['repair']['details'] as $detail)
                                 <tr>
                                     <td><div><strong>{{$detail['article']['description']}}</strong></div>
                                         <small>{{$detail['article']['reference']}}</small></td>
                                     <td>{{$detail['quantity']}}</td>
                                     <td>{{$detail['price']}}</td>
-                                    <td>{{$detail['price'] * $order['part_vat'] /100}}</td>
-                                    <td>{{$detail['quantity'] * $detail['price'] * (1+ ($order['part_vat'] /100) )}}</td>
+                                    <td>{{$detail['price'] * $repair['part_vat'] /100}}</td>
+                                    <td>{{$detail['quantity'] * $detail['price'] * (1+ ($repair['part_vat'] /100) )}}</td>
 
                                 </tr>
                             @endforeach
@@ -77,23 +75,33 @@
                     </div><!-- /table-responsive -->
 
                     <table class="table invoice-total">
+
                         <tbody>
-                        <tr>
-                            <td><strong>Total HTVA :</strong></td>
-                            <td>€ {{ round($order['part_amount']  - ($order['part_amount'] *($order['part_vat'] /100)),2)  }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>TOTAL TVA :</strong></td>
-                            <td>€ {{round($order['part_amount'] * $order['part_vat'] /100,2)   }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Acompte :</strong></td>
-                            <td> €{{$order['advance_amount']}}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>TOTAL TVAC :</strong></td>
-                            <td>€ {{$order['part_amount']}}</td>
-                        </tr>
+
+                            <tr>
+                                <td><strong>Total HTVA :</strong></td>
+                                <td>€ {{ round($repair['part_amount']  - ($repair['part_amount'] *($repair['part_vat'] /100)),2)  }}</td>
+                                <td><strong>Total HTVA :</strong></td>
+                                <td>€ {{ round($repair['part_amount']  - ($repair['part_amount'] *($repair['part_vat'] /100)),2)  }}</td>
+                                <td><strong>Total HTVA :</strong></td>
+                                <td>€ {{ round($repair['part_amount']  - ($repair['part_amount'] *($repair['part_vat'] /100)),2)  }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TOTAL TVA :</strong></td>
+                                <td>€ {{round($repair['part_amount'] * $repair['part_vat'] /100,2)   }}</td>
+                                <td><strong>TOTAL TVA :</strong></td>
+                                <td>€ {{round($repair['part_amount'] * $repair['part_vat'] /100,2)   }}</td>
+                                <td><strong>TOTAL TVA :</strong></td>
+                                <td>€ {{round($repair['part_amount'] * $repair['part_vat'] /100,2)   }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Acompte :</strong></td>
+                                <td> €{{$repair['advance_amount']}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TOTAL TVAC :</strong></td>
+                                <td>€ {{$repair['part_amount']}}</td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -124,13 +132,13 @@
             $('#action-sendmail' ).click(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    'url' : '/invoice/order/{{$order->id}}',
+                    'url' : '/invoice/repair/{{$repair->id}}',
                     'data' : '_action=sendmail',
                     'dataType' : 'json',
                     'type' : 'GET',
                     'beforeSend' : function()
                     {
-                         client = {!! json_encode($order['client']) !!};
+                         client = {!! json_encode($repair['client']) !!};
                         if(client.email.length < 10) {
                             $.gritter.add({
                                 title: 'Attention, une erreur est survenue !',

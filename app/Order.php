@@ -36,10 +36,22 @@ class Order extends Model
     }
     public static function calculateInvoice($req)
     {
-        $total = 0;
-        $total = $req['part_amount'] * ( 1 + ($req['part_vat']/100) ) ;
+        $total['total'] = 0;
 
-        return round($total, 2);
+        if(isset($req['part_amount'])) {
+            $total['part'] = $req['part_amount'] * ( 1 + ($req['part_vat']/100) ) ;
+            $total['total'] += $total['part'];
+        }
+        if(isset($req['shifting_amount'])) {
+            $total['shifting'] = $req['shifting_amount'] * ( 1 + ($req['shifting_vat']/100) ) ;
+            $total['total'] += $total['shifting'];
+        }
+        if(isset($req['labor_amount'])) {
+            $total['labor'] = $req['labor_amount'] * ( 1 + ($req['labor_vat']/100) ) ;
+            $total['total'] += $total['labor'];
+        }
+        $total['total'] = round( $total['total'], 2);
+        return $total;
     }
 
     /*GETTER*/

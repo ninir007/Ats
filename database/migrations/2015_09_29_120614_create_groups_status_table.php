@@ -20,12 +20,13 @@ class CreateGroupsStatusTable extends Migration
 
         // Insert some stuff
         DB::table('groups_status')->insert([
-            ['label' => 'à faire'],
-            ['label' => 'à surveiller'],
-            ['label' => 'action demandée'],
-            ['label' => 'paiement'],
-            ['label' => 'cloturée'],
-            ['label' => 'aviser client']
+            ['label' => 'pre'],
+            ['label' => 'rep'],
+            ['label' => 'comm'],
+            ['label' => 'post'],
+            ['label' => 'opt'],
+            ['label' => 'devis'],
+            ['label' => 'devis-end']
 
         ]);
     }

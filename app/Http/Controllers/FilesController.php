@@ -15,6 +15,7 @@ use App\Supplier;
 use App\Order;
 use App\CodeStatus;
 use App\OrderDetails;
+use App\RepairDetails;
 use App\Category;
 use App\Brand;
 use App\Invoice;
@@ -24,23 +25,59 @@ use App\Http\Controllers\Controller;
 
 class FilesController extends Controller
 {
+    private $num = 0;
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function invoiceOrder($id , Request $req)
+    public function formOrder($id)
+    {
+        $order = File::where('id', $id)->with('order.details.article', 'client')->first();
+
+
+        return view('/pdf/form-order', ['order' => $order]);
+    }
+    public function invoiceOrder($id , Request $req, Invoice $invoice)
     {
         $order = File::where('id', $id)->with('order.details.article', 'client')->first();
         $num = $id * 12;
         $invoice = Invoice::firstOrNew(['file_id' => $id]);
         if(! isset($invoice['id'])) {
             $invoice['created_at'] = date("d-m-Y");
+            $invoice['number'] = $num;
             $invoice->save();
         }
+        if($req['_action'] == "sendmail") {
+            $response = $invoice->sendMail($invoice, $order);
+            return $response;
+        }
+
+//        return view('/pdf/order-invoice', ['order' => $order, 'invoice' => $invoice]);
 
         return view('/files/invoice-order', ['order' => $order, 'invoice' => $invoice]);
     }
+
+    public function invoiceRepair($id , Request $req, Invoice $invoice)
+    {
+        $repair = File::where('id', $id)->with('repair.details.article', 'client')->first();
+        $num = $id * 12;
+        $invoice = Invoice::firstOrNew(['file_id' => $id]);
+        if(! isset($invoice['id'])) {
+            $invoice['created_at'] = date("d-m-Y");
+            $invoice['number'] = $num;
+            $invoice->save();
+        }
+        if($req['_action'] == "sendmail") {
+            $response = $invoice->sendMail($invoice, $repair);
+            return $response;
+        }
+
+//        return view('/pdf/order-invoice', ['order' => $order, 'invoice' => $invoice]);
+
+        return view('/files/invoice-repair', ['repair' => $repair, 'invoice' => $invoice]);
+    }
+
     public function searchFile(Request $req)
     {
         $action = $req->input('_action');
@@ -91,12 +128,29 @@ class FilesController extends Controller
         }
         else if( $action == 'calculateInvoice') {
 
-            $total = Order::calculateInvoice($req);
-            if(isset($req['advance_amount'])) {
-                $file = File::find($id)->update(['advance_amount' => $req['advance_amount'], 'part_amount' => $total, 'part_vat' => $req['part_vat']]);
-                $response['remaining'] =  $total - $req['advance_amount'] ;
-                $response['total'] = $total;
+            $response = Order::calculateInvoice($req);
+
+            if(isset($req['shifting_amount'])) {
+                $params["shifting_amount"] = $req['shifting_amount'];
+                $params["shifting_vat"] = $req['shifting_vat'];
             }
+            if(isset($req['labor_amount'])) {
+                $params["labor_amount"] = $req['labor_amount'];
+                $params["labor_vat"] = $req['labor_vat'];
+            }
+            if(isset($req['part_amount'])) {
+                $params["part_amount"] = $req['part_amount'];
+                $params["part_vat"] = $req['part_vat'];
+            }
+
+            if(isset($req['advance_amount'])) {
+                $params["advance_amount"] = $req['advance_amount'];
+
+                $response['remaining'] =  $response['total'] - $req['advance_amount'] ;
+
+            }
+
+            $file = File::find($id)->update($params);
 
 
             $response = (isset($response)) ? ['status' => 'success', 'invoice' => $response] : ['status' => 'error'] ;
@@ -121,9 +175,35 @@ class FilesController extends Controller
 
             //UPDATE TOTAL
             $order = Order::where("file_id" , $id)->first();
-            $sum = $order->total - $totaled;
+            $sum = $order->total_details_amount - $totaled;
 
-            $order = Order::where(["file_id" => $id])->update(['total' => $sum]);
+            $order = Order::where(["file_id" => $id])->update(['total_details_amount' => $sum]);
+
+            $stamp = date('d/m/Y, H:i:s');
+
+            $res = ["status" => "success", "stamp" => $stamp, 'sum' => $sum];
+        }
+        else $res = ["status" => "error"];
+
+        return $res;
+    }
+
+
+    public function deleteRepair($id, Request $req)
+    {
+
+        $todelete = RepairDetails::find($req['repair_detail_id']);
+        $totaled = $todelete->price * $todelete->quantity;
+        $deleted = $todelete->delete();
+
+
+        if($deleted) {
+
+            //UPDATE TOTAL
+            $repair = Repair::where("file_id" , $id)->first();
+            $sum = $repair->total_details_amount - $totaled;
+
+            $repair = Repair::where(["file_id" => $id])->update(['total_details_amount' => $sum]);
 
             $stamp = date('d/m/Y, H:i:s');
 
@@ -164,6 +244,33 @@ class FilesController extends Controller
         return ["status" => "success", "new" => $response, "stamp" =>$stamp, 'sum' => $total];
     }
 
+    public function updateRepair($id, Request $req)
+    {
+
+        if(isset($req['article_id'])) {
+            $total = 0;
+
+            //UPDATE DETAIL & CALCULATE TOTAL
+            foreach($req['article_id'] as $key => $article) {
+
+                $detail = RepairDetails::firstOrCreate(['file_id' => $id, 'article_id' => $article]);
+                $detail->price = $req["price"][$key];
+                $detail->quantity = $req["quantity"][$key];
+
+                $detail->save();
+                $total += $req["price"][$key] * $req["quantity"][$key];
+                $response["art-".$article] = $detail->id;
+            }
+            //UPDATE TOTAL
+            $repair = Repair::where(["file_id" => $id]);
+
+            $repair->update(['total_details_amount' => $total]);
+            File::find($id)->touch();
+        }
+        $stamp = date('d/m/Y, H:i:s');
+        return ["status" => "success", "new" => $response, "stamp" =>$stamp, 'sum' => $total];
+    }
+
     public function editOrder($id)
     {
         $files = File::with('client', 'technicien')->get()->find($id);
@@ -190,12 +297,16 @@ class FilesController extends Controller
             return redirect('/404');
         }
         //$files = File::with('client', 'technicien')->get();
-        $repairs = Repair::where('file_id', $files['id'])->with('device')->first();
-        $repairs["modele"] =  Modeles::where('id', $repairs['device']['model_id'])->with('category', 'brand')->get();
+        $repairs = Repair::where('file_id', $files['id'])->with('device', 'details')->first();
+        $details = RepairDetails::where('file_id', $files['id'])->with('article.supplier')->get();
+        $repairs['repair_details'] = $details;
+        $repairs["modele"] =  Modeles::where('id', $repairs['device']['model_id'])->with('category', 'brand', 'articles')->first();
         $status = CodeStatus::with('group')->get();
+        $supp = Supplier::all();
+        $articles = Article::all();
 
         $leftmenu['files'] = 'active';
-        return view('/files/edit-repair', [ 'leftmenu' => $leftmenu, 'files' => $files, 'repairs' => $repairs, 'code_status' => $status ]);
+        return view('/files/edit-repair', [ 'leftmenu' => $leftmenu, 'files' => $files, 'repairs' => $repairs, 'code_status' => $status, 'suppliers'   => $supp, 'articles'   => $articles ]);
     }
 
 

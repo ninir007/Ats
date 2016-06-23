@@ -3,9 +3,7 @@
 @section('content')
 
         <div class="row">
-{{$orders}} _______
-            <br>
-            {{$files}}
+
             <div class="col-lg-9">
                 <div class="wrapper wrapper-content animated fadeInUp">
                     <div class="ibox">
@@ -74,9 +72,9 @@
                                         <div class="panel-heading">
                                             <div class="panel-options">
                                                 <ul class="nav nav-tabs">
-                                                    <li class=""><a href="#tab-order-details" data-toggle="tab">Articles</a></li>
+                                                    <li class="active"><a href="#tab-order-details" data-toggle="tab">Articles</a></li>
                                                     <li class=""><a href="#tab-2" data-toggle="tab">Historique</a></li>
-                                                    <li class="active"><a href="#tab-facturation" data-toggle="tab">Facturation</a></li>
+                                                    <li class=""><a href="#tab-facturation" data-toggle="tab">Facturation</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -84,7 +82,7 @@
                                         <div class="panel-body">
 
                                             <div class="tab-content">
-                                                <div class="tab-pane" id="tab-order-details">
+                                                <div class="tab-pane active" id="tab-order-details">
                                                     <div class="feed-activity-list">
                                                         <div class="row">
                                                                 <div class="col-md-12">
@@ -385,7 +383,7 @@
                                                     </table>
 
                                                 </div>
-                                                <div class="tab-pane active" id="tab-facturation">
+                                                <div class="tab-pane " id="tab-facturation">
                                                     <form id="invoiceSetting" class="form-horizontal">
 
                                                         <div class="form-group">
@@ -537,8 +535,7 @@
                             <h3>Documents</h3>
                             <ul class="list-unstyled file-list">
                                 <li><a id="generateInvoice" class="invoice-print" data-isvat="{{$files["client"]['vat']}}" target="_blank" href="/invoice/order/{{$files->id}}"><i class="fa fa-file"></i> Facture</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Bon de Commande</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Note d'envoi</a></li>
+                                <li><a id="generateOrderForm" target="_blank" href="/form/order/{{$files->id}}"><i class="fa fa-file"></i> Bon de Commande</a></li>
                             </ul>
                         </div>
                     </div>
@@ -593,7 +590,14 @@
             handleReportsUpdate();
             handleInvoiceSubmit();
             onInvoiceGeneration();
+            onOrderFormGeneration();
         });
+
+        function onOrderFormGeneration() {
+            $("#generateOrderForm" ).click(function(e) {
+
+            });
+        }
 
         function onInvoiceGeneration() {
             $("#generateInvoice" ).click(function(e) {
@@ -602,7 +606,7 @@
                 var hasvat = $(this ).data('isvat');
                 console.log(hasvat);
                 if (hasvat.length > 3) {
-                    alert("generate");
+
                 }
                 else {
                     $.gritter.add({
@@ -743,6 +747,7 @@
             $('#article-sel').on('change', function() {
                 var selected = $( "#article-sel option:selected" ),
                         price_selected = $(selected[0]).data('price');
+                console.log("changement prix");
                 $('#price' ).val(price_selected);
             });
 
@@ -819,6 +824,9 @@
                                 $(".updt-time").html(response.stamp);
                                 $('#total-order' ).html(response.sum);
                                 $('#invoice-part-amount' ).val(response.sum);
+
+                                $('#invoiceSetting' ).submit();
+
                             }
                             else
                             {

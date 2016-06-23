@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Mail;
+
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -22,6 +24,9 @@ class User extends Model implements AuthenticatableContract,
      * @var string
      */
     protected $table = 'users';
+
+    protected $name = '';
+
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +46,20 @@ class User extends Model implements AuthenticatableContract,
     public function files()
     {
         return $this->hasMany('App\Files', 'user_id');
+    }
+
+
+    public function sendMail($req) {
+        $this->name = $req['name'];
+        try {
+            Mail::send('/pdf/user-welcoming', ['nuser' => $req], function($message){
+                $message->to('bouzanih.mounir@gmail.com', 'some Guy')->subject('Bienvenue dans l\'equipe ATS CENTER, '.$this->name);
+            });
+        }
+        catch(Error $e) {
+            abort('500');
+        }
+        return['status' => 'success'];
     }
 }
 
