@@ -25,6 +25,15 @@ class File extends Model
         'sum_amount'
     ];
 
+    public function status()
+    {
+        return $this->hasMany('App\StatusFile', 'file_id');
+    }
+    public function laststatus()
+    {
+        return $this->hasMany('App\StatusFile', 'file_id')->orderBy('created_at', 'desc');
+    }
+
     public function client()
     {
         return $this->belongsTo('App\Client', 'client_id');

@@ -3,8 +3,7 @@
 @section('content')
 
         <div class="row">
-            {{$files}}|||<br>
-            {{$repairs}}
+
             <div class="col-lg-9">
                 <div class="wrapper wrapper-content animated fadeInUp">
                     <div class="ibox">
@@ -12,25 +11,28 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="m-b-md">
-                                        <a href="#" class="btn btn-white btn-xs pull-right">Edit project</a>
                                         <h2 style="font-weight: 700;">Réparation: {{$files->id.'R'.$files["client"]["id"]}}</h2>
 
                                     </div>
                                     <div class="col-lg-2">
                                         <dl class="dl-horizontal">
-                                            <dt>Statut actuel:</dt> <dd><span class="label label-primary">Active</span></dd>
+                                            <dt>Statut actuel:</dt>
+                                            <dd>
+                                                @if(isset($files['last_status']['code']))
+                                                    <span class="label label-primary" id="last-label-html">{{$files['last_status']['code']['label']}}</span>
+                                                    <input type="hidden" id="last-group" value="{{$files['last_status']['code']['group']['label']}}">
+                                                    <input type="hidden" id="last-step" value="{{$files['last_status']['code']['step']}}">
+                                                    <input type="hidden" id="last-label" value="{{$files['last_status']['code']['label']}}">
+                                                @else
+                                                    <span class="label label-primary" id="last-label-html"></span>
+                                                    <input type="hidden" id="last-group" value="">
+                                                    <input type="hidden" id="last-step" value="">
+                                                    <input type="hidden" id="last-label" value="">
+                                                @endif
+                                            </dd>
                                         </dl>
                                     </div>
                                     <div class="col-lg-10">
-                                        <dl class="dl-horizontal">
-                                            <dt>Completed:</dt>
-                                            <dd>
-                                                <div class="progress progress-striped active m-b-sm">
-                                                    <div style="width: 60%;" class="progress-bar"></div>
-                                                </div>
-                                                <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>
-                                            </dd>
-                                        </dl>
                                     </div>
 
                                 </div>
@@ -39,8 +41,8 @@
                                 <div class="col-lg-5">
                                     <dl class="dl-horizontal">
 
-                                        <dt>Technicien:</dt> <dd>{{$files["technicien"]["name"]}}</dd>
-                                        <dt>Client:</dt> <dd><a href="/clients" class="text-navy"> {{ $files["client"]["lastname"].' '. $files["client"]["firstname"] }}</a> </dd>
+                                        <dt>Technicien:</dt> <dd>{{$files["technicien"]->name}}</dd>
+                                        <dt>Client:</dt> <dd><a href="/clients" id="toggle-client" class="text-navy"> {{ $files["client"]["lastname"].' '. $files["client"]["firstname"] }}</a> </dd>
 
                                     </dl>
                                 </div>
@@ -96,8 +98,9 @@
                                             <div class="panel-options">
                                                 <ul class="nav nav-tabs">
                                                     <li class="active"><a href="#tab-order-details" data-toggle="tab">Articles</a></li>
-                                                    <li class=""><a href="#tab-2" data-toggle="tab">Historique</a></li>
+                                                    <li class=""><a href="#tab-hitory-status" data-toggle="tab">Historique Statut</a></li>
                                                     <li class=""><a href="#tab-facturation" data-toggle="tab">Facturation</a></li>
+                                                    <li class=""><a href="#tab-history-device" data-toggle="tab">Historique Appareil</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -126,6 +129,7 @@
 
                                                                     <div class="form-group">
                                                                         <div class="col-md-2">
+                                                                            <a title="Attribuer + d'articles pour le modéle : {{$repairs['modele']['name']}}" href="/articles?sel_modele={{$repairs['modele']['id']}}" target="_blank" class="btn btn-primary  btn-xs pull-right"><i class="fa fa-plus-square-o"></i>  {{$repairs['modele']['name']}}</a>
                                                                         </div>
                                                                         <div class="col-md-4">
 
@@ -196,199 +200,42 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="tab-pane" id="tab-2">
+                                                <div class="tab-pane" id="tab-hitory-status">
 
                                                     <table class="table table-striped">
                                                         <thead>
                                                         <tr>
-                                                            <th>Status</th>
-                                                            <th>Title</th>
-                                                            <th>Start Time</th>
-                                                            <th>End Time</th>
-                                                            <th>Comments</th>
+                                                            <th>Statut</th>
+                                                            <th>Tech</th>
+                                                            <th>Commentaire</th>
+                                                            <th>Date</th>
                                                         </tr>
                                                         </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
-                                                            </td>
-                                                            <td>
-                                                                Create project in webapp
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                                                                </p>
-                                                            </td>
+                                                        <tbody id="status-wrapper">
+                                                        @if(isset($files['status']))
+                                                            @foreach($files['status'] as $stat)
 
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                            </td>
-                                                            <td>
-                                                                Various versions
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                                </p>
-                                                            </td>
+                                                                <tr id="{{$stat['code']['id'].'-'.$stat['code']['group_status_id']}}">
+                                                                    <td>
+                                                                        <span class="label label-primary" title="{{$stat['code']['description']}}"> {{$stat['code']['label']}}</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{$stat['technicien']->name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <p class="small">
+                                                                            {{$stat['comment']}}
+                                                                        </p>
+                                                                    </td>
 
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                            </td>
-                                                            <td>
-                                                                There are many variations
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
-                                                                </p>
-                                                            </td>
+                                                                    <td>
+                                                                        {{$stat['created_at']}}
+                                                                    </td>
 
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                            </td>
-                                                            <td>
-                                                                Latin words
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    Latin words, combined with a handful of model sentence structures
-                                                                </p>
-                                                            </td>
+                                                                </tr>
 
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                            </td>
-                                                            <td>
-                                                                The generated Lorem
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                                                                </p>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                            </td>
-                                                            <td>
-                                                                The first line
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                                                                </p>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                            </td>
-                                                            <td>
-                                                                The standard chunk
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
-                                                                </p>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
-                                                            </td>
-                                                            <td>
-                                                                Lorem Ipsum is that
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                                                                </p>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                            </td>
-                                                            <td>
-                                                                Contrary to popular
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                                                                </p>
-                                                            </td>
-
-                                                        </tr>
+                                                            @endforeach
+                                                        @endif
 
                                                         </tbody>
                                                     </table>
@@ -499,6 +346,42 @@
 
                                                     </form>
                                                 </div>
+                                                <div class="tab-pane" id="tab-history-device">
+                                                    <strong>Historique d'activités</strong>
+                                                    <div id="vertical-timeline" class="vertical-container dark-timeline">
+                                                        @if(! empty($repairs['device']['history']))
+                                                            @foreach($repairs['device']['history'] as $history)
+                                                                @if($history['file_id'] != $files['id'])
+                                                                <div class="vertical-timeline-block">
+                                                                    <div class="vertical-timeline-icon navy-bg">
+                                                                        <i class="fa fa-wrench"></i>
+                                                                    </div>
+                                                                    <div class="vertical-timeline-content project-title">
+                                                                        <p><a target="_blank" href="/file/repair/{{$history['file_id']}}"><h4>Fiche #{{ $history['file']['id'].'R'.$history['file']['client_id'] }}</h4></a></p>
+                                                                        <p>
+                                                                            <label>Desc: </label>
+                                                                            <br> {{ $history['description'] }}
+                                                                        </p>
+                                                                        <p>
+                                                                            <label>Rapport: </label>
+                                                                            <br> {{ $history['file']['intern_report'] }}
+                                                                        </p>
+                                                                        <span class="vertical-date small text-muted">Date IN: {{ $history['file']['created_at'] }}</span>
+                                                                        @if(isset($history['out']))
+                                                                            <span class="vertical-date small text-muted pull-right">Date OUT: {{ $history['out']['created_at'] }}</span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                @endif
+                                                            @endforeach
+
+                                                            @else <div class="alert-danger">pas d'historique pour cet appareil chez ATS</div>
+                                                        @endif
+
+
+
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -512,31 +395,82 @@
             </div>
             <div class="col-lg-3">
                 <div class="wrapper wrapper-content project-manager">
-                    <div class="ibox">
+                    <div class="ibox" style="display: none" id="client-infos-ibox">
                         <div class="ibox-content">
-                            <h3>Statuts</h3>
+                            <div class="client-infos">
+                                <div class="full-height-scroll">
 
-                            <p class="small">
-                              debug :  en cas d'erreur
-                            </p>
+                                    <h3 style="color: #1ab394;text-decoration: underline;"><strong> {{ $files["client"]["lastname"].' '. $files["client"]["firstname"] }}</strong></h3>
 
-                            <div class="form-group">
-                                <label>Code statut</label>
-                                <select name="code_status" id="code_status_id" class="form-control" required>
-                                    @if(isset($code_status))
-                                        @foreach($code_status as $code)
-                                            <option value="{{ $code->id }}" > {{ $code->label }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                                    <ul class="list-group clear-list">
+
+                                        <li class="list-group-item fist-item">
+                                            <span id="details-creation" class="pull-right">{{$files["client"]["created_at"]}}  </span>
+                                            <strong>Création : </strong>
+                                        </li>
+                                        <li class="list-group-item details-tva" >
+                                            <span id="details-tva" class="pull-right">{{$files["client"]["vat"]}}</span>
+                                            <strong>TVA : </strong>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <span id="details-mobile" class="pull-right">{{$files["client"]["mobile"]}} </span>
+                                            <strong>Mobile : </strong>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span id="details-office" class="pull-right">{{$files["client"]["office"]}}  </span>
+                                            <strong>Bureau : </strong>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span id="details-office" class="pull-right">{{$files["client"]["email"]}}  </span>
+                                            <strong>Email : </strong>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span id="details-fax" class="pull-right">{{$files["client"]["fax"]}} </span>
+                                            <strong>Fax : </strong>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span id="details-address" class="pull-right" style="width: 70%;">{{$files["client"]["street"].' '.$files["client"]["city"].' '.$files["client"]["postal_code"]}} </span>
+                                            <strong>Adresse : </strong>
+                                        </li>
+
+                                    </ul>
+
+                                    <hr>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Commentaires</label>
-                                <textarea class="form-control" placeholder="note relative au statut" rows="3"></textarea>
-                            </div>
-                            <button class="btn btn-primary btn-block"><i class="fa fa-check" aria-hidden="true"></i></button>
-
                         </div>
+                    </div>
+                    <div class="ibox">
+                        <form id="form-status-code">
+                            <div class="ibox-content">
+                                <h3>Statuts</h3>
+
+                                <div class="form-group">
+                                    <label>Code statut</label>
+                                    <select name="code_status_id" id="code_status_id" class="form-control" required>
+                                        <option value="" disabled selected></option>
+
+                                        @if(isset($code_status))
+                                            @foreach($code_status as $code)
+
+                                                <option value="{{ $code->id }}" data-label="{{ $code->label }}" data-step="{{$code->step}}" data-group="{{$code->group->label}}" > {{ $code->label }}</option>
+
+                                            @endforeach
+                                        @endif
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Commentaires</label>
+                                    <textarea class="form-control" id="relativecomm" name="comment" placeholder="note relative au statut" rows="3"></textarea>
+                                </div>
+                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="file_id" value="{{$files["id"]}}">
+                                <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-check" aria-hidden="true"></i></button>
+
+                            </div>
+                        </form>
                     </div>
 
 
@@ -595,12 +529,189 @@
             handleInvoiceSubmit();
             handleReportsUpdate();
             onInvoiceGeneration();
+            onStatus();
+
+            onClientToggle();
+
             /*
-
-
-
-            onOrderFormGeneration();*/
+            onOrderFormGeneration();
+            */
         });
+        function onClientToggle() {
+            $('#toggle-client' ).click(function(e){
+                e.preventDefault();
+                $('#client-infos-ibox' ).toggle(800);
+            });
+        }
+        function  updateLast() {
+            var last = $( "#code_status_id option:selected" );
+            $('#last-group' ).val(last.data('group'));
+
+            $('#last-step' ).val(last.data('step'));
+
+            $('#last-label' ).val(last.data('label'));
+            $('#last-label-html' ).html(last.data('label'));
+        }
+
+        function logicalCheck()   {
+            var error = false;
+            //get last encoded +selected
+            var sel = $( "#code_status_id option:selected" ),
+                    sel_group = sel.data('group'),
+                    sel_step = sel.data('step'),
+                    sel_label = sel.data('label');
+
+            var last_group = $('#last-group' ).val(),
+                    last_step = $('#last-step' ).val(),
+                    last_label = $('#last-label').val();
+
+            if(last_group == 'PRE') {
+                if((sel_group != 'ECONO') && (sel_group != 'REP') && (sel_group != 'DEVIS')) {
+                    error = 'Statut selectionné non application à ce stade 1 !';
+                }
+            }
+            if(last_group == 'REP') {
+                if((sel_group != 'POST' || sel_step != 'IN') && (sel_group != 'COMM' || sel_step != 'IN' ) ) {
+                    error = 'Statut selectionné non application à ce stade 1 !';
+                }
+            }
+            if(last_group == 'ECONO' ) {
+                if ( sel_group != 'POST' || sel_step != 'IN') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+
+            if(last_group == 'POST' && last_step == 'IN') {
+                if ( sel_group != 'POST' || sel_step != 'MIDDLE') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'POST' && last_step == 'MIDDLE') {
+                if ( sel_group != 'POST' || sel_step != 'OUT') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'POST' && last_step == 'OUT') {
+                if ( sel_group != 'END' ) {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'END' ) {
+                if ( sel_group != 'OPT' ) {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'OPT' ) {
+                error = 'Statut selectionné non application à ce stade !';
+            }
+
+            if(last_group == 'COMM' && last_step == 'IN') {
+                if ( sel_group != 'COMM' || sel_step != 'MIDDLE') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'COMM' && last_step == 'MIDDLE') {
+                if ( sel_group != 'COMM' || sel_step != 'OUT') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'COMM' && last_step == 'OUT') {
+                if ( sel_group != 'POST' || sel_step != 'IN') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+
+            if(last_group == 'DEVIS' && last_step == 'IN') {
+                if ( sel_group != 'DEVIS' || sel_step != 'MIDDLE') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'DEVIS' && last_step == 'MIDDLE') {
+                if ( sel_group != 'DEVIS' || sel_step != 'OUT') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+            if(last_group == 'DEVIS' && last_step == 'OUT') {
+                if ( sel_group != 'DEVIS-END') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+
+            if(last_group == 'DEVIS-END') {
+                if ( sel_group != 'REP') {
+                    error = 'Statut selectionné non application à ce stade !';
+                }
+            }
+
+
+
+            return error;
+            //then go back to creation and create I/A's or I/A's + TDD mudda hungry !!
+        }
+
+        function onStatus() {
+            $('#form-status-code' ).submit(function(e) {
+                e.preventDefault();
+                var form = $(this ).serialize();
+
+                $.ajax({
+                    url: '/file/{{$files->id}}',
+                    data: '_action=setStatusOrder&'+form,
+                    dataType: 'json',
+                    type: 'POST',
+                    'beforeSend' : function()
+                    {
+                        var error = logicalCheck();
+
+                        if(error) {
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: error
+                            });
+
+                            return false;
+
+                        }
+
+                    },
+                    complete: function (xhr) {
+                        var response = JSON.parse( xhr.responseText );
+                        if(response.status == 'success') {
+
+                            var label = $( "#code_status_id option:selected" ).data("label");
+                            var inputs = response.new;
+                            var user = inputs.user;
+                            var toInsert ='<tr><td><span class="label label-primary" title="">'+label+'</span></td><td>'+user+'</td><td><p class="small">'+inputs.comment+'</p></td><td>'+inputs.created_at+'</td></tr>';
+
+                            updateLast();
+                            $(".updt-time").html(inputs.created_at);
+
+
+                            $( "#code_status_id option:selected" ).hide();
+                            $("#code_status_id" ).val(''); //set to blank
+                            $("#relativecomm" ).val(''); //set to blank
+
+                            $.gritter.add({
+                                title: 'Succès !',
+                                text: 'Statut appliqué : '+label
+                            });
+                            $( "#status-wrapper" ).append(toInsert); //append to tab
+
+
+                        }
+                        else {
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: "Validation échouée !"
+                            });
+                        }
+                        return false;
+                    }
+                });
+
+            });
+
+        }
 
 
         function onInvoiceGeneration() {

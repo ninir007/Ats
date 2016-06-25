@@ -45,6 +45,38 @@ class SuppliersController extends Controller
     }
 
 
+    public function supplierHandle(Request $req)
+    {
+        $action = $req->input('_action');
+
+
+        if( $action == 'editSupplier' )
+        {
+
+            $id = $req['id'];
+            $client = Supplier::find($id);
+            $client->name       = $_POST['name'];
+            $client->contact      = $_POST['contact'];
+            $client->email = $_POST['email'];
+            $client->street = $_POST['street'];
+            $client->postal_code = $_POST['postal_code'];
+            $client->city = $_POST['city'];
+            $client->vat = $_POST['vat'];
+            $client->mobile = $_POST['mobile'];
+            $client->office = $_POST['office'];
+            $client->fax = $_POST['fax'];
+
+            $client->save();
+            return response(["status" => "success", "redirect" => "/suppliers/".$id]);
+        }
+        else {
+
+        }
+
+
+
+
+    }
     public function handleAction(Request $request)
     {
 

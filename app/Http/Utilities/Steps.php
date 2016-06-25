@@ -5,11 +5,15 @@ namespace App\Http\Utilities;
 Class Steps
 {
     protected static $bigSteps = [
-        "DEBUT",
+        "PRE",
+        "REP",
+        "COMM",
+        "POST",
+        "OPT",
         "DEVIS",
-        "COMMANDE",
-        "FINALE",
-        "PREFINALE"
+        "DEVIS-END",
+        "ECONO",
+        "END",
     ];
     protected static $detailSteps = [
         "IN",

@@ -45,12 +45,6 @@
                         </address>
                     </div>
 
-
-
-
-
-
-
                     <div class="col-sm-6 text-right">
                         <h4>Facture No.</h4>
                         <h4 class="text-navy">{{$invoice['number']}}</h4>

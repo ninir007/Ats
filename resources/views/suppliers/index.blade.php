@@ -8,16 +8,9 @@
             <div class="ibox-title">
                 <h5>Liste des fournisseurs</h5>
                 <div class="ibox-tools">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a data-toggle="modal" data-target="#modalAddSupplier">Créer</a></li>
-                        <li><a href="#">Config option 2</a>
-                        </li>
-                    </ul>
-
+                    <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalAddSupplier"> <i class="fa fa-wrench"></i> Créer</a>
                 </div>
+
             </div>
             <div class="ibox-content">
                 <div class="col-lg-12 right" style="margin-bottom: 10px; text-align: right">
@@ -27,7 +20,7 @@
                     <a href="#" data-column="2" class="toggle-vis btn btn-primary btn-xs">Adresse</a>
                     <a href="#" data-column="3" class="toggle-vis btn btn-primary btn-xs">Code postal</a>
                     <a href="#" data-column="4" class="toggle-vis btn btn-primary btn-xs">Ville</a>
-                    <a href="#" data-column="5" class="toggle-vis btn btn-primary btn-xs">Pays</a>
+                    <a href="#" data-column="5" class="toggle-vis btn btn-primary btn-xs">Tva</a>
                     <a href="#" data-column="6" class="toggle-vis btn btn-primary btn-xs">Email</a>
                     <a href="#" data-column="7" class="toggle-vis btn btn-primary btn-xs">Mobile</a>
                     <a href="#" data-column="8" class="toggle-vis btn btn-primary btn-xs">Bureau</a>
@@ -45,7 +38,7 @@
                             <th>Adresse</th>
                             <th>Code postal</th>
                             <th>Ville</th>
-                            <th>Pays</th>
+                            <th>Tva</th>
                             <th>Email</th>
                             <th>Mobile</th>
                             <th>Bureau</th>
@@ -64,7 +57,7 @@
                                     <td>{{$supp['street']}}</td>
                                     <td>{{$supp['postal_code']}}</td>
                                     <td>{{$supp['city']}}</td>
-                                    <td>{{$supp['country']}}</td>
+                                    <td>{{$supp['vat']}}</td>
                                     <td>{{$supp['email']}}</td>
                                     <td>{{$supp['mobile']}}</td>
                                     <td>{{$supp['office']}}</td>
@@ -131,8 +124,8 @@
                                     <input class="form-control" name="city" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Pays :</label>
-                                    <input class="form-control" name="country" required>
+                                    <label>Tva :</label>
+                                    <input class="form-control" name="vat" required>
                                 </div>
                             </div>
 

@@ -37,5 +37,9 @@ class Device extends Model
     {
         return $this->hasMany('App\Repair', 'device_id');
     }
+    public function history()
+    {
+        return $this->hasMany('App\Repair', 'device_id');
+    }
 
 }

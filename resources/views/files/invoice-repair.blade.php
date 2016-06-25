@@ -14,8 +14,8 @@
 
     <div id='toprint' class="row">
         <div class="col-lg-12">
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="ibox-content p-xl">
+            <div class="wrapper wrapper-content animated fadeInRight " style="    padding-bottom: 0;">
+                <div class="ibox-content p-xl my-page">
                     <div class="row">
                         <div class="col-sm-6">
                             <address>
@@ -46,67 +46,117 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive m-t">
-                        <table class="table invoice-table">
+
+                        <table class="table-principal">
                             <thead>
-                                <tr>
-                                    <th>Articles</th>
-                                    <th>Quantité</th>
-                                    <th>Prix/u</th>
-                                    <th>Tva ({{$repair['part_vat'].'%'}})</th>
-                                    <th>Total</th>
-                                </tr>
+
+                                    <th></th>
+                                    <th></th>
+
                             </thead>
                             <tbody>
-                            @foreach($repair['repair']['details'] as $detail)
-                                <tr>
-                                    <td><div><strong>{{$detail['article']['description']}}</strong></div>
-                                        <small>{{$detail['article']['reference']}}</small></td>
-                                    <td>{{$detail['quantity']}}</td>
-                                    <td>{{$detail['price']}}</td>
-                                    <td>{{$detail['price'] * $repair['part_vat'] /100}}</td>
-                                    <td>{{$detail['quantity'] * $detail['price'] * (1+ ($repair['part_vat'] /100) )}}</td>
 
+                                <tr>
+                                    <td>
+                                        <table class="table-a">
+                                            <tbody>
+                                            <tr>
+                                                <th>#Fiche</th>
+                                                <th class="text-navy"> <strong>@if($repair['type'] == 'REPAIR'){{$repair['id'].'R'.$repair['client_id']}} @else {{$repair['id'].'R'.$repair['client_id']}} @endif</strong></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Modele</th>
+                                                <th>{{$repair['repair']['device']['modele']['name']}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Marque</th>
+                                                <th>{{$repair['repair']['device']['modele']['brand']['name']}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Categorie</th>
+                                                <th>{{$repair['repair']['device']['modele']['category']['name']}}</th>
+
+                                            </tr>
+                                            <tr>
+                                                <th>N° Serie</th>
+                                                <th>{{$repair['repair']['device']['serial_number']}}</th>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td class="td-rapport">
+                                        <label class="label-rapport">Rapport Client:</label>
+                                        <textarea class="" id="" cols="50" rows="10">{{$repair['client_report']}}</textarea>
+
+                                    </td>
                                 </tr>
-                            @endforeach
+
 
                             </tbody>
                         </table>
-                    </div><!-- /table-responsive -->
 
-                    <table class="table invoice-total">
+
+                    <table class="table-b">
 
                         <tbody>
-
                             <tr>
-                                <td><strong>Total HTVA :</strong></td>
-                                <td>€ {{ round($repair['part_amount']  - ($repair['part_amount'] *($repair['part_vat'] /100)),2)  }}</td>
-                                <td><strong>Total HTVA :</strong></td>
-                                <td>€ {{ round($repair['part_amount']  - ($repair['part_amount'] *($repair['part_vat'] /100)),2)  }}</td>
-                                <td><strong>Total HTVA :</strong></td>
-                                <td>€ {{ round($repair['part_amount']  - ($repair['part_amount'] *($repair['part_vat'] /100)),2)  }}</td>
+                                <td><strong>Acompte</strong></td>
+                                <td>{{$repair["advance_amount"]}}</td>
                             </tr>
                             <tr>
-                                <td><strong>TOTAL TVA :</strong></td>
-                                <td>€ {{round($repair['part_amount'] * $repair['part_vat'] /100,2)   }}</td>
-                                <td><strong>TOTAL TVA :</strong></td>
-                                <td>€ {{round($repair['part_amount'] * $repair['part_vat'] /100,2)   }}</td>
-                                <td><strong>TOTAL TVA :</strong></td>
-                                <td>€ {{round($repair['part_amount'] * $repair['part_vat'] /100,2)   }}</td>
+                                <td><strong>Deplacement :</strong></td>
+                                <td>€ {{ $repair['shifting_amount']  }}</td>
+                                <td><strong>TVA ({{$repair['shifting_vat']}}%) :</strong></td>
+                                <td>€ {{ round($repair['shifting_amount'] * ($repair['shifting_vat'] /100),2)  }}</td>
+                                <td><strong>TVAC :</strong></td>
+                                <td>€ {{ round($repair['shifting_amount']  * (1 +($repair['shifting_vat'] /100)),2)  }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Acompte :</strong></td>
-                                <td> €{{$repair['advance_amount']}}</td>
+                                <td><strong>Main d'oeuvre</strong></td>
+                                <td>€ {{ $repair['labor_amount']  }}</td>
+                                <td><strong>TVA ({{$repair['labor_vat']}}%) :</strong></td>
+                                <td>€ {{ round($repair['labor_amount'] * ($repair['labor_vat'] /100),2)  }}</td>
+                                <td><strong>TVAC :</strong></td>
+                                <td>€ {{ round($repair['labor_amount']  * (1 +($repair['labor_vat'] /100)),2)  }}</td>
                             </tr>
                             <tr>
+                                <td><strong>Piece</strong></td>
+                                <td>€ {{ $repair['part_amount']  }}</td>
+                                <td><strong>TVA ({{$repair['part_vat']}}%) :</strong></td>
+                                <td>€ {{ round($repair['part_amount'] * ($repair['part_vat'] /100),2)  }}</td>
+                                <td><strong>TVAC :</strong></td>
+                                <td>€ {{ round($repair['part_amount']  * (1 +($repair['part_vat'] /100)),2)  }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td><strong>TOTAL TVAC :</strong></td>
-                                <td>€ {{$repair['part_amount']}}</td>
+                                <td>€ {{$repair['sum_amount']}}</td>
                             </tr>
                         </tbody>
                     </table>
 
-
-                    <div class="well m-t"><strong>PAIEMENT :</strong> A LA RECEPTION DE LA FACTURE</div>
+                    <div class="well m-t terme"><strong>PAIEMENT :</strong> A LA RECEPTION DE LA FACTURE</div>
+                    <table class="table-open">
+                        <tbody>
+                        <tr>
+                            <td>
+                                Ouvert du Lundi au Vendredi de 10h à 12h et de 13h à 18h.
+                            </td>
+                            <td>
+                                FERME LE LUNDI
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Samedi de 10h à 14h.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -31,6 +31,9 @@ class CodeStatusController extends Controller
 
         if( $action == 'addCode' )
         {
+            $this->validate($request, [
+                'label' => 'required|unique:codes_status',
+            ]);
             CodeStatus::create( $request->all() );
             flash()->success('Opération réussie!', 'Code créé avec succés.');
         }

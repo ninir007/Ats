@@ -31,6 +31,7 @@
 
         <!-- ATS Custom -->
         <link href="/css/ats.css" rel="stylesheet">
+        @yield('top')
 
     </head>
     <body class=" pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
@@ -42,12 +43,14 @@
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
-                        <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="/img/profile_small.jpg">
-                             </span>
+                        <div class="dropdown profile-element">
+                            <span class="adapt">
+                                <img alt="image" class="img-circle" src="/img/img_generic_person.jpg">
+
+                            </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{!! Auth::user()->name !!}</strong>
-                             </span> <span class="text-muted text-xs block">Senior technicien <b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">Technicien <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="/profile">Profile</a></li>
                                 <li><a href="/technicien/notes">Notes</a></li>
@@ -93,7 +96,7 @@
                         </li>
 
 
-                        <li class=" {{ isset($leftmenu['client']) ? $leftmenu['client'] : '' }}">
+                        <li class=" {{ isset($leftmenu['tech']) ? $leftmenu['tech'] : '' }}">
                             <a href="/new-user"><i class="fa fa-plus"></i> <span class="nav-label">Technicien</span></a>
                         </li>
                     @endif
@@ -112,7 +115,7 @@
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                        <form role="search" class="navbar-form-custom" action="/file" method="post">
+                        <form id="massivesearchform" role="search" class="navbar-form-custom" action="/file" method="post">
                             <div class="form-group">
                                 <input type="text" placeholder="Rechercher fiche..." class="form-control" name="top_search" id="top_search" required>
                                 <input type="hidden" value="massiveSearch" name="_action">
@@ -181,48 +184,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="/#">
-                                <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-alerts">
-                                <li>
-                                    <a href="/mailbox.html">
-                                        <div>
-                                            <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                            <span class="pull-right text-muted small">4 minutes ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="/profile.html">
-                                        <div>
-                                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                            <span class="pull-right text-muted small">12 minutes ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="/grid_options.html">
-                                        <div>
-                                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                            <span class="pull-right text-muted small">4 minutes ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="text-center link-block">
-                                        <a href="/notifications.html">
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
+
 
 
                         <li>

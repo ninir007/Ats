@@ -36,9 +36,23 @@ class Invoice extends Model
     }
 
     public function sendMail($invoice, $order) {
+
         $this->num = $invoice->number;
         try {
             Mail::send('/pdf/order-invoice', ['order' => $order, 'invoice' => $invoice], function($message){
+                $message->to('bouzanih.mounir@gmail.com', 'some Guy')->subject('Votre facture : '.$this->num);
+            });
+        }
+        catch(Error $e) {
+            abort('500');
+        }
+        return['status' => 'success'];
+    }
+    public function sendRepairMail($invoice, $order) {
+
+        $this->num = $invoice->number;
+        try {
+            Mail::send('/pdf/repair-invoice', ['repair' => $order, 'invoice' => $invoice], function($message){
                 $message->to('bouzanih.mounir@gmail.com', 'some Guy')->subject('Votre facture : '.$this->num);
             });
         }

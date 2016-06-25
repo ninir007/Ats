@@ -47,7 +47,7 @@
                         <span class="label label-warning" id="model-stat"></span>
                         <h5> &nbsp; Fournisseur <small>- details</small> </h5>
                         <div class="ibox-tools">
-                            <button class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i></button>
+                            <button data-target="#modalEditSupplier" data-toggle="modal" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i></button>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -75,8 +75,8 @@
                                             <input class="form-control" value="{{$supp->city}}" disabled="" name="city" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Pays :</label>
-                                            <input class="form-control" value="{{$supp->country}}" disabled="" name="country" required>
+                                            <label>Tva :</label>
+                                            <input class="form-control" value="{{$supp->vat}}" disabled="" name="country" required>
                                         </div>
                                     </div>
 
@@ -160,6 +160,79 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal edit supplier -->
+    <div id="modalEditSupplier" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <!--Modal Content-->
+            <div class="modal-content">
+                <form method="post" role="form" autocomplete="off" id="formEditSupplier">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                        <h4 class="modal-title">Nouveau fournisseur</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nom :</label>
+                                    <input class="form-control" name="name" required autofocus value="{{$supp->name}}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Adresse :</label>
+                                    <input class="form-control" name="street" required value="{{$supp->street}}"/>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Code Postal :</label>
+                                    <input class="form-control" name="postal_code" required value="{{$supp->postal_code}}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ville :</label>
+                                    <input class="form-control" name="city" required value="{{$supp->city}}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tva :</label>
+                                    <input class="form-control" name="vat" required value="{{$supp->vat}}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Contact :</label>
+                                    <input class="form-control" name="contact" required value="{{$supp->contact}}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email :</label>
+                                    <input class="form-control" type="email" name="email" required value="{{$supp->email}}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label> Mobile:</label>
+                                    <input class="form-control" name="mobile"  placeholder="( facultatif)" value="{{$supp->mobile}}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Bureau :</label>
+                                    <input class="form-control" name="office"  placeholder="( facultatif)" value="{{$supp->office}}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fax :</label>
+                                    <input class="form-control" name="fax"  placeholder="( facultatif)" value="{{$supp->fax}}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="_action" value="editSupplier" />
+                        <input type="hidden" name="id" value="{{$supp->id}}" />
+                        {{ csrf_field() }}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="submit" id="btnSubmitFormEditSupp" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @stop
 
 
@@ -174,9 +247,66 @@
                 return false;
             });
 
+            $('#formEditSupplier').submit(function(e){
+                e.preventDefault();
+                handleSubmitFormEditSupp($(this ).serialize());
+                return false;
+            });
+
+
 
 
         });
+
+        function handleSubmitFormEditSupp(form) {
+
+            $.ajax({
+                'url' : '/suppliers/{{$supp->id}}',
+                'data' : form,
+                'dataType' : 'json',
+                'type' : 'POST',
+                'beforeSend' : function()
+                {
+
+                },
+                'complete' : function(xhr) {
+                    if(xhr.status == '200')
+                    {
+                        var response = JSON.parse( xhr.responseText );
+                        if(response.status == 'success')
+                        {
+                            $.gritter.add({
+                                title: 'Succès !',
+                                text: 'Edition fournisseur effectuée !'
+                            });
+
+                            setTimeout(function() {
+                                window.location.href = response.redirect;
+
+                            }, 1900);
+
+
+                        }
+                        else
+                        {
+                            $.gritter.add({
+                                title: 'Attention, une erreur est survenue !',
+                                text: "Validation échouée !"
+                            });
+                        }
+                        return false;
+                    }
+                    else {
+                        $.gritter.add({
+                            title: 'Attention, une erreur est survenue !',
+                            text: "Erreur DB : validation échouée !"
+                        });
+                    }
+                    return false;
+                }
+            });
+
+        }
 
         function handleSubmitFormAddArt()
         {

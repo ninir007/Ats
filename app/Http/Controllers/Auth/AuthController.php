@@ -66,8 +66,8 @@ class AuthController extends Controller
 
 
     public function authenticated( \Illuminate\Http\Request $request, \App\User $user ) {
-        $use = $user['name'];
-        flash("ATS REPAIR CENTER" , "Bienvenue ". $use." !");
+
+        flash("ATS REPAIR CENTER" , "Bienvenue ". $user->name." !");
         return redirect()->intended( $this->redirectPath() );
     }
 }

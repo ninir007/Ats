@@ -23,6 +23,7 @@ Route::post('/clients', 'ClientsController@handleAction');
 Route::get('/suppliers', 'SuppliersController@index');
 Route::post('/suppliers', 'SuppliersController@handleAction');
 Route::get('/suppliers/{id}', 'SuppliersController@supplierDetails')->where('id', '[0-9]*');
+Route::post('/suppliers/{id}', 'SuppliersController@supplierHandle')->where('id', '[0-9]*');
 
 //Category + Brand
 Route::get('/category-model', 'CategoryController@index');

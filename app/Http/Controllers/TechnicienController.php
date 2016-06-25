@@ -56,7 +56,9 @@ class TechnicienController extends Controller
 
     public function newTech(Request $req)
     {
-        return view('/techniciens/create');
+
+        $leftmenu['tech'] = 'active';
+        return view('/techniciens/create', ['leftmenu' => $leftmenu]);
     }
 
     public function registerTech(Request $req, User $user)

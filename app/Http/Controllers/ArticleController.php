@@ -26,7 +26,16 @@ class ArticleController extends Controller
 
         $leftmenu['model'] = 'active';
         $leftmenu['model_article'] = 'active';
-        return view('/articles/index', ['leftmenu' => $leftmenu, 'modeles' => $modele, 'article_modele' => $articles_modeles, 'suppliers' => $supp]);
+
+        if(isset($_GET['sel_modele'])){
+            $response = ['leftmenu' => $leftmenu, 'modeles' => $modele, 'article_modele' => $articles_modeles, 'suppliers' => $supp, 'selection' => $_GET['sel_modele']];
+
+        }
+        else {
+            $response = ['leftmenu' => $leftmenu, 'modeles' => $modele, 'article_modele' => $articles_modeles, 'suppliers' => $supp];
+
+        }
+        return view('/articles/index', $response);
     }
     public function handleAction(Request $request)
     {

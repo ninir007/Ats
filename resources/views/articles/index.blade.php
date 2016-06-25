@@ -3,6 +3,7 @@
 
 @section('content')
 <div class="row">
+
     <div class="col-sm-6">
         <div class="ibox float-e-margins" >
             <div class="ibox-title">
@@ -70,7 +71,7 @@
 
                             <div class="form-group">
                                 <label>Reference : </label> <small>3 min.</small>
-                                <input class="form-control" type="text" id="reference" name="reference" pattern=".{3,}" autofocus required/>
+                                <input class="form-control" type="text" id="reference" name="reference" pattern=".{3,}"  required/>
                             </div>
                             <div class="form-group">
                                 <label>Description :</label>
@@ -118,7 +119,7 @@
 
                             <div class="form-group">
                                 <label>Article :</label>
-                                <select name="article_id" id="article_id" class="form-control" required>
+                                <select name="article_id" id="article_id" class="form-control" required @if(isset($selection)) autofocus @endif>
                                     <option value="" selected disabled="">--</option>
                                     @if(isset($article_modele))
                                         @foreach($article_modele as $mod)
@@ -134,7 +135,7 @@
                                     <option value="" selected disabled="">--</option>
                                     @if(isset($modeles))
                                         @foreach($modeles as $mod)
-                                            <option value="{{ $mod->id }}"> {{ $mod->name }} ( {{ $mod->category->name }} - {{ $mod->brand->name }} )</option>
+                                            <option value="{{ $mod->id }}" @if(isset($selection) && $selection == $mod->id) selected @endif> {{ $mod->name }} ( {{ $mod->category->name }} - {{ $mod->brand->name }} )</option>
                                         @endforeach
                                     @endif
                                 </select>

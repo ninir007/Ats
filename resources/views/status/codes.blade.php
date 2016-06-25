@@ -85,7 +85,7 @@
                                     <label>Etape :</label>
                                     <select name="step" id="step" class="form-control" required>
                                         <option value="" selected disabled="">--</option>
-                                        @foreach($steps::getBig() as $step)
+                                        @foreach($steps::getDetails() as $step)
                                         <option value="{{ $step }}"> {{ $step }}</option>
                                         @endforeach
                                     </select>
@@ -98,15 +98,7 @@
                                     <label>Description :</label>
                                     <textarea rows="5" cols="30" class="form-control" id="description" name="description" required ></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label>Etape_Etape :</label>
-                                    <select name="step_step" id="step_step" class="form-control" required>
-                                        <option value="" selected disabled="">--</option>
-                                        @foreach($steps::getDetails() as $step)
-                                            <option value="{{ $step }}"> {{ $step }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
                             </div>
                         </div>
 
@@ -155,7 +147,7 @@
                                     <label>Etape :</label>
                                     <select name="step" id="editstep" class="form-control" required>
                                         <option value="" selected disabled="">--</option>
-                                        @foreach($steps::getBig() as $step)
+                                        @foreach($steps::getDetails() as $step)
                                         <option value="{{ $step }}"> {{ $step }}</option>
                                         @endforeach
                                     </select>
@@ -168,15 +160,7 @@
                                     <label>Description :</label>
                                     <textarea rows="5" cols="30" class="form-control" id="editdescription" name="description" required ></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label>Etape_Etape :</label>
-                                    <select name="step_step" id="editstep_step" class="form-control" required>
-                                        <option value="" selected disabled="">--</option>
-                                        @foreach($steps::getDetails() as $step)
-                                            <option value="{{ $step }}"> {{ $step }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
                             </div>
                         </div>
 

@@ -18,7 +18,7 @@ class CreateStatusFilesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('code_status_id')->unsigned();
             $table->mediumText('comment');
-            $table->date('created_at');
+            $table->timestamp('created_at');
 
             $table->foreign('file_id')
                 ->references('id')

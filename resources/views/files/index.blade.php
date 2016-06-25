@@ -5,7 +5,6 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="wrapper wrapper-content animated fadeInUp">
-
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Liste des Fiches</h5>
@@ -18,21 +17,28 @@
                     <div class="ibox-content">
 
                         <div class="project-list">
+                            <div class="col-lg-6">
+                                <div class="input-group" style="padding-top: 5px">
+                                    <input type="text" placeholder="Filtrer " id="filter" class="input form-control filter-status">
+                                <span class="input-group-btn">
+                                       <button href="#clear" title="clear filter" type="button" class="btn btn btn-primary clear-filter"> <i class="fa fa-refresh"></i> Reset</button>
+                                </span>
+                                </div>
+                            </div>
 
-                            <table class="footable table table-hover">
+                            <table class="footable table table-hover" data-filter-minimum="2" data-page-size="10" data-filter="#filter">
                                 <thead>
 
                                 <tr>
-
-
-                                    <th style="text-align:center;"> #</th>
-                                    <th style="text-align:center;"> Titre</th>
-                                    <th style="text-align:center;"> Achèvement</th>
+                                    <th > #</th>
+                                    <th > Titre</th>
+                                    <th > Statut</th>
                                     <th style="text-align:center;"> Client</th>
-                                    <th style="text-align:right;"> Action</th>
+                                    <th style="text-align:right;">Consulter</th>
 
                                 </tr>
                                 </thead>
+
                                 <tbody>
                                 @foreach ($files as $file)
                                     @if($file->type == 'REPAIR' )
@@ -45,17 +51,14 @@
                                                 <br>
                                                 <small>Créé {{ $file->created_at }}</small>
                                             </td>
-                                            <td class="project-completion">
-                                                <small>Completion with: 48%</small>
-                                                <div class="progress progress-mini">
-                                                    <div style="width: 48%;" class="progress-bar"></div>
-                                                </div>
+                                            <td class="project-status">
+                                                <span class="label label-primary">@if(isset($file['laststatus'][0])){{$file['laststatus'][0]['code']['label']}}@endif</span>
                                             </td>
                                             <td class="project-people"  style="text-align:center;">
                                                 <p>{{$file->client->lastname}} {{$file->client->firstname}}</p>
                                             </td>
                                             <td class="project-actions" >
-                                                <a href="/file/repair/{{$file->id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
+                                                <a href="/file/repair/{{$file->id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> </a>
                                             </td>
                                         </tr>
 
@@ -69,23 +72,29 @@
                                                 <br>
                                                 <small>Créé {{ $file->created_at }}</small>
                                             </td>
-                                            <td class="project-completion">
-                                                <small>Completion with: 48%</small>
-                                                <div class="progress progress-mini">
-                                                    <div style="width: 48%;" class="progress-bar"></div>
-                                                </div>
+                                            <td class="project-status">
+                                                <span class="label label-primary">@if(isset($file['laststatus'][0])){{$file['laststatus'][0]['code']['label']}}@endif</span>
                                             </td>
                                             <td class="project-people"  style="text-align:center;">
                                                 <p>{{$file->client->lastname}} {{$file->client->firstname}}</p>
                                             </td>
                                             <td class="project-actions" >
-                                                <a href="/file/order/{{$file->id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
+                                                <a href="/file/order/{{$file->id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> </a>
                                             </td>
                                         </tr>
                                     @endif
 
                                 @endforeach
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right"></ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+
                             </table>
                         </div>
                     </div>
@@ -146,8 +155,10 @@
 @section('script.files')
     <script type="text/javascript">
 
-//        $('.footable').footable();
+
         $(document).ready(function(){
+            $('.footable').footable();
+
 
             $('#loading-example-btn').click(function () {
                 btn = $(this);
@@ -158,7 +169,17 @@
             handleAutocomplete('clientkeyword','_filtertype','client_id');
             handlerCreateFileByClient();
 
+            onClearTable();
+
         });
+        function onClearTable() {
+            $('.clear-filter').click(function (e) {
+                e.preventDefault();
+                $('.filter-status').val('');
+                $('table.footable').trigger('footable_clear_filter');
+            });
+        }
+
 
         function handlerCreateFileByClient()
         {

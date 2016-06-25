@@ -12,40 +12,37 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
                     </div>
                 </div>
                 <div class="ibox-content">
                     <table class="table table-hover no-margins">
                         <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Client</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Client</th>
+                            <th class="text-center">Tech</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="text-center text-navy">7R2</td>
-                            <td><small>Pending...</small></td>
-                            <td><i class="fa fa-clock-o"></i> 2016-05-24 08:47:40</td>
-                            <td>tarantino quentin</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center text-navy">3R2</td>
-                            <td><small>Pending...</small> </td>
-                            <td><i class="fa fa-clock-o"></i> 2016-05-31 14:38:30</td>
-                            <td>tarantino quentin</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center text-navy">29R5</td>
-                            <td><small>Pending...</small> </td>
-                            <td><i class="fa fa-clock-o"></i> 2016-05-28 12:56:57</td>
-                            <td>Luc lemoine</td>
-                        </tr>
+                        @if(isset($files['repair_to_do']))
+                            @if(!empty($files['repair_to_do']))
+                                @foreach($files['repair_to_do'] as $file)
+                                    @if($file['type'] == 'REPAIR')
+                                    <tr>
+                                        <td class="text-center text-navy" ><a class="text-center text-navy" target="_blank" href="/file/repair/{{$file['id']}}">{{$file['id'].'R'.$file['client_id']}}</a></td>
+                                        <td class="text-center"><small><span class="label label-primary" >{{$file['laststatus'][0]['code']['label']}}</span></small></td>
+                                        <td class="text-center"><i class="fa fa-clock-o"></i> {{$file['laststatus'][0]['created_at']}}</td>
+                                        <td class="text-center">{{$file['client']['firstname'].' '.$file['client']['lastname']}}</td>
+                                        <td class="text-center">{{$file['laststatus'][0]['technicien']['name']}}</td>
+                                    </tr>
+                                    @endif
+                                @endforeach
+                            @endif
+
+                        @endif
+
                         </tbody>
                     </table>
                 </div>
@@ -59,45 +56,40 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
+                        
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <ul class="todo-list m-t small-list">
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
-                            <span class="m-l-xs todo-completed">Buy a milk</span>
+                    <table class="table table-hover margin bottom">
+                        <thead>
+                        <tr>
+                            <th style="width: 1%" class="text-center">No.</th>
+                            <th class="text-center">Statut</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Client</th>
+                            <th class="text-center">Tech</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if(isset($files['aviser']))
+                            @if(!empty($files['aviser']))
+                                @foreach($files['aviser'] as $file)
+                                    <tr>
+                                        <td class="text-center text-danger" ><a class="text-center text-danger" target="_blank" @if($file['type'] == 'ORDER') href="/file/order/{{$file['id']}}" @else href="/file/repair/{{$file['id']}}"@endif > @if($file['type'] == 'ORDER'){{$file['id'].'O'.$file['client_id']}} @else {{$file['id'].'R'.$file['client_id']}} @endif  </a></td>
+                                        <td class="text-center"><small><span class="label label-danger">{{$file['laststatus'][0]['code']['label']}}</span></small></td>
+                                        <td class="text-center"><i class="fa fa-clock-o"></i> {{$file['laststatus'][0]['created_at']}}</td>
+                                        <td class="text-center">{{$file['client']['firstname'].' '.$file['client']['lastname']}}</td>
+                                        <td class="text-center">{{$file['laststatus'][0]['technicien']['name']}}</td>
+                                    </tr>
 
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Go to shop and find some products.</span>
+                                @endforeach
+                            @endif
 
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Send documents to Mike</span>
-                            <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 mins</small>
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Go to the doctor dr Smith</span>
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
-                            <span class="m-l-xs todo-completed">Plan vacation</span>
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Create new stuff</span>
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Call to Anna for dinner</span>
-                        </li>
-                    </ul>
+                        @endif
+
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -109,9 +101,7 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
+
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -119,31 +109,30 @@
                         <thead>
                         <tr>
                             <th style="width: 1%" class="text-center">No.</th>
+                            <th class="text-center">Statut</th>
                             <th class="text-center">Date</th>
-                            <th class="text-center">Amount</th>
+                            <th class="text-center">Client</th>
+                            <th class="text-center">Tech</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="text-center text-navy">24O3</td>
+                        @if(isset($files['order_to_do']))
+                            @if(!empty($files['order_to_do']))
+                                @foreach($files['order_to_do'] as $file)
+                                    <tr>
+                                        <td class="text-center text-navy" ><a class="text-center text-navy" target="_blank" @if($file['type'] == 'ORDER') href="/file/order/{{$file['id']}}" @else href="/file/repair/{{$file['id']}}"@endif > @if($file['type'] == 'ORDER'){{$file['id'].'O'.$file['client_id']}} @else {{$file['id'].'R'.$file['client_id']}} @endif  </a></td>
 
-                            <td class="text-center small">2016-05-30 </td>
-                            <td class="text-center"><span class="label label-primary">€483.00</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-cente text-navy">25O1</td>
+                                        <td class="text-center"><small><span class="label label-primary">{{$file['laststatus'][0]['code']['label']}}</span></small></td>
+                                        <td class="text-center"><i class="fa fa-clock-o"></i> {{$file['laststatus'][0]['created_at']}}</td>
+                                        <td class="text-center">{{$file['client']['firstname'].' '.$file['client']['lastname']}}</td>
+                                        <td class="text-center">{{$file['laststatus'][0]['technicien']['name']}}</td>
+                                    </tr>
 
-                            <td class="text-center small">2016-05-30 </td>
-                            <td class="text-center"><span class="label label-primary">€327.00</span></td>
+                                @endforeach
+                            @endif
 
-                        </tr>
-                        <tr>
-                            <td class="text-center text-navy">27O5</td>
+                        @endif
 
-                            <td class="text-center small"> 2016-05-31</td>
-                            <td class="text-center"><span class="label label-primary">€125.00</span></td>
-
-                        </tr>
 
                         </tbody>
                     </table>

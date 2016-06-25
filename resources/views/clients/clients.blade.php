@@ -5,57 +5,85 @@
         <div class="col-sm-8">
             <div class="ibox">
                 <div class="ibox-content">
-                    <span class="text-muted small pull-right">Last modification: <i class="fa fa-clock-o"></i> 2:10 pm - 12.06.2014</span>
+                    <span class="text-muted small pull-right">
+                        <button type="button" name="createclient" class="btn btn-info btn-xs m-l-sm" data-toggle="modal" data-target="#modalAddClient">Créer</button>
+                    </span>
                     <h2>Clients</h2>
-                    <button type="button" name="createclient" class="btn btn-info btn-xs m-l-sm" data-toggle="modal" data-target="#modalAddClient">Créer</button>
 
-
-                    <div class="input-group" style="padding-top: 5px">
-                        <input type="text" placeholder="Search client " class="input form-control">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group" style="padding-top: 5px">
+                                <input type="text" placeholder="Filtrer " id="filter" class="input form-control filter-status">
                                 <span class="input-group-btn">
-                                        <button type="button" class="btn btn btn-primary"> <i class="fa fa-search"></i> Search</button>
+                                       <button href="#clear" title="clear filter" type="button" class="btn btn btn-primary clear-filter"> <i class="fa fa-refresh"></i> Reset</button>
                                 </span>
-                    </div>
-                    <div class="clients-list">
-                        <ul class="nav nav-tabs">
-                            <span class="pull-right small text-muted">{{ count($clients) }} Elements</span>
-                            <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Particulier</a></li>
-                        </ul>
-                        <div class="tab-content ">
-                            <div id="tab-1" class="tab-pane active">
-                                <div class="full-height-scroll">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
-                                            <tbody>
-                                            @if(isset($clients))
-
-                                                @foreach($clients as $client)
-
-                                                    <tr>
-                                                        <td class="client-avatar"><img alt="image" src="img/img_generic_person.jpg"> </td>
-                                                        <td><a data-toggle="tab" rel="{{$client->id}}" class="client-link">{{$client->lastname}} {{$client->firstname}}</a></td>
-                                                        <td class="contact-type"><i class="fa fa-phone"> </i></td>
-                                                        <td> {{$client->mobile}}</td>
-                                                        <td class="contact-type"><i class="fa fa-envelope"> </i></td>
-                                                        <td> {{$client->email}}</td>
-                                                        <td class="client-status"><span class="label label-info">Actif</span></td>
-                                                    </tr>
-
-                                                @endforeach
-
-                                            @else    <tr><th colspan="5" style="text-align: center">Pas d'enregistrement!</th></tr>
-                                            @endif
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
                             </div>
-
                         </div>
-
                     </div>
+
+<div class="row">
+    <div class="clients-list">
+        <ul class="nav nav-tabs">
+            <span class="pull-right small text-muted">{{ count($clients) }} Elements</span>
+        </ul>
+
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover footable" data-filter-minimum="2" data-page-size="10" data-filter="#filter">
+                <thead>
+
+                <tr>
+                    <th > </th>
+                    <th > Nom</th>
+                    <th > Prenom</th>
+                    <th ></th>
+                    <th >Mobile</th>
+                    <th ></th>
+                    <th >Email</th>
+                    <th > Code Postal</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                @if(isset($clients))
+
+                    @foreach($clients as $client)
+
+                        <tr>
+                            <td class="client-avatar"><img alt="image" src="img/img_generic_person.jpg"> </td>
+                            <td><a data-toggle="tab" rel="{{$client->id}}" class="client-link">{{$client->lastname}} </a></td>
+                            <td><a data-toggle="tab" rel="{{$client->id}}" class="client-link"> {{$client->firstname}}</a></td>
+                            <td class="contact-type"><i class="fa fa-phone"> </i></td>
+                            <td> {{$client->mobile}}</td>
+                            <td class="contact-type"><i class="fa fa-envelope"> </i></td>
+                            <td> {{$client->email}}</td>
+                            <td class="client-status"><span class="label label-info">{{$client->postal_code}}</span></td>
+                        </tr>
+
+                    @endforeach
+
+                @else
+                @endif
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <ul class="pagination pull-right"></ul>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
                 </div>
             </div>
         </div>
@@ -63,7 +91,7 @@
             <div class="ibox ">
 
                 <div class="ibox-content">
-                    <div class="tab-content clientdetails">
+                    <div class="tab-content clientdetails" >
                             <!--//FILLED DYNAMICALLY BY THE AJAX RESPONSE-->
                                     <div id="tab-pane" class="tab-pane">
                                         <div class="row m-b-lg">
@@ -90,7 +118,7 @@
                                                 <small id="details-updt" ></small>
                                             </div>
                                         </div>
-                                        <div class="client-detail">
+                                        <div class="client-detail" style="height: 566px;">
                                             <div class="full-height-scroll">
 
                                                 <h3 style="color: #1ab394;text-decoration: underline;"><strong>Détails</strong></h3>
@@ -292,6 +320,20 @@
 
 @section('script.client')
     <script type="text/javascript">
+
+        $(document ).ready(function() {
+
+            $('.footable').footable();
+            onClearTable();
+        });
+        function onClearTable() {
+            $('.clear-filter').click(function (e) {
+                e.preventDefault();
+                $('.filter-status').val('');
+                $('table.footable').trigger('footable_clear_filter');
+            });
+        }
+
         client='';
         $('.client-link').click(function() {
 
@@ -335,18 +377,19 @@
                         //set the file history part
                         var files = detailclient.files;
                         var template = "";
+                        console.log('a faire ', files);
                         $.each(files, function(key, data){
 
                             var temp1 =  "<div class='vertical-timeline-block'><div class='vertical-timeline-icon navy-bg'>";
                             var icone = (data.type == 'REPAIR') ? "<i class='fa fa-wrench'></i>" : "<i class='fa fa-file-text'></i>";
                             var temp2= "</div><div class='vertical-timeline-content project-title'><p>";
-                            var cont = "<a href='/file/repair/"+data.id+"'>Fiche #" + data.id + "</a><br>" + data.intern_report;
+                            var cont = (data.type == 'REPAIR') ? "<a href='/file/repair/"+data.id+"'>Fiche #" + data.id +"R"+data.client_id+ "</a><br>" + data.intern_report : "<a href='/file/order/"+data.id+"'>Fiche #" + data.id +"O"+data.client_id+ "</a><br>" + data.intern_report;
                             var temp3= "</p><span class='vertical-date small text-muted'>";
                             var dtime = data.created_at;
                             var temp4 = "</span></div></div>";
                             template += temp1+ icone+ temp2+ cont+ temp3+ dtime+ temp4;
                         });
-
+//
                         $('.files-history').html(template);
 
             //reveal the side panel

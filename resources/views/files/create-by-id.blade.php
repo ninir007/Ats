@@ -1,5 +1,8 @@
 @extends('template')
 
+
+
+
 @section('content')
     <div class="row">
         <div class="col-lg-5">
@@ -16,7 +19,7 @@
 
                     <form id="formClient" role="form" autocomplete="off">
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-lg-7">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -24,7 +27,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-5">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon">%</span>
@@ -153,6 +156,12 @@
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                             <input type="text" class="form-control lockable" name="purchased_at" value="" id="purchaseddevice">
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label>Devis</label>
+                                                    <div data-toggle="buttons">
+                                                        <label class="btn btn-outline btn-info dim "><input type="checkbox" id="devis" name="devis" value="1"><i class="fa fa-check"></i></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
@@ -523,7 +532,7 @@
                             $('#model_select option[value=new_id]').prop('selected', true);
                             $("#categorie" ).val(category_text);
                             $("#marque" ).val(brand_text);
-                    console.log('select set');
+
 //                            $("#brand_name").val('');
 //                            $("#brand_name").focus();
                         }
@@ -647,7 +656,7 @@
         {
             var inputs = $('#formDevice').serialize();
             console.log(inputs);
-            alert("");
+
             $.ajax({
                 'url' : '/create/file',
                 'data' : '_action=createRepair&'+$('#formcreatefile').serialize()+'&'+inputs,
@@ -668,7 +677,7 @@
                                 text: 'Validation effectuée !'
                             });
                             setTimeout(function(){
-                                window.location.href = "/files";
+                                window.location.href = response.redirect;
                             },1700);
 
                         }

@@ -22,3 +22,84 @@
 .enligne{
     display: inline-block;
 }
+
+.status-toclone {
+    display: none;
+}
+
+.devis {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    opacity: 0;
+    background: rgb(255, 255, 255);
+}
+
+.adapt {
+    width: 100%;
+    display: block;
+}
+.adapt > img {
+    width: 33%;
+}
+
+.my-page {
+    height: 28cm;
+    width: 21.6cm;
+    margin: auto;
+}
+.table-principal {
+    text-align: center;
+    position: relative;
+    left: 30%;
+}
+.table-a {
+    text-align: left;
+    position: relative;
+    left: -208px;
+    font-size: 16px;
+}
+.table-a  tr > th:last-child {
+    font-weight: normal;
+    left: 40px;
+    position: relative;
+
+}
+
+.td-rapport {
+    position: relative;
+    left: -76px;
+    font-size: 16px;
+    top: 10px;
+}
+.label-rapport {
+    position: absolute;
+    top: -25px;
+}
+.table-b {
+    position: relative;
+    top: 1cm;
+    left: 1cm;
+    height: 3cm;
+    width: 17cm;
+}
+.terme {
+    position: absolute;
+    width: 20cm;
+    bottom: 2cm;
+}
+.table-open {
+    position: absolute;
+    width: 20cm;
+    bottom: 0;
+    text-align: center;
+}
+
+
+

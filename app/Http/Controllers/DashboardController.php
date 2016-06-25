@@ -7,6 +7,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 
+use App\File;
+use App\CodeStatus;
+
+
 
 class DashboardController  extends Controller
 {
@@ -15,13 +19,17 @@ class DashboardController  extends Controller
         $this->middleware('auth');
     }
 
-    public function showDashboard(Request $request)
+    public function showDashboard(Request $req)
     {
 
         $leftmenu['dashboard'] = 'active';
 
+        $files = File::with('client', 'technicien', 'laststatus.code.group', 'laststatus.technicien')->get();
 
-        return view('dashboard', ['leftmenu' => $leftmenu]);
+        $files =  CodeStatus::getThemAllLastStatus($files->toArray());
+
+
+        return view('dashboard', ['leftmenu' => $leftmenu, 'files' => $files]);
     }
 
 
