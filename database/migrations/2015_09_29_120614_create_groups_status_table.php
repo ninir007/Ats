@@ -27,7 +27,8 @@ class CreateGroupsStatusTable extends Migration
             ['label' => 'opt'],
             ['label' => 'devis'],
             ['label' => 'devis-end'],
-            ['label' => 'econo']
+            ['label' => 'econo'],
+            ['label' => 'end']
 
         ]);
     }

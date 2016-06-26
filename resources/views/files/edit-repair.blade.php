@@ -688,14 +688,14 @@
             if(sel_group == 'DEVIS' && sel_step == 'MIDDLE') {
                 var main = $("#total-due" ).val();
                  if(main == 0) {
-                     error = 'Veuillez mettre à jour la facture !';
+                     error = 'Veuillez mettre à jour la facturation !';
                  }
             }
 
             if(sel_group == 'POST' && sel_step == 'MIDDLE') {
                 var main = $("#total-due" ).val();
                  if(main == 0) {
-                     error = 'Veuillez mettre à jour la facture !';
+                     error = 'Veuillez mettre à jour la facturation !';
                  }
             }
 
@@ -773,6 +773,14 @@
         function onInvoiceGeneration() {
             $("#generateInvoice" ).click(function(e) {
 
+                var ped = $('#10-4');
+                if(ped.length == 0) {
+                    $.gritter.add({
+                        title: 'Generation de la facture échouée!',
+                        text: "Veuillez mettre à jour le statut de la fiche : PE"
+                    });
+                    e.preventDefault();
+                }
 
                 var hasvat = $(this ).data('isvat');
                 console.log(hasvat);
