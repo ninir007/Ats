@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
+use Session;
 
 class Note extends Model
 {
@@ -30,5 +32,25 @@ class Note extends Model
     {
         $dated = date('d/m/Y, H:i:s', strtotime($value));
         return $dated;
+    }
+    public static function countMyMsg($notes)
+    {
+        $count = 0;
+        foreach($notes as $note) {
+            if($note['scope'] == 'PRIVATE' && $note['user_id'] ==  Auth::user()['id']) {
+                $count++;
+            }
+            else if($note['scope'] == 'PUBLIC') {
+                $count++;
+
+            }
+            else {
+
+            }
+        }
+
+        Session::put('countnote', $count);
+
+        return $count;
     }
 }

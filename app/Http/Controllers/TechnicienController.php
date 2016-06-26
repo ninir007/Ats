@@ -20,7 +20,8 @@ class TechnicienController extends Controller
     public function notes()
     {
         $notes = Note::with('technicien')->get();
-        return view('/techniciens/notes', ['notes' => $notes]);
+        $count = Note::countMyMsg($notes);
+        return view('/techniciens/notes', ['notes' => $notes, 'countnote' => $count]);
     }
     public function handleAction(Request $request)
     {

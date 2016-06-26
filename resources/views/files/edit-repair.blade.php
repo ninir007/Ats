@@ -480,9 +480,9 @@
                             <h3>Documents</h3>
                             <ul class="list-unstyled file-list">
                                 <li><a id="generateInvoice" class="invoice-print" data-isvat="{{$files["client"]['vat']}}" target="_blank" href="/invoice/repair/{{$files->id}}"><i class="fa fa-file"></i> Facture</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Bon de Réparation</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Note d'envoi</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Devis</a></li>
+                                <li><a id="generateBonRep" target="_blank" href="/bon/repair/{{$files->id}}"><i class="fa fa-file" ></i> Bon de Réparation</a></li>
+                                <li><a id="generateTicketRep" target="_blank" href="/ticket/repair/{{$files->id}}"><i class="fa fa-file"></i> Note d'envoi</a></li>
+                                <li><a id="generateDevisRep" target="_blank" href="/devis/repair/{{$files->id}}"><i class="fa fa-file"></i> Devis</a></li>
                             </ul>
                         </div>
                     </div>
@@ -533,10 +533,53 @@
 
             onClientToggle();
 
+
+            onDevisGeneration();
+            onBonGeneration();
+            onNoteGeneration();
             /*
             onOrderFormGeneration();
             */
         });
+        function onDevisGeneration() {
+            $("#generateDevisRep" ).click(function(e) {
+                var ped = $('#16-6');
+                if(ped.length == 0) {
+                    $.gritter.add({
+                        title: 'Generation de devis échouée!',
+                        text: "Veuillez mettre à jour le statut de la fiche : PED"
+                    });
+                    e.preventDefault();
+                }
+
+            });
+        }
+        function onBonGeneration() {
+            $("#generateBonRep" ).click(function(e) {
+                var ped = $('#4-1');
+                if(ped.length == 0) {
+                    $.gritter.add({
+                        title: 'Generation de bon de réparation échouée!',
+                        text: "Veuillez mettre à jour le statut de la fiche : I/A"
+                    });
+                    e.preventDefault();
+                }
+
+            });
+        }
+        function onNoteGeneration() {
+            $("#generateTicketRep" ).click(function(e) {
+                var ped = $('#23-9');
+                if(ped.length == 0) {
+                    $.gritter.add({
+                        title: 'Generation de note d\'envoie échouée!',
+                        text: "Veuillez mettre à jour le statut de la fiche : OUT"
+                    });
+                    e.preventDefault();
+                }
+
+            });
+        }
         function onClientToggle() {
             $('#toggle-client' ).click(function(e){
                 e.preventDefault();
@@ -641,6 +684,19 @@
                 if ( sel_group != 'REP') {
                     error = 'Statut selectionné non application à ce stade !';
                 }
+            }
+            if(sel_group == 'DEVIS' && sel_step == 'MIDDLE') {
+                var main = $("#total-due" ).val();
+                 if(main == 0) {
+                     error = 'Veuillez mettre à jour la facture !';
+                 }
+            }
+
+            if(sel_group == 'POST' && sel_step == 'MIDDLE') {
+                var main = $("#total-due" ).val();
+                 if(main == 0) {
+                     error = 'Veuillez mettre à jour la facture !';
+                 }
             }
 
 
@@ -926,6 +982,16 @@
                     data: '_action=calculateInvoice&'+$(this).serialize(),
                     dataType: 'json',
                     type: 'POST',
+                    beforeSend: function() {
+                        /*var main = $("#total-due" ).val();
+                        if(main == 0) {
+                            $.gritter.add({
+                                title: 'Confirmer un montant pour la main d\'oeuvre !',
+                                text: "Validation échouée !"
+                            });
+                            return false;
+                        }*/
+                    },
                     complete: function (xhr) {
                         var response = JSON.parse( xhr.responseText );
                         if(response.status == 'success') {

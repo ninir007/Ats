@@ -10,7 +10,7 @@
         </div>
 
         <div class="col-xs-1">
-            <text type="text" class="btn btn-primary btn-lg">{{ isset($notes) ? count($notes).' notes' : '0 notes'  }}</text>
+            <text type="text" class="btn btn-primary btn-lg">{{ isset($countnote) ? $countnote.' notes' : '0 notes'  }}</text>
         </div>
 
     </div>

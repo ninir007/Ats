@@ -48,12 +48,12 @@ class Invoice extends Model
         }
         return['status' => 'success'];
     }
-    public function sendRepairMail($invoice, $order) {
+    public function sendDevisRepairMail($repair) {
 
-        $this->num = $invoice->number;
+        $this->num = $repair['id'].'R'.$repair['client_id'];
         try {
-            Mail::send('/pdf/repair-invoice', ['repair' => $order, 'invoice' => $invoice], function($message){
-                $message->to('bouzanih.mounir@gmail.com', 'some Guy')->subject('Votre facture : '.$this->num);
+            Mail::send('/pdf/repair-devis', ['repair' => $repair], function($message){
+                $message->to('bouzanih.mounir@gmail.com', 'some Guy')->subject('Devis concernant fiche : '.$this->num);
             });
         }
         catch(Error $e) {

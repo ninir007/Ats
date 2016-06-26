@@ -98,6 +98,7 @@
                 <div class="ibox-title">
                     <h5>Liste de Commandes à faire</h5>
                     <div class="ibox-tools">
+                        <a class="btn btn-primary btn-xs" id="print-list-order"> <i class="fa fa-print"></i> Imprimer</a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
@@ -140,5 +141,61 @@
             </div>
         </div>
     </div>
+    <table id="list-to-print" class="table table-bordered" style="display: none" >
+
+        <thead>
+        <tr>
+            <th colspan="5"><h2>Articles à commander</h2></th>
+        </tr>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">reference</th>
+            <th class="text-center">description</th>
+            <th class="text-center">fournisseur</th>
+            <th class="text-center">prix cat.</th>
+        </tr>
+        </thead>
+        @if(isset($files['order_to_do']))
+            @if(!empty($files['order_to_do']))
+                @foreach($files['order_to_do'] as $file)
+                    @foreach($file['order_details'] as $detail)
+                        @if(isset($detail['id']))
+                        <tr>
+                            <td class="text-center text-navy" ><a class="text-center text-navy" target="_blank"  > @if($file['type'] == 'ORDER'){{$file['id'].'O'.$file['client_id']}} @else {{$file['id'].'R'.$file['client_id']}} @endif  </a></td>
+
+                            <td class="text-center"><small><span class="label label-primary">{{$detail['article']['reference']}}</span></small></td>
+                            <td class="text-center"><i class="fa fa-info"></i> {{$detail['article']['description']}}</td>
+                            <td class="text-center">{{$detail['article']['supplier']['name']}}</td>
+                            <td class="text-center">{{$detail['article']['standard_price']}}€</td>
+                        </tr>
+                        @endif
+                    @endforeach
+                @endforeach
+            @endif
+
+        @endif
+    </table>
+@stop
+
+
+@section('script.files')
+    <script type="text/javascript">
+
+
+        $(document).ready(function() {
+            $('#print-list-order' ).click(function(e) {
+                e.preventDefault();
+
+                $('#list-to-print' ).show();
+                $('#list-to-print' ).printThis();
+                setTimeout(function() {
+                    $( '#list-to-print' ).hide();
+
+                }, 1000);
+
+            });
+        });
+
+    </script>
 
 @stop

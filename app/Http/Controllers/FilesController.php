@@ -81,6 +81,44 @@ class FilesController extends Controller
 
         return view('/files/invoice-repair', ['repair' => $repair, 'invoice' => $invoice]);
     }
+    public function devisRepair($id , Request $req, Invoice $invoice)
+    {
+        $repair = File::where('id', $id)->with('repair.details.article','repair.device.modele.brand','repair.device.modele.category', 'client')->first();
+
+
+        if($req['_action'] == "sendmail") {
+            $response = $invoice->sendDevisRepairMail($repair);
+            return $response;
+
+        }
+
+
+
+        return view('/files/devis-repair', ['repair' => $repair]);
+    }
+
+    public function ticketRepair($id , Request $req, Invoice $invoice)
+    {
+        $repair = File::where('id', $id)->with('repair.details.article','repair.device.modele.brand','repair.device.modele.category', 'client', 'laststatus')->first();
+
+        if($req['_action'] == "sendmail") {
+
+
+        }
+
+        return view('/files/ticket-repair', ['repair' => $repair, 'invoice' => $invoice]);
+    }
+    public function bonRepair($id , Request $req, Invoice $invoice)
+    {
+        $repair = File::where('id', $id)->with('repair.details.article','repair.device.modele.brand','repair.device.modele.category', 'client')->first();
+
+        if($req['_action'] == "sendmail") {
+
+
+        }
+
+        return view('/files/bon-repair', ['repair' => $repair, 'invoice' => $invoice]);
+    }
 
     public function searchFile(Request $req)
     {
@@ -155,6 +193,7 @@ class FilesController extends Controller
                 $response['remaining'] =  $response['total'] - $req['advance_amount'] ;
 
             }
+            $params['sum_amount'] = $response['total'];
 
             $file = File::find($id)->update($params);
 
@@ -325,7 +364,7 @@ class FilesController extends Controller
         $details = RepairDetails::where('file_id', $files['id'])->with('article.supplier')->get();
         $repairs['repair_details'] = $details;
         $repairs["modele"] =  Modeles::where('id', $repairs['device']['model_id'])->with('category', 'brand', 'articles')->first();
-        $repairs = CodeStatus::getOUT($repairs);
+        $repairs['device']['history'] = CodeStatus::getOUT($repairs['device']['history']);
         $status = CodeStatus::with('group')->get();
         $status = CodeStatus::filterStatus($status, $files['status']);
         $files['last_status'] = CodeStatus::getLastStatus($files['status']);

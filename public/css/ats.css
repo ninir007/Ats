@@ -54,6 +54,11 @@
     width: 21.6cm;
     margin: auto;
 }
+.my-page-h {
+    width: 35cm;
+    height: 21.6cm;
+    margin: auto;
+}
 .table-principal {
     text-align: center;
     position: relative;
@@ -100,6 +105,131 @@
     bottom: 0;
     text-align: center;
 }
+.table-page {
+    width: 30cm;
+}
+.table-half-page {
+    width: 15cm;
+}
 
 
+.tddesc {
+    position: relative;
+    top: 1cm;
+}
+.labdesc {
+    position: relative;
+}
+.labdescticket {
+    position: absolute;
+    top: -18px;
+}
 
+.tbaddress {
+    position: relative;
+    left: 2cm;
+    border: solid 1px;
+    padding: 1cm;
+    width: 5cm;
+}
+.tbaddress th, .tbaddress td {
+    padding: 4px;
+}
+
+.tbcoord {
+    font-weight: normal!important;
+    position: relative;
+    left: -3cm;
+    border: solid 1px;
+    padding: 1cm;
+    width: 6cm;
+}
+.tbcoord th, .tbcoord td {
+    padding: 2px;
+}
+.tbcoord th, .tbdevice th {
+    padding-left: 4px;
+}
+
+.tbdevice {
+    position: relative;
+    border: solid 1px;
+    padding: 1cm;
+    width: 5cm;
+}
+.tdacompte {
+    position: relative;
+    top: 1cm;
+}
+.numrep{
+    position: relative;
+    left: -3cm;
+    text-align: left;
+}
+
+.firma {
+    position: relative;
+    top: 3cm;
+    left: -.5cm;
+}
+.firmaticket {
+    position: relative;
+    top: 5cm;
+    left: -.5cm;
+}
+
+.foot-horraire {
+    position: absolute;
+    bottom: 3cm;
+    right: 2cm;
+}
+.foot-horraire-n {
+    position: absolute;
+    bottom: 2.5cm;
+    right: 9cm;
+}
+.stick-bottom {
+    position: absolute;
+    bottom: .5cm;
+    width: 50%;
+    left: .5cm;
+}
+.stick-infos {
+    position: absolute;
+    bottom: .5cm;
+    width: 15cm;
+    text-align: center;
+
+}
+.bordertop {
+    border-top: solid;
+}
+
+.centerdotted {
+    border: dotted 1px;
+    text-align: center;
+    height: 1cm;
+}
+.paddedbottom {
+    padding-bottom: 6px;
+}
+.tddateout {
+    position: relative;
+    top: 4cm;
+}
+.tablefacturedetail {
+    position: relative;
+    width: 7cm;
+    top: 1cm;
+}
+
+.tablefacturedetail th , .tablefacturedetail td  {
+    padding-top: 3px;
+}
+.border-top {
+    border-top: 1px dotted;
+}
+
+.border-top > th, .border-top > td {
+    padding-top: 0.5cm;
+}

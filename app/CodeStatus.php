@@ -98,6 +98,17 @@ class CodeStatus extends Model
 
                 }
                 else if($last['label'] == 'TW') {
+                    if($file['type'] == 'ORDER') {
+                        $details = OrderDetails::where('file_id', $file['id'])->with('article.supplier')->get();
+                        $files[$key]['order_details'] = $details;
+                    }
+                    else {
+                        $details = RepairDetails::where('file_id', $file['id'])->with('article.supplier')->get();
+                        $files[$key]['order_details'] = $details;
+                    }
+
+
+
                     $xfiles['order_to_do'][] = $files[$key];
 
                 }
@@ -111,10 +122,10 @@ class CodeStatus extends Model
     }
     public static function getOUT($list) {
 
-            if(! empty($list['device']['history'])) {
-                foreach($list['device']['history'] as $key => $history){
+            if(! empty($list)) {
+                foreach($list as $key => $history){
                     $history['out'] = StatusFile::where(['file_id'=> $history['file_id'], 'code_status_id'=> '23' ])->first();
-                    $list['device']['history'][$key] = $history;
+                    $list[$key] = $history;
                 }
             }
 

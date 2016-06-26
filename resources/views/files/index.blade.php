@@ -31,6 +31,7 @@
 
                                 <tr>
                                     <th > #</th>
+                                    <th style="text-align:center;"> Techn.</th>
                                     <th > Titre</th>
                                     <th > Statut</th>
                                     <th style="text-align:center;"> Client</th>
@@ -45,6 +46,9 @@
                                         <tr class="repair">
                                             <td class="project-status">
                                                 <span class="label label-primary"> {{$file->id.'R'.$file->client->id}} </span>
+                                            </td>
+                                            <td style="text-align:center;" class="project-people"  >
+                                                <p>{{$file->technicien->name}}</p>
                                             </td>
                                             <td class="project-title">
                                                 <a href="/file/repair/{{$file->id}}">Réparation de : @foreach($repairs as $repair) @if($repair->file_id == $file->id) {{$repair->device->modele->name}} - ({{$repair->device->modele->category->name}} - {{$repair->device->modele->brand->name}}) @endif @endforeach</a>
@@ -66,6 +70,9 @@
                                         <tr class="order">
                                             <td class="project-status">
                                                 <span class="label label-primary"> {{$file->id.'O'.$file->client->id}} </span>
+                                            </td>
+                                            <td style="text-align:center;" class="project-people"  >
+                                                <p>{{$file->technicien->name}}</p>
                                             </td>
                                             <td class="project-title">
                                                 <a href="/file/order/{{$file->id}}">Commande de : @foreach($orders as $order) @if($order->file_id == $file->id) {{$order->total_details_amount}} €  @endif @endforeach</a>

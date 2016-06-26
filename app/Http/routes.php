@@ -45,7 +45,6 @@ Route::post('/new-file/devices', 'DevicesController@handleAction');
 //Technicien = USER
 Route::get('/technicien/notes', 'TechnicienController@notes');
 Route::post('/technicien/notes', 'TechnicienController@handleAction');
-Route::get('/profile', 'TechnicienController@getFormEdit');
 
 
 //STATUS....
@@ -63,6 +62,9 @@ Route::get('/files', 'FilesController@index'); // OK
     Route::post('/file/repair/{id}', 'FilesController@updateRepair')->where('id', '[0-9]*'); // OK
     Route::delete('/file/repair/{id}', 'FilesController@deleteRepair')->where('id', '[0-9]*'); // OK
     Route::get('/invoice/repair/{id}', 'FilesController@invoiceRepair')->where('id', '[0-9]*'); // OK
+    Route::get('/bon/repair/{id}', 'FilesController@bonRepair')->where('id', '[0-9]*'); // OK
+    Route::get('/ticket/repair/{id}', 'FilesController@ticketRepair')->where('id', '[0-9]*'); // OK
+    Route::get('/devis/repair/{id}', 'FilesController@devisRepair')->where('id', '[0-9]*'); // OK
 
 
 //..//order
